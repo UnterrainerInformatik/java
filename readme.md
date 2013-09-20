@@ -1,22 +1,24 @@
-	/**************************************************************************
-	 * <pre>
-	 * 
-	 * Copyright (c) Unterrainer Informatik OG.
-	 * This source is subject to the Microsoft Public License.
-	 * 
-	 * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
-	 * All other rights reserved.
-	 * 
-	 * (In other words you may copy, use, change and redistribute it without
-	 * any restrictions except for not suing me because it broke something.)
-	 * 
-	 * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
-	 * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-	 * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
-	 * PURPOSE.
-	 * 
-	 * </pre>
-	 ***************************************************************************/
+```
+/**************************************************************************
+ * <pre>
+ * 
+ * Copyright (c) Unterrainer Informatik OG.
+ * This source is subject to the Microsoft Public License.
+ * 
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ * 
+ * (In other words you may copy, use, change and redistribute it without
+ * any restrictions except for not suing me because it broke something.)
+ * 
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ * 
+ * </pre>
+ ***************************************************************************/
+ ```
  
 # General JAVA Tools
 
@@ -40,18 +42,18 @@ It has a property 'isActive' that defaults to true. When this is set to false al
 
 ### Example
 	
-	``` java
-	SplitStopWatch ssw = new SplitStopWatch();
-	ssw.start("started.");
-	  Thread.sleep(10);
-	ssw.split("split.");
-	  Thread.sleep(10);
-	ssw.stop("stopped.");
-	```
+```
+SplitStopWatch ssw = new SplitStopWatch();
+ssw.start("started.");
+  Thread.sleep(10);
+ssw.split("split.");
+  Thread.sleep(10);
+ssw.stop("stopped.");
+```
 
 ## CsvTools
 
-under construction
+under construction.
 
 [1]: http://www.unterrainer.info
 [2]: http://www.unterrainer.info/Home/Coding

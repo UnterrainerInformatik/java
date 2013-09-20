@@ -1,22 +1,24 @@
-	/**************************************************************************
-	 * <pre>
-	 * 
-	 * Copyright (c) Unterrainer Informatik OG.
-	 * This source is subject to the Microsoft Public License.
-	 * 
-	 * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
-	 * All other rights reserved.
-	 * 
-	 * (In other words you may copy, use, change and redistribute it without
-	 * any restrictions except for not suing me because it broke something.)
-	 * 
-	 * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
-	 * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-	 * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
-	 * PURPOSE.
-	 * 
-	 * </pre>
-	 ***************************************************************************/
+```
+/**************************************************************************
+ * <pre>
+ * 
+ * Copyright (c) Unterrainer Informatik OG.
+ * This source is subject to the Microsoft Public License.
+ * 
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ * 
+ * (In other words you may copy, use, change and redistribute it without
+ * any restrictions except for not suing me because it broke something.)
+ * 
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ * 
+ * </pre>
+ ***************************************************************************/
+ ```
 
 You may copy, use or rewrite every single one of its contained projects to your hearts content.
 In order to get help with basic GIT commands you may try [the GIT cheat-sheet][2] on our [homepage][1].
@@ -37,13 +39,15 @@ All public methods within this class are synchronized so you may use it concurre
 It has a property 'isActive' that defaults to true. When this is set to false all calls to this class are aborted within a single if-statement in the called method. This is a convenience function so that you may leave your logging-code in the production code.
 
 ## Example
-	
-	SplitStopWatch ssw = new SplitStopWatch();
-	ssw.start("started.");
-	  Thread.sleep(10);
-	ssw.split("split.");
-	  Thread.sleep(10);
-	ssw.stop("stopped.");
+
+```	java
+SplitStopWatch ssw = new SplitStopWatch();
+ssw.start("started.");
+  Thread.sleep(10);
+ssw.split("split.");
+  Thread.sleep(10);
+ssw.stop("stopped.");
+```
 
 [1]: http://www.unterrainer.info
 [2]: http://www.unterrainer.info/Home/Coding
