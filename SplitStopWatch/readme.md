@@ -18,7 +18,7 @@
  * 
  * </pre>
  ***************************************************************************/
- ```
+```
 
 You may copy, use or rewrite every single one of its contained projects to your hearts content.
 In order to get help with basic GIT commands you may try [the GIT cheat-sheet][2] on our [homepage][1].
