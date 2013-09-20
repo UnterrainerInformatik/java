@@ -20,12 +20,14 @@ It has a property 'isActive' that defaults to true. When this is set to false al
 
 ### Example
 	
+	``` java
 	SplitStopWatch ssw = new SplitStopWatch();
 	ssw.start("started.");
 	  Thread.sleep(10);
 	ssw.split("split.");
 	  Thread.sleep(10);
 	ssw.stop("stopped.");
+	```
 
 ## CsvTools
 
