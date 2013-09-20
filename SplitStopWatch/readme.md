@@ -1,6 +1,5 @@
 ```
 /**************************************************************************
- * <pre>
  * 
  * Copyright (c) Unterrainer Informatik OG.
  * This source is subject to the Microsoft Public License.
@@ -16,7 +15,6 @@
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  * 
- * </pre>
  ***************************************************************************/
 ```
 
@@ -40,7 +38,7 @@ It has a property 'isActive' that defaults to true. When this is set to false al
 
 ## Example
 
-```	java
+```java
 SplitStopWatch ssw = new SplitStopWatch();
 ssw.start("started.");
   Thread.sleep(10);
