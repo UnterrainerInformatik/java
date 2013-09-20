@@ -22,12 +22,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * This is the test class for the SplipStopWatch - tool.
  * 
  * @author UNGE
+ * @since 11.07.2013
  */
 public class SplitStopWatchTests {
 
