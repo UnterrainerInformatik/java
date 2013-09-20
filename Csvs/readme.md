@@ -1,6 +1,5 @@
 ```
 /**************************************************************************
- * <pre>
  * 
  * Copyright (c) Unterrainer Informatik OG.
  * This source is subject to the Microsoft Public License.
@@ -16,7 +15,6 @@
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  * 
- * </pre>
  ***************************************************************************/
 ```
 
