@@ -1,1 +1,10 @@
-/bin
+.classpath
+.project
+.settings/
+bin/
+build/
+target/
+.metadata/
+database/dbdoc/
+*.orig
+generated-sources/
