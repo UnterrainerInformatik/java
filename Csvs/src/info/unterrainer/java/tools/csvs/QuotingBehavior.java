@@ -18,6 +18,8 @@
  * </pre>
  ***************************************************************************/
 
+package info.unterrainer.java.tools.csvs;
+
 /**
  * The Enumeration QuotingBehavior.
  * <p>

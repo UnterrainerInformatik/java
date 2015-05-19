@@ -18,6 +18,8 @@
  * </pre>
  ***************************************************************************/
 
+package info.unterrainer.java.tools.csvs;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;

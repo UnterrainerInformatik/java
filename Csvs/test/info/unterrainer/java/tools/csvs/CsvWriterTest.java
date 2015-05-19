@@ -18,7 +18,9 @@
  * </pre>
  ***************************************************************************/
 
-import java.io.IOException;
+package info.unterrainer.java.tools.csvs;
+
+import java.io.IOException; 
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
