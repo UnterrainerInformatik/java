@@ -1,3 +1,4 @@
+package info.unterrainer.java.tools.reporting;
 /**************************************************************************
  * <pre>
  * 
@@ -21,6 +22,8 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import info.unterrainer.java.tools.reporting.SplitStopWatch;
 
 /**
  * This is the test class for the SplipStopWatch - tool.

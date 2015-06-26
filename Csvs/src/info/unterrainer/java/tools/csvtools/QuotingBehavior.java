@@ -18,7 +18,7 @@
  * </pre>
  ***************************************************************************/
 
-package info.unterrainer.java.tools.csvs;
+package info.unterrainer.java.tools.csvtools;
 
 /**
  * The Enumeration QuotingBehavior.

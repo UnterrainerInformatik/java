@@ -17,7 +17,7 @@
  * 
  * </pre>
  ***************************************************************************/
-package info.unterrainer.java.tools.csvs;
+package info.unterrainer.java.tools.csvtools;
 
 import java.io.IOException;
 import java.io.Reader;

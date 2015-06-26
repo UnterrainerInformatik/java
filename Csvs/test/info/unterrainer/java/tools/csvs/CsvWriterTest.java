@@ -30,6 +30,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import info.unterrainer.java.tools.csvtools.CsvWriter;
+import info.unterrainer.java.tools.csvtools.QuotingBehavior;
+
 /**
  * The Class CsvWriterTest.
  * <p>

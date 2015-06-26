@@ -31,6 +31,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import info.unterrainer.java.tools.csvtools.CsvReader;
+
 /**
  * The Class CsvReaderTest.
  * <p>
