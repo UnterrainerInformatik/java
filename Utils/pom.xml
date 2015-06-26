@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.java.tools</groupId>
-	<artifactId>csv-tools</artifactId>
+	<artifactId>utils</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CsvTools</name>
-	<description>This library provides writer and reader for the CSV format.</description>
+	<name>Utils</name>
+	<description>This class contains static helper classes for various occasions.</description>
 
 	<properties>
 		<javaVersion>1.8</javaVersion>
