@@ -33,19 +33,19 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.xml.sax.InputSource;
 
 import info.unterrainer.java.tools.utils.StringUtils;
 import info.unterrainer.java.tools.utils.files.Encoding;
 import info.unterrainer.java.tools.utils.files.FileUtils;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * The Class Serializations.
  * <p>
  * Contains utility-methods involving serialization.
  */
+@Log4j2
 @SuppressWarnings({ "unchecked" })
 public final class SerializationUtils {
 
@@ -53,8 +53,6 @@ public final class SerializationUtils {
 	private static final String JAXB_TRANSFORM_INDENT_AMOUNT = "{http://xml.apache.org/xslt}indent-amount";
 	private static final String JAXB_TRANSFORM_PROPERTY_YES = "yes";
 	private static final String JAXB_TRANSFORM_PROPERTY_NO = "no";
-
-	private static final Logger logger = LogManager.getLogger(SerializationUtils.class);
 
 	/**
 	 * Instantiates a new Serializations-class. Here in order to hide the public constructor since this is a static utility class.
@@ -87,15 +85,15 @@ public final class SerializationUtils {
 			return sw.toString();
 
 		} catch (TransformerFactoryConfigurationError e) {
-			logger.fatal("There was an error configuring the transformer-factory.\n" + StringUtils.getStackTrace(e));
+			log.fatal("There was an error configuring the transformer-factory.\n" + StringUtils.getStackTrace(e));
 		} catch (JAXBException e) {
-			logger.fatal("There was an error marshalling the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
+			log.fatal("There was an error marshalling the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (sw != null) {
 				try {
 					sw.close();
 				} catch (IOException e) {
-					logger.fatal("There was an error closing the stringWriter after serialization.\n" + StringUtils.getStackTrace(e));
+					log.fatal("There was an error closing the stringWriter after serialization.\n" + StringUtils.getStackTrace(e));
 				}
 			}
 		}
@@ -122,8 +120,8 @@ public final class SerializationUtils {
 			fw.close();
 
 		} catch (IOException e) {
-			logger.fatal("There was an error writing the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
-			logger.fatal(e.getMessage());
+			log.fatal("There was an error writing the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
+			log.fatal(e.getMessage());
 		}
 	}
 
@@ -194,26 +192,26 @@ public final class SerializationUtils {
 			return sw2.toString();
 
 		} catch (TransformerConfigurationException e) {
-			logger.fatal("There was an error configuring the XML transformer.\n" + StringUtils.getStackTrace(e));
+			log.fatal("There was an error configuring the XML transformer.\n" + StringUtils.getStackTrace(e));
 		} catch (TransformerFactoryConfigurationError e) {
-			logger.fatal("There was an error configuring the transformer-factory.\n" + StringUtils.getStackTrace(e));
+			log.fatal("There was an error configuring the transformer-factory.\n" + StringUtils.getStackTrace(e));
 		} catch (TransformerException e) {
-			logger.fatal("There was an error transforming the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
+			log.fatal("There was an error transforming the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
 		} catch (JAXBException e) {
-			logger.fatal("There was an error marshalling the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
+			log.fatal("There was an error marshalling the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (sw1 != null) {
 				try {
 					sw1.close();
 				} catch (IOException e) {
-					logger.fatal("There was an error closing the stringWriter after serialization.\n" + StringUtils.getStackTrace(e));
+					log.fatal("There was an error closing the stringWriter after serialization.\n" + StringUtils.getStackTrace(e));
 				}
 			}
 			if (sw2 != null) {
 				try {
 					sw2.close();
 				} catch (IOException e) {
-					logger.fatal("There was an error closing the stringWriter after serialization.\n" + StringUtils.getStackTrace(e));
+					log.fatal("There was an error closing the stringWriter after serialization.\n" + StringUtils.getStackTrace(e));
 				}
 			}
 		}
@@ -247,8 +245,8 @@ public final class SerializationUtils {
 			fw.close();
 
 		} catch (IOException e) {
-			logger.fatal("There was an error writing the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
-			logger.fatal(e.getMessage());
+			log.fatal("There was an error writing the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
+			log.fatal(e.getMessage());
 		}
 	}
 
@@ -274,7 +272,7 @@ public final class SerializationUtils {
 			result = (T) unmarshallingClassJAXB.createUnmarshaller().unmarshal(new InputSource(new StringReader(source)));
 
 		} catch (JAXBException e) {
-			logger.fatal("There was an error processing the file you wanted to deserialize "
+			log.fatal("There was an error processing the file you wanted to deserialize "
 					+ "or when setting up the JAXB context.\n"
 					+ StringUtils.getStackTrace(e));
 		}
@@ -340,7 +338,7 @@ public final class SerializationUtils {
 			encoder.writeObject(serializableObject);
 
 		} catch (FileNotFoundException e) {
-			logger.fatal("The file you wanted to serialize to couldn't be" + " opened, created or was a directory.\n" + StringUtils.getStackTrace(e));
+			log.fatal("The file you wanted to serialize to couldn't be" + " opened, created or was a directory.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (encoder != null) {
 				encoder.close();
@@ -368,7 +366,7 @@ public final class SerializationUtils {
 			result = (T) decoder.readObject();
 
 		} catch (FileNotFoundException e) {
-			logger.fatal("The file you wanted to deserialize to couldn't be" + " opened, created or was a directory.\n" + StringUtils.getStackTrace(e));
+			log.fatal("The file you wanted to deserialize to couldn't be" + " opened, created or was a directory.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (decoder != null) {
 				decoder.close();
@@ -396,22 +394,22 @@ public final class SerializationUtils {
 			baos.writeTo(outputStream);
 
 		} catch (FileNotFoundException e) {
-			logger.fatal("The file you wanted to serialize to couldn't" + " be opened, created or was a directory.\n" + StringUtils.getStackTrace(e));
+			log.fatal("The file you wanted to serialize to couldn't" + " be opened, created or was a directory.\n" + StringUtils.getStackTrace(e));
 		} catch (IOException e) {
-			logger.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
+			log.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
 		} finally {
 			if (baos != null) {
 				try {
 					baos.close();
 				} catch (IOException e) {
-					logger.fatal("Error closing the output stream during serialization.\n" + StringUtils.getStackTrace(e));
+					log.fatal("Error closing the output stream during serialization.\n" + StringUtils.getStackTrace(e));
 				}
 			}
 			if (outputStream != null) {
 				try {
 					outputStream.close();
 				} catch (IOException e) {
-					logger.fatal("Error closing the output file during serialization.\n" + StringUtils.getStackTrace(e));
+					log.fatal("Error closing the output file during serialization.\n" + StringUtils.getStackTrace(e));
 				}
 			}
 		}
@@ -432,14 +430,14 @@ public final class SerializationUtils {
 			out.writeObject(serializableObject);
 			out.close();
 		} catch (IOException e) {
-			logger.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
+			log.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
 		} finally {
 			try {
 				if (out != null) {
 					out.close();
 				}
 			} catch (IOException e) {
-				logger.fatal("Fatal error working with the unterlying output stream during serialization.\n" + StringUtils.getStackTrace(e));
+				log.fatal("Fatal error working with the unterlying output stream during serialization.\n" + StringUtils.getStackTrace(e));
 			}
 		}
 		return result;
@@ -465,13 +463,13 @@ public final class SerializationUtils {
 			baos.flush();
 			return SerializationUtils.<T> objectDeserialize(baos, type);
 		} catch (IOException e) {
-			logger.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
+			log.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
 		} finally {
 			if (baos != null) {
 				try {
 					baos.close();
 				} catch (IOException e) {
-					logger.fatal("Fatal error working with the unterlying" + " output stream during serialization.\n" + StringUtils.getStackTrace(e));
+					log.fatal("Fatal error working with the unterlying" + " output stream during serialization.\n" + StringUtils.getStackTrace(e));
 				}
 			}
 		}
@@ -496,15 +494,15 @@ public final class SerializationUtils {
 			in = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
 			result = (T) in.readObject();
 		} catch (IOException e) {
-			logger.fatal("Error working with the unterlying input stream during serialization.\n" + StringUtils.getStackTrace(e));
+			log.fatal("Error working with the unterlying input stream during serialization.\n" + StringUtils.getStackTrace(e));
 		} catch (ClassNotFoundException e) {
-			logger.fatal("Error during serialization. The given class could not be found.\n" + StringUtils.getStackTrace(e));
+			log.fatal("Error during serialization. The given class could not be found.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (in != null) {
 				try {
 					in.close();
 				} catch (IOException e) {
-					logger.fatal("Fatal error working with the unterlying" + " input stream during serialization.\n" + StringUtils.getStackTrace(e));
+					log.fatal("Fatal error working with the unterlying" + " input stream during serialization.\n" + StringUtils.getStackTrace(e));
 				}
 			}
 		}
@@ -527,9 +525,9 @@ public final class SerializationUtils {
 			return serialCloneInternal(objectToClone);
 
 		} catch (IOException e) {
-			logger.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
+			log.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
 		} catch (ClassNotFoundException e) {
-			logger.fatal("Error during serialization. The given class could not be found.\n" + StringUtils.getStackTrace(e));
+			log.fatal("Error during serialization. The given class could not be found.\n" + StringUtils.getStackTrace(e));
 		}
 		return null;
 	}

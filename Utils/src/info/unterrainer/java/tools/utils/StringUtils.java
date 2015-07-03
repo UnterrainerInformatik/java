@@ -8,7 +8,7 @@ import java.util.List;
 public class StringUtils {
 
 	/**
-	 * Instantiates a new Serializations-class. Here in order to hide the public constructor since this is a static utility class.
+	 * Private constructor in order to hide constructor of static helper-class.
 	 */
 	private StringUtils() {
 	}

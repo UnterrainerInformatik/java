@@ -42,10 +42,8 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.function.Consumer;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import info.unterrainer.java.tools.utils.StringUtils;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * The Class Files.
@@ -79,8 +77,8 @@ import info.unterrainer.java.tools.utils.StringUtils;
  *
  * @author GEUNT
  */
+@Log4j2
 public final class FileUtils {
-	private static final Logger logger = LogManager.getLogger(FileUtils.class);
 
 	private static final String END = "'].\n";
 
@@ -123,14 +121,17 @@ public final class FileUtils {
 	}
 
 	public static List<String> getFileList(File dir, String ending, boolean isRecursive) {
-		List<String> result = new ArrayList<String>();
+		return getFileList(dir, ending, isRecursive, new ArrayList<>());
+	}
+
+	private static List<String> getFileList(File dir, String ending, boolean isRecursive, List<String> result) {
 		Arrays.stream(dir.listFiles((f, n) -> !n.startsWith(".") && (f.isDirectory() || n.toLowerCase().endsWith(ending)))).forEach(unchecked((file) -> {
 			if (!file.isDirectory()) {
 				result.add(file.getCanonicalPath());
 			}
 
 			if (file.isDirectory()) {
-				getFileList(file, ending, isRecursive);
+				getFileList(file, ending, isRecursive, result);
 			}
 		}));
 		return result;
@@ -212,12 +213,12 @@ public final class FileUtils {
 				}
 			}
 		} catch (IOException e) {
-			logger.fatal("IO Exception occurred while reading input-stream:\n" + StringUtils.getStackTrace(e));
+			log.fatal("IO Exception occurred while reading input-stream:\n" + StringUtils.getStackTrace(e));
 		} finally {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				logger.fatal("IO Exception occurred while closing input-stream:\n" + StringUtils.getStackTrace(e));
+				log.fatal("IO Exception occurred while closing input-stream:\n" + StringUtils.getStackTrace(e));
 			}
 		}
 	}
@@ -250,12 +251,12 @@ public final class FileUtils {
 				}
 			}
 		} catch (IOException e) {
-			logger.fatal("IO Exception occurred while reading input-stream:\n" + StringUtils.getStackTrace(e));
+			log.fatal("IO Exception occurred while reading input-stream:\n" + StringUtils.getStackTrace(e));
 		} finally {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				logger.fatal("IO Exception occurred while closing input-stream:\n" + StringUtils.getStackTrace(e));
+				log.fatal("IO Exception occurred while closing input-stream:\n" + StringUtils.getStackTrace(e));
 			}
 		}
 	}
@@ -293,7 +294,7 @@ public final class FileUtils {
 		try {
 			return getCountPropertiesOf(new BufferedInputStream(new FileInputStream(file)));
 		} catch (FileNotFoundException e) {
-			logger.fatal("File not found:\n" + StringUtils.getStackTrace(e));
+			log.fatal("File not found:\n" + StringUtils.getStackTrace(e));
 		}
 		return null;
 	}
@@ -334,12 +335,12 @@ public final class FileUtils {
 			wordCount++;
 			return new CountProperties(lineCount, wordCount, characterCount);
 		} catch (IOException e) {
-			logger.fatal("IO Exception occurred while reading input-stream:\n" + StringUtils.getStackTrace(e));
+			log.fatal("IO Exception occurred while reading input-stream:\n" + StringUtils.getStackTrace(e));
 		} finally {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				logger.fatal("IO Exception occurred while closing input-stream:\n" + StringUtils.getStackTrace(e));
+				log.fatal("IO Exception occurred while closing input-stream:\n" + StringUtils.getStackTrace(e));
 			}
 		}
 		return null;
@@ -354,10 +355,10 @@ public final class FileUtils {
 	 */
 	public static void clearFile(final String fileName) {
 		final File file = new File(fileName);
-		logger.info("Deleting file: " + fileName);
+		log.info("Deleting file: " + fileName);
 		file.delete();
 		createFile(fileName);
-		logger.info("Creating file: " + fileName);
+		log.info("Creating file: " + fileName);
 	}
 
 	/**
@@ -406,7 +407,7 @@ public final class FileUtils {
 	@SuppressWarnings("resource")
 	public static boolean copyFile(final File source, final File destination) {
 		try {
-			logger.info("Copy file " + source.getAbsolutePath() + " to " + destination.getAbsolutePath());
+			log.info("Copy file " + source.getAbsolutePath() + " to " + destination.getAbsolutePath());
 			FileChannel inputChannel = null;
 			FileChannel outputChannel = null;
 			try {
@@ -434,7 +435,7 @@ public final class FileUtils {
 	 * @return true ({@link boolean}), if successful
 	 */
 	public static boolean copyDirectory(final String sourcePath, final String destinationPath) {
-		logger.info("Copy files from " + sourcePath + " to " + destinationPath);
+		log.info("Copy files from " + sourcePath + " to " + destinationPath);
 		final File source = new File(sourcePath);
 		final File destination = new File(destinationPath);
 		return copyDirectory(source, destination);
@@ -457,7 +458,7 @@ public final class FileUtils {
 			in = new FileInputStream(src);
 			out = new FileOutputStream(dest);
 			final int buffersize = 1024;
-			logger.info("Copy file " + srcFile + " to " + dstFile);
+			log.info("Copy file " + srcFile + " to " + dstFile);
 			final byte[] buf = new byte[buffersize];
 			int len;
 			while ((len = in.read(buf)) > 0) {
@@ -520,14 +521,13 @@ public final class FileUtils {
 	 * @param fileName
 	 *            file name and path
 	 * @return file
-	 * @author DBR
 	 */
 	public static File createFile(final String fileName) {
 		try {
 			final File file = new File(fileName);
-			final boolean exist = file.createNewFile();
-			if (exist) {
-				logger.info("File " + fileName + " created.");
+			final boolean created = file.createNewFile();
+			if (created) {
+				log.info("File " + fileName + " created.");
 			}
 			return file;
 		} catch (final Exception e) {
@@ -555,7 +555,7 @@ public final class FileUtils {
 			}
 			fos.close();
 		} catch (final IOException e) {
-			logger.fatal("Fatal IO-error when working with file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+			log.fatal("Fatal IO-error when working with file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 		}
 	}
 
@@ -682,7 +682,7 @@ public final class FileUtils {
 				// Suspect Unix-style path delimiter
 				retVal = fullFileName.substring(0, fullFileName.lastIndexOf('/'));
 			} else {
-				logger.info("Recieved filename '" + fullFileName + "' contains neither Windows nor Unix-style directory delimiter.");
+				log.info("Recieved filename '" + fullFileName + "' contains neither Windows nor Unix-style directory delimiter.");
 			}
 		}
 		return retVal;
@@ -755,7 +755,7 @@ public final class FileUtils {
 			final File file = new File(fileName);
 			result = file.exists();
 		} catch (final Exception e) {
-			logger.fatal("Exception occurred: " + e.getMessage());
+			log.fatal("Exception occurred: " + e.getMessage());
 			result = false;
 		}
 		return result;
@@ -795,17 +795,17 @@ public final class FileUtils {
 			stream.close();
 			return properties;
 		} catch (final IOException e) {
-			logger.fatal("Problem opening resource bundle of application under test ['"
+			log.fatal("Problem opening resource bundle of application under test ['"
 					+ pathAndNameAndExtension
 					+ "'] could not be found. Exception:\n"
 					+ StringUtils.getStackTrace(e));
 		} catch (final IllegalArgumentException e) {
-			logger.fatal("Problem opening resource bundle of application under test ['"
+			log.fatal("Problem opening resource bundle of application under test ['"
 					+ pathAndNameAndExtension
 					+ "'] could not be found. Exception:\n"
 					+ StringUtils.getStackTrace(e));
 		} catch (final SecurityException e) {
-			logger.fatal("Problem opening resource bundle of application under test ['"
+			log.fatal("Problem opening resource bundle of application under test ['"
 					+ pathAndNameAndExtension
 					+ "'] could not be found. Exception:\n"
 					+ StringUtils.getStackTrace(e));
@@ -829,9 +829,9 @@ public final class FileUtils {
 		try {
 			out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file.getAbsoluteFile(), append), encoding.getEncoding()));
 		} catch (final UnsupportedEncodingException e) {
-			logger.fatal("Error opening file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+			log.fatal("Error opening file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 		} catch (final FileNotFoundException e) {
-			logger.fatal("Error opening file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+			log.fatal("Error opening file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 		}
 		return out;
 	}
@@ -872,10 +872,10 @@ public final class FileUtils {
 				return sFileContent.toString();
 			}
 		} catch (final FileNotFoundException e) {
-			logger.fatal(e.getMessage());
+			log.fatal(e.getMessage());
 			return sFileContent.toString();
 		} catch (final IOException e) {
-			logger.fatal(e.getMessage());
+			log.fatal(e.getMessage());
 			return sFileContent.toString();
 		}
 	}
@@ -891,7 +891,7 @@ public final class FileUtils {
 		try {
 			return java.nio.file.Files.readAllBytes(Paths.get(file.getAbsolutePath()));
 		} catch (final IOException e) {
-			logger.fatal("Error reading file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+			log.fatal("Error reading file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 		}
 		return null;
 	}
@@ -915,9 +915,9 @@ public final class FileUtils {
 			}
 			br.close();
 		} catch (final FileNotFoundException fN) {
-			logger.fatal(fN.getMessage());
+			log.fatal(fN.getMessage());
 		} catch (final IOException e) {
-			logger.fatal(e.getMessage());
+			log.fatal(e.getMessage());
 		}
 		return data;
 	}
@@ -935,7 +935,7 @@ public final class FileUtils {
 		try {
 			return new String(readFileToByteArray(file), encoding.getEncoding());
 		} catch (final IOException e) {
-			logger.fatal("Error reading file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+			log.fatal("Error reading file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 		}
 		return null;
 	}
@@ -958,66 +958,44 @@ public final class FileUtils {
 				Collections.addAll(result, line.split(";"));
 			}
 		} catch (final IOException e) {
-			logger.fatal("Error reading file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+			log.fatal("Error reading file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 		}
 		return result;
 	}
 
 	/**
-	 * Write a list of strings to a file.
+	 * Write a list of strings to a file separated by a newline character. Always appends to the target-file.
 	 *
 	 * @param file
-	 *            Path to the file
-	 * @param text
+	 *            path to the file
+	 * @param list
 	 *            list of strings which gets written into the file
-	 * @author thl
 	 */
-	public static void writeListToFile(final File file, final List<String> text) {
-		FileWriter fstream = null;
-		try {
-			fstream = new FileWriter(file);
-			final BufferedWriter out = new BufferedWriter(fstream);
-			for (Integer i = 0; i < text.size(); i++) {
-				try {
-					out.write(text.get(i) + "\n");
-				} catch (final IOException e) {
-					logger.fatal(e.getMessage());
-				}
-			}
-			try {
-				out.close();
-			} catch (final IOException e) {
-				logger.fatal(e.getMessage());
-			}
-		} catch (final IOException e) {
-			logger.fatal(e.getMessage());
-		}
+	public static void writeListToFile(final File file, final List<String> list) {
+		writeListToFile(file, list, true);
 	}
 
 	/**
-	 * Writes ArrayList to File with possibility to append.
+	 * Write a list of strings to a file separated by a newline character.
 	 *
-	 * @param fFile2Write
-	 *            file to be written
-	 * @param lsOutList
-	 *            String to be written
+	 * @param file
+	 *            path to the file
+	 * @param list
+	 *            list of strings which gets written into the file
 	 * @param append
 	 *            true = append to file, false = overwrite
-	 * @throws IOException
-	 *             the IO exception
-	 * @author DBR
 	 */
-	public static void writeListToFile(final File fFile2Write, final List<String> lsOutList, final boolean append) throws IOException {
+	public static void writeListToFile(final File file, final List<String> list, final boolean append) {
 		FileWriter fstream = null;
 		try {
-			fstream = new FileWriter(fFile2Write, append);
+			fstream = new FileWriter(file, append);
 			final BufferedWriter out = new BufferedWriter(fstream);
-			for (Integer i = 0; i < lsOutList.size(); i++) {
-				out.write(lsOutList.get(i) + "\n");
+			for (Integer i = 0; i < list.size(); i++) {
+				out.write(list.get(i) + "\n");
 			}
 			out.close();
 		} catch (final IOException e) {
-			logger.fatal(e.getMessage());
+			log.fatal(e.getMessage());
 		}
 	}
 
@@ -1058,22 +1036,22 @@ public final class FileUtils {
 			writer = new OutputStreamWriter(out, charsetEncoder);
 			writer.write(data);
 		} catch (final IllegalArgumentException e) {
-			logger.fatal("Error opening file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+			log.fatal("Error opening file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 		} catch (final IOException e) {
-			logger.fatal("Error writing to file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+			log.fatal("Error writing to file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 		} finally {
 			if (writer != null) {
 				try {
 					writer.close();
 				} catch (final IOException e) {
-					logger.fatal("Fatal error closing file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+					log.fatal("Fatal error closing file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 				}
 			}
 			if (out != null) {
 				try {
 					out.close();
 				} catch (final IOException e) {
-					logger.fatal("Fatal error closing file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+					log.fatal("Fatal error closing file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 				}
 			}
 		}
@@ -1116,7 +1094,7 @@ public final class FileUtils {
 			String encoding = System.getProperty("file.encoding");
 			while (sourceChannel.read(buf) > 0) {
 				buf.rewind();
-				logger.fatal(Charset.forName(encoding).decode(buf).toString());
+				log.fatal(Charset.forName(encoding).decode(buf).toString());
 				buf.flip();
 			}
 		}
