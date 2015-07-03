@@ -115,9 +115,9 @@ public class CsvWriter extends CsvBase {
 	 * @param rowSeparator
 	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
 	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just null).
+	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 */
-	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final char fieldDelimiter) {
+	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter) {
 		this(stringWriter);
 		this.columnSeparator = columnSeparator;
 		this.rowSeparator = rowSeparator;
@@ -135,12 +135,12 @@ public class CsvWriter extends CsvBase {
 	 * @param rowSeparator
 	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
 	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just null).
+	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 * @param quotingBehavior
 	 *            The quotingBehavior tells the writer how to quote fields in the resulting CSV. Minimal only lets him apply quotes where absolutely necessary.
 	 *            All means that he always applies them, necessary or not.
 	 */
-	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final char fieldDelimiter,
+	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter,
 			final QuotingBehavior quotingBehavior) {
 		this(stringWriter, quotingBehavior);
 		this.columnSeparator = columnSeparator;
@@ -159,12 +159,12 @@ public class CsvWriter extends CsvBase {
 	 * @param rowSeparator
 	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
 	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just null).
+	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 * @param writeChunkSize
 	 *            Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The bufferSize
 	 *            is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
 	 */
-	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final char fieldDelimiter,
+	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter,
 			final int writeChunkSize) {
 		this(stringWriter, columnSeparator, rowSeparator, fieldDelimiter);
 		setChunkAndBufferSize(writeChunkSize);
@@ -181,7 +181,7 @@ public class CsvWriter extends CsvBase {
 	 * @param rowSeparator
 	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
 	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just null).
+	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 * @param writeChunkSize
 	 *            Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The bufferSize
 	 *            is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
@@ -190,14 +190,11 @@ public class CsvWriter extends CsvBase {
 	 *            All means that he always applies them, necessary or not.
 	 */
 	@Builder
-	public CsvWriter(final StringWriter stringWriter, final Character columnSeparator, final String rowSeparator, final Character fieldDelimiter,
-			final Integer writeChunkSize, final QuotingBehavior quotingBehavior, final Boolean fieldDelimiterIsNull) {
+	public CsvWriter(final StringWriter stringWriter, final Character columnSeparator, final String rowSeparator, final String fieldDelimiter,
+			final Integer writeChunkSize, final QuotingBehavior quotingBehavior) {
 		this(stringWriter, NullUtils.defaultIfNull(columnSeparator, DEFAULT_COLUMN_SEPARATOR), NullUtils.defaultIfNull(rowSeparator, DEFAULT_ROW_SEPARATOR),
 				NullUtils.defaultIfNull(fieldDelimiter, DEFAULT_FIELD_DELIMITER), NullUtils.defaultIfNull(writeChunkSize, DEFAULT_CHUNK_SIZE));
 		this.quotingBehavior = NullUtils.defaultIfNull(quotingBehavior, QuotingBehavior.MINIMAL);
-		if (fieldDelimiterIsNull != null && fieldDelimiterIsNull == true) {
-			this.fieldDelimiter = null;
-		}
 	}
 
 	/**

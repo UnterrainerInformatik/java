@@ -71,9 +71,9 @@ public class CsvReader extends CsvBase {
 	 * @param rowSeparator
 	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
 	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just null).
+	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 */
-	public CsvReader(final StringReader stringReader, final char columnSeparator, final String rowSeparator, final Character fieldDelimiter) {
+	public CsvReader(final StringReader stringReader, final char columnSeparator, final String rowSeparator, final String fieldDelimiter) {
 		this(stringReader);
 		this.columnSeparator = columnSeparator;
 		this.rowSeparator = rowSeparator;
@@ -91,19 +91,16 @@ public class CsvReader extends CsvBase {
 	 * @param rowSeparator
 	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
 	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just null).
+	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 * @param readChunkSize
 	 *            Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The bufferSize
 	 *            is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
 	 */
 	@Builder
-	public CsvReader(final StringReader stringReader, final Character columnSeparator, final String rowSeparator, final Character fieldDelimiter,
-			final Integer readChunkSize, final Boolean fieldDelimiterIsNull) {
+	public CsvReader(final StringReader stringReader, final Character columnSeparator, final String rowSeparator, final String fieldDelimiter,
+			final Integer readChunkSize) {
 		this(stringReader, NullUtils.defaultIfNull(columnSeparator, DEFAULT_COLUMN_SEPARATOR), NullUtils.defaultIfNull(rowSeparator, DEFAULT_ROW_SEPARATOR),
 				NullUtils.defaultIfNull(fieldDelimiter, DEFAULT_FIELD_DELIMITER));
-		if (fieldDelimiterIsNull != null && fieldDelimiterIsNull == true) {
-			this.fieldDelimiter = null;
-		}
 		setChunkAndBufferSize(NullUtils.defaultIfNull(readChunkSize, DEFAULT_CHUNK_SIZE));
 	}
 
@@ -228,7 +225,7 @@ public class CsvReader extends CsvBase {
 		StringBuilder content = new StringBuilder();
 		boolean isEscaped = false;
 		while (nextChar != null) {
-			if (nextChar == fieldDelimiter) {
+			if (nextChar.toString().equals(fieldDelimiter)) {
 				if (isEscaped && peek(1).equals(fieldDelimiter + "")) {
 					// Double fieldDelimiter.
 					// Write one of them, omit the other.
@@ -338,7 +335,7 @@ public class CsvReader extends CsvBase {
 	 *
 	 * @return The field delimiter.
 	 */
-	public char getFieldDelimiter() {
+	public String getFieldDelimiter() {
 		return fieldDelimiter;
 	}
 

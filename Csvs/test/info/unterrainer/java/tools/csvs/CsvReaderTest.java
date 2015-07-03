@@ -83,7 +83,7 @@ public class CsvReaderTest {
 	public void testEmptyFields() throws IOException {
 		stringReader = new StringReader("\"test\";test1;A 01;t;;");
 
-		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter('"').build();
+		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
 		Assert.assertNotNull(csvReader);
 
 		List<String> row = csvReader.readRow();
@@ -121,7 +121,7 @@ public class CsvReaderTest {
 	public void testSpecialCharacters() throws IOException {
 		stringReader = new StringReader("����;\"!\"\"�$%&/()=?\"\r\n\"_:;'*\";<>.-,,#+");
 
-		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter('"').build();
+		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
 		Assert.assertNotNull(csvReader);
 
 		List<String> row = csvReader.readRow();
@@ -143,7 +143,7 @@ public class CsvReaderTest {
 	public void testEscapedFieldDelimiters() throws IOException {
 		stringReader = new StringReader("\"A\",01,\"A\"\" \"\"01\",\"t\"\"\",,\"\"");
 
-		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(',').rowSeparator(newLine).fieldDelimiter('"').build();
+		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(',').rowSeparator(newLine).fieldDelimiter("\"").build();
 		Assert.assertNotNull(csvReader);
 
 		List<String> row = csvReader.readRow();
@@ -165,7 +165,7 @@ public class CsvReaderTest {
 	public void testQuoteSpecial() throws IOException {
 		stringReader = new StringReader("9008390101544,öäü,\"Normal\" Test a string.,,");
 
-		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(',').rowSeparator(newLine).fieldDelimiterIsNull(true).build();
+		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(',').rowSeparator(newLine).fieldDelimiter("").build();
 		Assert.assertNotNull(csvReader);
 
 		List<String> row = csvReader.readRow();
@@ -213,7 +213,7 @@ public class CsvReaderTest {
 		stringReader = new StringReader(
 				"\"Great\";\"Totally\";\"Cool\"" + newLine + "\"Gr" + newLine + "eat\";\"Totally\";Cool" + newLine + "Great;Totally;Cool");
 
-		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter('\"').build();
+		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
 		Assert.assertNotNull(csvReader);
 
 		List<String> row = csvReader.readRow();
@@ -241,7 +241,7 @@ public class CsvReaderTest {
 	@Test
 	public void testTwoLinesWithEmptyLastLineAndPreviousFieldDelimiter() throws IOException {
 		stringReader = new StringReader("Great;Totally;");
-		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiterIsNull(true).build();
+		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("").build();
 
 		List<String> row = csvReader.readRow();
 		Assert.assertNotNull(row);
@@ -267,7 +267,7 @@ public class CsvReaderTest {
 		String csvToWrite = writeCsv(csvData, ';', newLine);
 		stringReader = new StringReader(csvToWrite);
 
-		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter('\"').build();
+		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
 		// ReadAllRows calls ReadRow consecutively...
 		List<List<String>> csv = csvReader.readAllRows();
 		Assert.assertNotNull(csv);
@@ -303,7 +303,7 @@ public class CsvReaderTest {
 				.stringReader(stringReader)
 				.columnSeparator(';')
 				.rowSeparator("tooLong" + newLine)
-				.fieldDelimiter('\"')
+				.fieldDelimiter("\"")
 				.readChunkSize(1)
 				.build();
 				// ChunkSize should be RowSeparator.length after this constructor call ("tooLong\r\n" = 9 characters).

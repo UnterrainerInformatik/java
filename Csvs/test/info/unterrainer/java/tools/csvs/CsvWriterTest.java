@@ -54,7 +54,7 @@ public class CsvWriterTest {
 	public void setupMethod() {
 		newLine = System.getProperty("line.separator");
 		stringWriter = new StringWriter();
-		csvWriter = CsvWriter.builder().stringWriter(stringWriter).columnSeparator(';').rowSeparator(newLine).fieldDelimiter('"').build();
+		csvWriter = CsvWriter.builder().stringWriter(stringWriter).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class CsvWriterTest {
 				.stringWriter(stringWriter)
 				.columnSeparator(';')
 				.rowSeparator("\r\n")
-				.fieldDelimiter('\"')
+				.fieldDelimiter("\"")
 				.writeChunkSize(10)
 				.quotingBehavior(QuotingBehavior.MINIMAL)
 				.build();
@@ -201,7 +201,7 @@ public class CsvWriterTest {
 				.stringWriter(stringWriter)
 				.columnSeparator(';')
 				.rowSeparator("\r\n")
-				.fieldDelimiter('\"')
+				.fieldDelimiter("\"")
 				.writeChunkSize(10)
 				.quotingBehavior(QuotingBehavior.ALL)
 				.build();
@@ -241,7 +241,7 @@ public class CsvWriterTest {
 				.stringWriter(stringWriter)
 				.columnSeparator(';')
 				.rowSeparator("\r\n")
-				.fieldDelimiter('\"')
+				.fieldDelimiter("\"")
 				.writeChunkSize(10)
 				.quotingBehavior(QuotingBehavior.ALL)
 				.build();
@@ -288,7 +288,7 @@ public class CsvWriterTest {
 				.stringWriter(stringWriter)
 				.columnSeparator(';')
 				.rowSeparator("\r\n")
-				.fieldDelimiter('\"')
+				.fieldDelimiter("\"")
 				.writeChunkSize(200)
 				.quotingBehavior(QuotingBehavior.ALL)
 				.build();

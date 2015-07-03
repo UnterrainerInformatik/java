@@ -45,7 +45,7 @@ public abstract class CsvBase implements Closeable {
 	/**
 	 * The default value for the field delimiter.
 	 */
-	protected final static Character DEFAULT_FIELD_DELIMITER = '"';
+	protected final static String DEFAULT_FIELD_DELIMITER = "\"";
 
 	/**
 	 * This is the lock-object for this class.
@@ -60,7 +60,7 @@ public abstract class CsvBase implements Closeable {
 	/**
 	 * The value of the field delimiter that is used by the program.
 	 */
-	protected Character fieldDelimiter = DEFAULT_FIELD_DELIMITER;
+	protected String fieldDelimiter = DEFAULT_FIELD_DELIMITER;
 
 	/**
 	 * The value of the row separator that is used by the program.
