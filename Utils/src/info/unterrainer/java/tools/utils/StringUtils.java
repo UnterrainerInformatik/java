@@ -85,4 +85,23 @@ public class StringUtils {
 		}
 		return result;
 	}
+
+	/**
+	 * Strips the leading and trailing quotes {@code (")} from a string if it starts with one and ends with one. Does not trim the string first; That's up to
+	 * you.
+	 *
+	 * @param text
+	 *            {@link String} the text to strip the quotes from
+	 * @return the string {@link String} the text without the quotes or the original text, if the condition was not satisfied
+	 */
+	public static String stripQuotes(final String text) {
+		if (text == null) {
+			return null;
+		}
+
+		if ((text.length() > 1) && text.startsWith("\"") && text.endsWith("\"")) {
+			return text.substring(1, text.length() - 1);
+		}
+		return text;
+	}
 }
