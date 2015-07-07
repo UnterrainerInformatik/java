@@ -50,7 +50,7 @@ public class ProgressBar implements DrawableComponent {
 	}
 
 	@Override
-	public void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value) {
+	public void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value, int lastValue) {
 		String s = "";
 
 		if (drawInitialized) {

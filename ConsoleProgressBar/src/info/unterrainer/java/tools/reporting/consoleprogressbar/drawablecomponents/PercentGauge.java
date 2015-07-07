@@ -20,7 +20,8 @@ import lombok.Setter;
  * }
  * </pre>
  *
- * This bar ignores the width-parameter.
+ * This bar ignores the width-parameter for the drawing of the percentage. However you may use it to regulate the sensitivity of the gauge (a higher width
+ * updates the gauge more often). Widths over 100 don't make sense in this context since it will be drawn more often but the value won't change.
  * <p>
  * You may specify any other begin- ('['), end- (']'), percent- ('%') or empty-character (' ') you like.<br />
  * This bar is only a good choice if your console supports control characters since for this representation you have to to clear all characters on each redraw
@@ -52,7 +53,7 @@ public class PercentGauge implements DrawableComponent {
 	}
 
 	@Override
-	public void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value) {
+	public void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value, int lastValue) {
 		String s = "";
 
 		if (drawInitialized) {

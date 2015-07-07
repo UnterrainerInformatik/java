@@ -15,6 +15,7 @@ public interface DrawableComponent {
 	 * @param width the width of the bar in characters
 	 * @param drawInitialized false, if this is the first call to the draw-method, true otherwise
 	 * @param value the number of characters that have the status 'filled'
+	 * @param lastValue the number of character drawn by the last call to draw
 	 */
-	void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value);
+	void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value, int lastValue);
 }

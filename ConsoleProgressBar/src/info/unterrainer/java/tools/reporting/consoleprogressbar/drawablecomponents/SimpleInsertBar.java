@@ -20,7 +20,7 @@ import lombok.Setter;
  *  ########
  * }
  * </pre>
- * 
+ *
  * ... with an ever growing number of '#' characters You may specify any other begin- ('['), end- (']'), full- ('#') or legendFill-character ('>') you like.
  * <br />
  * This bar is always working. Even if your console doesn't support control characters like the Eclipse console-implementation (before Mars (4.5)) or a pipe to
@@ -52,7 +52,7 @@ public class SimpleInsertBar implements DrawableComponent {
 	}
 
 	@Override
-	public void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value) {
+	public void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value, int lastValue) {
 
 		if (!drawInitialized) {
 			// Draw the lead-line, the legend to the bar.
@@ -60,8 +60,7 @@ public class SimpleInsertBar implements DrawableComponent {
 			ps.flush();
 		}
 
-		int fullNumber = (int) (fader.getPercentage() * width);
-		ps.print(StringUtils.repeat(full + "", fullNumber - value));
+		ps.print(StringUtils.repeat(full + "", value - lastValue));
 		ps.flush();
 	}
 }

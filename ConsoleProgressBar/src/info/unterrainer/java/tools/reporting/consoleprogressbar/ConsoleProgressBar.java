@@ -159,7 +159,7 @@ public class ConsoleProgressBar {
 		int fullNumber = (int) (fader.getPercentage() * width);
 
 		if ((fullNumber != lastNumberOfCharactersDrawn) || !drawInitialized) {
-			component.draw(ps, fader, width, drawInitialized, fullNumber);
+			component.draw(ps, fader, width, drawInitialized, fullNumber, lastNumberOfCharactersDrawn);
 			drawInitialized = true;
 			lastNumberOfCharactersDrawn = fullNumber;
 		}
