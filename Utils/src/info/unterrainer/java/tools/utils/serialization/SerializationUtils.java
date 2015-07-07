@@ -1,7 +1,23 @@
-/*
- * Copyright 2012 NTS New Technology Systems GmbH. All Rights reserved. NTS PROPRIETARY/CONFIDENTIAL. Use is subject to
- * NTS License Agreement. Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria Homepage: www.ntswincash.com
- */
+/**************************************************************************
+ * <pre>
+ *
+ * Copyright (c) Unterrainer Informatik OG.
+ * This source is subject to the Microsoft Public License.
+ *
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ *
+ * (In other words you may copy, use, change and redistribute it without
+ * any restrictions except for not suing me because it broke something.)
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * </pre>
+ ***************************************************************************/
+
 package info.unterrainer.java.tools.utils.serialization;
 
 import java.beans.XMLDecoder;
@@ -29,33 +45,23 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.xml.sax.InputSource;
 
-import info.unterrainer.java.tools.utils.StringUtils;
 import info.unterrainer.java.tools.utils.files.Encoding;
 import info.unterrainer.java.tools.utils.files.FileUtils;
-import lombok.extern.log4j.Log4j2;
 
-/**
- * The Class Serializations.
- * <p>
- * Contains utility-methods involving serialization.
- */
-@Log4j2
 @SuppressWarnings({ "unchecked" })
 public final class SerializationUtils {
 
-	private static final String ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION = "Error working with the unterlying output stream during serialization.\n";
 	private static final String JAXB_TRANSFORM_INDENT_AMOUNT = "{http://xml.apache.org/xslt}indent-amount";
 	private static final String JAXB_TRANSFORM_PROPERTY_YES = "yes";
 	private static final String JAXB_TRANSFORM_PROPERTY_NO = "no";
 
 	/**
-	 * Instantiates a new Serializations-class. Here in order to hide the public constructor since this is a static utility class.
+	 * Private constructor in order to hide constructor of static helper-class.
 	 */
 	private SerializationUtils() {
 	}
@@ -69,8 +75,20 @@ public final class SerializationUtils {
 	 * @param serializableObject
 	 *            {@link Object} the serializable object
 	 * @return the string {@link String} containing the serialized form of the given object.
+	 * @throws JAXBException
+	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 *             <ol>
+	 *             <li>No JAXB implementation was discovered</li>
+	 *             <li>Classes use JAXB annotations incorrectly</li>
+	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
+	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
+	 *             development time.)</li>
+	 *             </ol>
+	 *
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static String jaxBXmlSerialize(final Object serializableObject) {
+	public static String jaxBXmlSerialize(final Object serializableObject) throws JAXBException, IOException {
 
 		JAXBContext jaxbContext;
 		StringWriter sw = null;
@@ -84,20 +102,11 @@ public final class SerializationUtils {
 			sw.flush();
 			return sw.toString();
 
-		} catch (TransformerFactoryConfigurationError e) {
-			log.fatal("There was an error configuring the transformer-factory.\n" + StringUtils.getStackTrace(e));
-		} catch (JAXBException e) {
-			log.fatal("There was an error marshalling the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (sw != null) {
-				try {
-					sw.close();
-				} catch (IOException e) {
-					log.fatal("There was an error closing the stringWriter after serialization.\n" + StringUtils.getStackTrace(e));
-				}
+				sw.close();
 			}
 		}
-		return null;
 	}
 
 	/**
@@ -110,19 +119,24 @@ public final class SerializationUtils {
 	 *            {@link Object} the serializable object
 	 * @param targetFile
 	 *            {@link File} the target file
+	 * @throws JAXBException
+	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 *             <ol>
+	 *             <li>No JAXB implementation was discovered</li>
+	 *             <li>Classes use JAXB annotations incorrectly</li>
+	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
+	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
+	 *             development time.)</li>
+	 *             </ol>
+	 *
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static void jaxBXmlSerialize(final Object serializableObject, final File targetFile) {
-
-		try {
-			FileWriter fw = new FileWriter(targetFile);
-			fw.write(jaxBXmlSerialize(serializableObject));
-			fw.flush();
-			fw.close();
-
-		} catch (IOException e) {
-			log.fatal("There was an error writing the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
-			log.fatal(e.getMessage());
-		}
+	public static void jaxBXmlSerialize(final Object serializableObject, final File targetFile) throws JAXBException, IOException {
+		FileWriter fw = new FileWriter(targetFile);
+		fw.write(jaxBXmlSerialize(serializableObject));
+		fw.flush();
+		fw.close();
 	}
 
 	/**
@@ -137,9 +151,23 @@ public final class SerializationUtils {
 	 *            {@link File} the target file
 	 * @param elementsEncapsulatedInCdataTags
 	 *            {@link String} a white-space delimited list of the elements whose content you want to be encapsulated in CDATA tags
+	 * @throws JAXBException
+	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 *             <ol>
+	 *             <li>No JAXB implementation was discovered</li>
+	 *             <li>Classes use JAXB annotations incorrectly</li>
+	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
+	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
+	 *             development time.)</li>
+	 *             </ol>
+	 *
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws TransformerException
+	 *             If an unrecoverable error occurs during the course of the transformation.
 	 */
-	public static void jaxBXmlTransformerSerialize(final Object serializableObject, final File targetFile, final String elementsEncapsulatedInCdataTags) {
-
+	public static void jaxBXmlTransformerSerialize(final Object serializableObject, final File targetFile, final String elementsEncapsulatedInCdataTags)
+			throws JAXBException, IOException, TransformerException {
 		jaxBXmlTransformerSerialize(serializableObject, targetFile, elementsEncapsulatedInCdataTags, 2, false);
 	}
 
@@ -158,9 +186,25 @@ public final class SerializationUtils {
 	 * @param omitXmlDeclaration
 	 *            {@link boolean} true, if the XML-declaration shall be omitted. False otherwise
 	 * @return the string {@link String}
+	 * @throws JAXBException
+	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 *             <ol>
+	 *             <li>No JAXB implementation was discovered</li>
+	 *             <li>Classes use JAXB annotations incorrectly</li>
+	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
+	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
+	 *             development time.)</li>
+	 *             </ol>
+	 *
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws TransformerConfigurationException
+	 *             When it is not possible to create a {@link Transformer} instance.
+	 * @throws TransformerException
+	 *             If an unrecoverable error occurs during the course of the transformation.
 	 */
 	public static String jaxBXmlTransformerSerialize(final Object serializableObject, final String elementsEncapsulatedInCdataTags, final int indent,
-			final boolean omitXmlDeclaration) {
+			final boolean omitXmlDeclaration) throws JAXBException, IOException, TransformerConfigurationException, TransformerException {
 		Transformer t;
 		JAXBContext jaxbContext;
 		StringWriter sw1 = null;
@@ -191,31 +235,14 @@ public final class SerializationUtils {
 			sw2.flush();
 			return sw2.toString();
 
-		} catch (TransformerConfigurationException e) {
-			log.fatal("There was an error configuring the XML transformer.\n" + StringUtils.getStackTrace(e));
-		} catch (TransformerFactoryConfigurationError e) {
-			log.fatal("There was an error configuring the transformer-factory.\n" + StringUtils.getStackTrace(e));
-		} catch (TransformerException e) {
-			log.fatal("There was an error transforming the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
-		} catch (JAXBException e) {
-			log.fatal("There was an error marshalling the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (sw1 != null) {
-				try {
-					sw1.close();
-				} catch (IOException e) {
-					log.fatal("There was an error closing the stringWriter after serialization.\n" + StringUtils.getStackTrace(e));
-				}
+				sw1.close();
 			}
 			if (sw2 != null) {
-				try {
-					sw2.close();
-				} catch (IOException e) {
-					log.fatal("There was an error closing the stringWriter after serialization.\n" + StringUtils.getStackTrace(e));
-				}
+				sw2.close();
 			}
 		}
-		return null;
 	}
 
 	/**
@@ -234,20 +261,27 @@ public final class SerializationUtils {
 	 *            {@link int} the indent. Specify zero if you don't want any
 	 * @param omitXmlDeclaration
 	 *            {@link boolean} true, if the XML-declaration shall be omitted. False otherwise
+	 * @throws JAXBException
+	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 *             <ol>
+	 *             <li>No JAXB implementation was discovered</li>
+	 *             <li>Classes use JAXB annotations incorrectly</li>
+	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
+	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
+	 *             development time.)</li>
+	 *             </ol>
+	 *
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws TransformerException
+	 *             If an unrecoverable error occurs during the course of the transformation.
 	 */
 	public static void jaxBXmlTransformerSerialize(final Object serializableObject, final File targetFile, final String elementsEncapsulatedInCdataTags,
-			final int indent, final boolean omitXmlDeclaration) {
-
-		try {
-			FileWriter fw = new FileWriter(targetFile);
-			fw.write(jaxBXmlTransformerSerialize(serializableObject, elementsEncapsulatedInCdataTags, indent, omitXmlDeclaration));
-			fw.flush();
-			fw.close();
-
-		} catch (IOException e) {
-			log.fatal("There was an error writing the file you wanted to serialize.\n" + StringUtils.getStackTrace(e));
-			log.fatal(e.getMessage());
-		}
+			final int indent, final boolean omitXmlDeclaration) throws JAXBException, IOException, TransformerException {
+		FileWriter fw = new FileWriter(targetFile);
+		fw.write(jaxBXmlTransformerSerialize(serializableObject, elementsEncapsulatedInCdataTags, indent, omitXmlDeclaration));
+		fw.flush();
+		fw.close();
 	}
 
 	/**
@@ -263,20 +297,21 @@ public final class SerializationUtils {
 	 * @param type
 	 *            {@link Class<T>} the type
 	 * @return the t {@link T}
+	 * @throws JAXBException
+	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 *             <ol>
+	 *             <li>No JAXB implementation was discovered</li>
+	 *             <li>Classes use JAXB annotations incorrectly</li>
+	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
+	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
+	 *             development time.)</li>
+	 *             </ol>
 	 */
-	public static <T> T jaxBXmlDeserializer(final String source, final Class<T> type) {
+	public static <T> T jaxBXmlDeserializer(final String source, final Class<T> type) throws JAXBException {
 		T result = null;
 
-		try {
-			final JAXBContext unmarshallingClassJAXB = JAXBContext.newInstance(type);
-			result = (T) unmarshallingClassJAXB.createUnmarshaller().unmarshal(new InputSource(new StringReader(source)));
-
-		} catch (JAXBException e) {
-			log.fatal("There was an error processing the file you wanted to deserialize "
-					+ "or when setting up the JAXB context.\n"
-					+ StringUtils.getStackTrace(e));
-		}
-
+		final JAXBContext unmarshallingClassJAXB = JAXBContext.newInstance(type);
+		result = (T) unmarshallingClassJAXB.createUnmarshaller().unmarshal(new InputSource(new StringReader(source)));
 		return result;
 	}
 
@@ -293,8 +328,19 @@ public final class SerializationUtils {
 	 * @param type
 	 *            {@link Class<T>} the type
 	 * @return the t {@link T}
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws JAXBException
+	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 *             <ol>
+	 *             <li>No JAXB implementation was discovered</li>
+	 *             <li>Classes use JAXB annotations incorrectly</li>
+	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
+	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
+	 *             development time.)</li>
+	 *             </ol>
 	 */
-	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Class<T> type) {
+	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Class<T> type) throws IOException, JAXBException {
 
 		String source = FileUtils.readFileToString(sourceFile, Encoding.UTF8);
 		return jaxBXmlDeserializer(source, type);
@@ -315,8 +361,19 @@ public final class SerializationUtils {
 	 * @param type
 	 *            {@link Class<T>} the type
 	 * @return the t {@link T}
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws JAXBException
+	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 *             <ol>
+	 *             <li>No JAXB implementation was discovered</li>
+	 *             <li>Classes use JAXB annotations incorrectly</li>
+	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
+	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
+	 *             development time.)</li>
+	 *             </ol>
 	 */
-	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Encoding encoding, final Class<T> type) {
+	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Encoding encoding, final Class<T> type) throws IOException, JAXBException {
 
 		String source = FileUtils.readFileToString(sourceFile, encoding);
 		return jaxBXmlDeserializer(source, type);
@@ -329,16 +386,17 @@ public final class SerializationUtils {
 	 *            {@link Object} the serializable object
 	 * @param targetFile
 	 *            {@link File} the target file
+	 * @throws FileNotFoundException
+	 *             if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other
+	 *             reason
 	 */
-	public static void beansXmlEncode(final Object serializableObject, final File targetFile) {
+	public static void beansXmlEncode(final Object serializableObject, final File targetFile) throws FileNotFoundException {
 
 		XMLEncoder encoder = null;
 		try {
 			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(targetFile)));
 			encoder.writeObject(serializableObject);
 
-		} catch (FileNotFoundException e) {
-			log.fatal("The file you wanted to serialize to couldn't be" + " opened, created or was a directory.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (encoder != null) {
 				encoder.close();
@@ -356,8 +414,11 @@ public final class SerializationUtils {
 	 * @param type
 	 *            {@link Class<T>} the type
 	 * @return the t {@link T}
+	 * @throws FileNotFoundException
+	 *             if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other
+	 *             reason
 	 */
-	public static <T> T beansXmlDecode(final File sourceFile, final Class<T> type) {
+	public static <T> T beansXmlDecode(final File sourceFile, final Class<T> type) throws FileNotFoundException {
 
 		T result = null;
 		XMLDecoder decoder = null;
@@ -365,8 +426,6 @@ public final class SerializationUtils {
 			decoder = new XMLDecoder(new FileInputStream(sourceFile));
 			result = (T) decoder.readObject();
 
-		} catch (FileNotFoundException e) {
-			log.fatal("The file you wanted to deserialize to couldn't be" + " opened, created or was a directory.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (decoder != null) {
 				decoder.close();
@@ -382,8 +441,13 @@ public final class SerializationUtils {
 	 *            {@link Object} the serializable object
 	 * @param targetFile
 	 *            {@link File} the target file
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws FileNotFoundException
+	 *             if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other
+	 *             reason
 	 */
-	public static void objectSerialize(final Object serializableObject, final File targetFile) {
+	public static void objectSerialize(final Object serializableObject, final File targetFile) throws IOException, FileNotFoundException {
 
 		ByteArrayOutputStream baos = SerializationUtils.objectSerialize(serializableObject);
 
@@ -393,24 +457,12 @@ public final class SerializationUtils {
 			outputStream = new FileOutputStream(targetFile);
 			baos.writeTo(outputStream);
 
-		} catch (FileNotFoundException e) {
-			log.fatal("The file you wanted to serialize to couldn't" + " be opened, created or was a directory.\n" + StringUtils.getStackTrace(e));
-		} catch (IOException e) {
-			log.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
 		} finally {
 			if (baos != null) {
-				try {
-					baos.close();
-				} catch (IOException e) {
-					log.fatal("Error closing the output stream during serialization.\n" + StringUtils.getStackTrace(e));
-				}
+				baos.close();
 			}
 			if (outputStream != null) {
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-					log.fatal("Error closing the output file during serialization.\n" + StringUtils.getStackTrace(e));
-				}
+				outputStream.close();
 			}
 		}
 	}
@@ -421,23 +473,19 @@ public final class SerializationUtils {
 	 * @param serializableObject
 	 *            {@link Object} the serializable object
 	 * @return the byte array output stream {@link ByteArrayOutputStream}
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ByteArrayOutputStream objectSerialize(final Object serializableObject) {
+	public static ByteArrayOutputStream objectSerialize(final Object serializableObject) throws IOException {
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
 		ObjectOutputStream out = null;
 		try {
 			out = new ObjectOutputStream(result);
 			out.writeObject(serializableObject);
 			out.close();
-		} catch (IOException e) {
-			log.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
 		} finally {
-			try {
-				if (out != null) {
-					out.close();
-				}
-			} catch (IOException e) {
-				log.fatal("Fatal error working with the unterlying output stream during serialization.\n" + StringUtils.getStackTrace(e));
+			if (out != null) {
+				out.close();
 			}
 		}
 		return result;
@@ -453,8 +501,12 @@ public final class SerializationUtils {
 	 * @param type
 	 *            {@link Class<T>} the type that should be deserialized
 	 * @return the t {@link T} the class that was deserialized {@link ObjectOutputStream}.
+	 * @throws ClassNotFoundException
+	 *             Class of a serialized object cannot be found
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static <T> T objectDeserialize(final File sourceFile, final Class<T> type) {
+	public static <T> T objectDeserialize(final File sourceFile, final Class<T> type) throws ClassNotFoundException, IOException {
 		ByteArrayOutputStream baos = null;
 		try {
 			byte[] ba = FileUtils.readFileToByteArray(sourceFile);
@@ -462,18 +514,11 @@ public final class SerializationUtils {
 			baos.write(ba);
 			baos.flush();
 			return SerializationUtils.<T> objectDeserialize(baos, type);
-		} catch (IOException e) {
-			log.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
 		} finally {
 			if (baos != null) {
-				try {
-					baos.close();
-				} catch (IOException e) {
-					log.fatal("Fatal error working with the unterlying" + " output stream during serialization.\n" + StringUtils.getStackTrace(e));
-				}
+				baos.close();
 			}
 		}
-		return null;
 	}
 
 	/**
@@ -486,24 +531,20 @@ public final class SerializationUtils {
 	 * @param type
 	 *            {@link Class<T>} the type that should be deserialized
 	 * @return the t {@link T} the class that was deserialized
+	 * @throws IOException
+	 *             if an I/O error occurs while reading the stream header of the input stream
+	 * @throws ClassNotFoundException
+	 *             Class of a serialized object cannot be found
 	 */
-	public static <T> T objectDeserialize(final ByteArrayOutputStream baos, final Class<T> type) {
+	public static <T> T objectDeserialize(final ByteArrayOutputStream baos, final Class<T> type) throws IOException, ClassNotFoundException {
 		ObjectInputStream in = null;
 		T result = null;
 		try {
 			in = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
 			result = (T) in.readObject();
-		} catch (IOException e) {
-			log.fatal("Error working with the unterlying input stream during serialization.\n" + StringUtils.getStackTrace(e));
-		} catch (ClassNotFoundException e) {
-			log.fatal("Error during serialization. The given class could not be found.\n" + StringUtils.getStackTrace(e));
 		} finally {
 			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {
-					log.fatal("Fatal error working with the unterlying" + " input stream during serialization.\n" + StringUtils.getStackTrace(e));
-				}
+				in.close();
 			}
 		}
 		return result;
@@ -519,17 +560,13 @@ public final class SerializationUtils {
 	 * @param objectToClone
 	 *            {@link T} the data-structure to clone
 	 * @return the t {@link T} which now is a perfect clone of the source-data-structure
+	 * @throws ClassNotFoundException
+	 *             Class of a serialized object cannot be found
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static <T> T serialClone(final T objectToClone) {
-		try {
-			return serialCloneInternal(objectToClone);
-
-		} catch (IOException e) {
-			log.fatal(ERROR_WORKING_WITH_THE_UNTERLYING_OUTPUT_STREAM_DURING_SERIALIZATION + StringUtils.getStackTrace(e));
-		} catch (ClassNotFoundException e) {
-			log.fatal("Error during serialization. The given class could not be found.\n" + StringUtils.getStackTrace(e));
-		}
-		return null;
+	public static <T> T serialClone(final T objectToClone) throws ClassNotFoundException, IOException {
+		return serialCloneInternal(objectToClone);
 	}
 
 	/**
@@ -543,7 +580,7 @@ public final class SerializationUtils {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 * @throws ClassNotFoundException
-	 *             the ClassNotFoundException
+	 *             Class of a serialized object cannot be found
 	 */
 	private static <T> T serialCloneInternal(final T x) throws IOException, ClassNotFoundException {
 

@@ -6,6 +6,7 @@
 	<artifactId>splitstopwatch</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SplitStopWatch</name>
+	<packaging>jar</packaging>
 	<description>Using this tool you can streamline your debug-output when timing the duration of your methods or tasks.</description>
 
 	<properties>

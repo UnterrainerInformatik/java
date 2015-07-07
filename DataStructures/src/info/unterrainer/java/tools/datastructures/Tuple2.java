@@ -1,87 +1,52 @@
-/*
- * Copyright 2012 NTS New Technology Systems GmbH. All Rights reserved. NTS PROPRIETARY/CONFIDENTIAL. Use is subject to
- * NTS License Agreement. Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria Homepage: www.ntswincash.com
- */
+/**************************************************************************
+ * <pre>
+ *
+ * Copyright (c) Unterrainer Informatik OG.
+ * This source is subject to the Microsoft Public License.
+ *
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ *
+ * (In other words you may copy, use, change and redistribute it without
+ * any restrictions except for not suing me because it broke something.)
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * </pre>
+ ***************************************************************************/
+
 package info.unterrainer.java.tools.datastructures;
 
 import java.io.Serializable;
 import java.util.Map.Entry;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * This class is a tuple containing two variables of possibly two different types. This is a convenience class that should ease the burden when requiring
  * multiple return values.
  * <p>
  * It implements {@link Serializable}, so it is serializable as long as the parameters are serializable.
- * 
+ *
  * @param <A>
  *            the type of the first parameter.
  * @param <B>
  *            the type of the second parameter.
- * @author GEUNT
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public final class Tuple2<A, B> implements Serializable, Entry<A, B> {
 
 	private static final long serialVersionUID = 907647270469007515L;
 
 	private A a;
 	private B b;
-
-	/**
-	 * The Constructor.
-	 */
-	public Tuple2() {
-	}
-
-	/**
-	 * The Constructor.
-	 * 
-	 * @param a
-	 *            the a
-	 * @param b
-	 *            the b
-	 */
-	public Tuple2(final A a, final B b) {
-		this.a = a;
-		this.b = b;
-	}
-
-	/**
-	 * Gets the first parameter of this tuple.
-	 * 
-	 * @return The first parameter.
-	 */
-	public A getA() {
-		return a;
-	}
-
-	/**
-	 * Sets the first parameter of this tuple.
-	 * 
-	 * @param a
-	 *            The first parameter.
-	 */
-	public void setA(final A a) {
-		this.a = a;
-	}
-
-	/**
-	 * Gets the second parameter of this tuple.
-	 * 
-	 * @return The second parameter.
-	 */
-	public B getB() {
-		return b;
-	}
-
-	/**
-	 * Sets the second parameter of this tuple.
-	 * 
-	 * @param b
-	 *            the b
-	 */
-	public void setB(final B b) {
-		this.b = b;
-	}
 
 	@Override
 	public String toString() {

@@ -1,4 +1,3 @@
-package info.unterrainer.java.tools.reporting;
 /**************************************************************************
  * <pre>
  *
@@ -18,6 +17,8 @@ package info.unterrainer.java.tools.reporting;
  *
  * </pre>
  ***************************************************************************/
+
+package info.unterrainer.java.tools.reporting;
 
 import java.io.PrintStream;
 import java.util.Formatter;

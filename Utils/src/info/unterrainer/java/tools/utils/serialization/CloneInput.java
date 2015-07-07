@@ -1,7 +1,23 @@
-/*
- * Copyright 2012 NTS New Technology Systems GmbH. All Rights reserved. NTS PROPRIETARY/CONFIDENTIAL. Use is subject to
- * NTS License Agreement. Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria Homepage: www.ntswincash.com
- */
+/**************************************************************************
+ * <pre>
+ *
+ * Copyright (c) Unterrainer Informatik OG.
+ * This source is subject to the Microsoft Public License.
+ *
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ *
+ * (In other words you may copy, use, change and redistribute it without
+ * any restrictions except for not suing me because it broke something.)
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * </pre>
+ ***************************************************************************/
+
 package info.unterrainer.java.tools.utils.serialization;
 
 import java.io.IOException;
@@ -10,46 +26,27 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 
-/**
- * The Class CloneInput.
- * @author GEUNT
- */
 public class CloneInput extends ObjectInputStream {
-    private final CloneOutput output;
+	private final CloneOutput output;
 
-    /**
-     * Instantiates a new clone input.
-     * @param in {@link InputStream} the in
-     * @param output {@link CloneOutput} the output
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    CloneInput(final InputStream in, final CloneOutput output) throws IOException {
-        super(in);
-        this.output = output;
-    }
+	CloneInput(final InputStream in, final CloneOutput output) throws IOException {
+		super(in);
+		this.output = output;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see java.io.ObjectInputStream#resolveClass(java.io.ObjectStreamClass)
-     */
-    @Override
-    protected Class<?> resolveClass(final ObjectStreamClass osc) throws IOException, ClassNotFoundException {
-        Class<?> c = output.getClassQueue().poll();
-        String expected = osc.getName();
-        String found = (c == null) ? null : c.getName();
-        if (!expected.equals(found)) {
-            throw new InvalidClassException("Classes desynchronized: " + "found " + found + " when expecting "
-                    + expected);
-        }
-        return c;
-    }
+	@Override
+	protected Class<?> resolveClass(final ObjectStreamClass osc) throws IOException, ClassNotFoundException {
+		Class<?> c = output.getClassQueue().poll();
+		String expected = osc.getName();
+		String found = (c == null) ? null : c.getName();
+		if (!expected.equals(found)) {
+			throw new InvalidClassException("Classes desynchronized: " + "found " + found + " when expecting " + expected);
+		}
+		return c;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see java.io.ObjectInputStream#resolveProxyClass(java.lang.String[])
-     */
-    @Override
-    protected Class<?> resolveProxyClass(final String[] interfaceNames) throws IOException, ClassNotFoundException {
-        return output.getClassQueue().poll();
-    }
+	@Override
+	protected Class<?> resolveProxyClass(final String[] interfaceNames) throws IOException, ClassNotFoundException {
+		return output.getClassQueue().poll();
+	}
 }

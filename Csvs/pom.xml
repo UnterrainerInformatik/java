@@ -6,6 +6,7 @@
 	<artifactId>csv-tools</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CsvTools</name>
+	<packaging>jar</packaging>
 	<description>This library provides writer and reader for the CSV format.</description>
 
 	<properties>

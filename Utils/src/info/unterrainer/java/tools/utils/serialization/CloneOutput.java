@@ -1,7 +1,23 @@
-/*
- * Copyright 2012 NTS New Technology Systems GmbH. All Rights reserved. NTS PROPRIETARY/CONFIDENTIAL. Use is subject to
- * NTS License Agreement. Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria Homepage: www.ntswincash.com
- */
+/**************************************************************************
+ * <pre>
+ *
+ * Copyright (c) Unterrainer Informatik OG.
+ * This source is subject to the Microsoft Public License.
+ *
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ *
+ * (In other words you may copy, use, change and redistribute it without
+ * any restrictions except for not suing me because it broke something.)
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * </pre>
+ ***************************************************************************/
+
 package info.unterrainer.java.tools.utils.serialization;
 
 import java.io.IOException;
@@ -10,45 +26,23 @@ import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- * The Class CloneOutput.
- * @author GEUNT
- */
+import lombok.Getter;
+
 public class CloneOutput extends ObjectOutputStream {
-    private final Queue<Class<?>> classQueue = new LinkedList<Class<?>>();
+	@Getter
+	private final Queue<Class<?>> classQueue = new LinkedList<Class<?>>();
 
-    /**
-     * Instantiates a new clone output.
-     * @param out {@link OutputStream} the out
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    CloneOutput(final OutputStream out) throws IOException {
-        super(out);
-    }
+	CloneOutput(final OutputStream out) throws IOException {
+		super(out);
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see java.io.ObjectOutputStream#annotateClass(java.lang.Class)
-     */
-    @Override
-    protected void annotateClass(final Class<?> c) {
-        classQueue.add(c);
-    }
+	@Override
+	protected void annotateClass(final Class<?> c) {
+		classQueue.add(c);
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see java.io.ObjectOutputStream#annotateProxyClass(java.lang.Class)
-     */
-    @Override
-    protected void annotateProxyClass(final Class<?> c) {
-        classQueue.add(c);
-    }
-
-    /**
-     * Gets the class queue.
-     * @return the class queue {@link Queue<Class<?>>}
-     */
-    protected Queue<Class<?>> getClassQueue() {
-        return classQueue;
-    }
+	@Override
+	protected void annotateProxyClass(final Class<?> c) {
+		classQueue.add(c);
+	}
 }

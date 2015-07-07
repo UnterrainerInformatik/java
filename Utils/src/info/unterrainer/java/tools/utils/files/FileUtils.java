@@ -1,7 +1,23 @@
-/*
- * Copyright 2012 NTS New Technology Systems GmbH. All Rights reserved. NTS PROPRIETARY/CONFIDENTIAL. Use is subject to
- * NTS License Agreement. Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria Homepage: www.ntswincash.com
- */
+/**************************************************************************
+ * <pre>
+ *
+ * Copyright (c) Unterrainer Informatik OG.
+ * This source is subject to the Microsoft Public License.
+ *
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ *
+ * (In other words you may copy, use, change and redistribute it without
+ * any restrictions except for not suing me because it broke something.)
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * </pre>
+ ***************************************************************************/
+
 package info.unterrainer.java.tools.utils.files;
 
 import java.io.BufferedInputStream;
@@ -11,79 +27,35 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.channels.SeekableByteChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.function.Consumer;
 
 import info.unterrainer.java.tools.utils.StringUtils;
-import lombok.extern.log4j.Log4j2;
 
-/**
- * The Class Files.
- * <p>
- * This class contains a collection of static helper-methods used in conjunction with files. This is the newest version of such a class. Please use it.
- * <p>
- * If you find that it doesn't contain a method that it should contain, please add it or transfer it from one of the older tool-classes.
- * <p>
- * The base construct of this class is the java.io.File. It is used to build paths and path-filename-combinations and to return most of the values. One thing
- * you have to know before you're starting to use methods of this class is, that a file doesn't have to exist (therefore the exists()-method). You may specify a
- * file and create it later on. Also know that file is a synonym for 'file or folder'. You may concatenate directories with the File(File parent, String
- * current) constructor or files to directories in the same way. Don't bother to care about the right directory-separators since every file-constructor converts
- * them automatically to the system-directory-separator per default.
- * <p>
- * To get the right path (remember: this may be a directory or directory with a filename) from a file, use one of the following:
- * <ul>
- * <li><b>file.getPath()</b><br>
- * gets the path exactly in the same way, as you specified it (relative or not)
- * <li><b>file.getAbsolutePath()</b><br>
- * gets the path you specified and roots it, if it was relative (depending on the system you're using the root may be the user's directory or the currently used
- * directory... see the documentation of this method for further information).
- * <li><b>file.getCanonicalPath()</b><br>
- * returns the same path as file.getAbsolutePath() but solves constructs as 'foo/../bar/../foo/text.txt' as well. Therefore it maybe needs to access the
- * file-system so be prepared to catch the even or odd exception (you won't need this method very often).
- * </ul>
- * <p>
- * Directories never end with a directory-separator, but that's not a problem since you'd concatenate them with the File-constructor and that would add the
- * right one.
- * <p>
- * If you want to get a filename or extension from a File then use FilenameUtils.getName(), getBaseName() or getPath().
- *
- * @author GEUNT
- */
-@Log4j2
 public final class FileUtils {
 
-	private static final String END = "'].\n";
-
 	/**
-	 * Instantiates a new Files-class. Here in order to hide the public constructor since this is a static utility class.
+	 * Private constructor in order to hide constructor of static helper-class.
 	 */
 	private FileUtils() {
 	}
@@ -99,8 +71,11 @@ public final class FileUtils {
 	 *            {@link long} the start line index
 	 * @param endLineIndex
 	 *            {@link long} the end line index. If you want all until the file ends, just specify -1 here
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static void partOfByLines(final InputStream inputStream, final OutputStream outputStream, final long startLineIndex, final long endLineIndex) {
+	public static void partOfByLines(final InputStream inputStream, final OutputStream outputStream, final long startLineIndex, final long endLineIndex)
+			throws IOException {
 		partOf(inputStream, outputStream, startLineIndex, endLineIndex, true, false, false);
 	}
 
@@ -115,8 +90,11 @@ public final class FileUtils {
 	 *            {@link long} the start word index
 	 * @param endWordIndex
 	 *            {@link long} the end word index. If you want all until the file ends, just specify -1 here
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static void partOfByWords(final InputStream inputStream, final OutputStream outputStream, final long startWordIndex, final long endWordIndex) {
+	public static void partOfByWords(final InputStream inputStream, final OutputStream outputStream, final long startWordIndex, final long endWordIndex)
+			throws IOException {
 		partOf(inputStream, outputStream, startWordIndex, endWordIndex, false, true, false);
 	}
 
@@ -168,7 +146,7 @@ public final class FileUtils {
 	 *            {@link long} the end character index. If you want all until the file ends, just specify -1 here
 	 */
 	public static void partOfByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
-			final long endCharacterIndex) {
+			final long endCharacterIndex) throws IOException {
 		partOf(inputStream, outputStream, startCharacterIndex, endCharacterIndex, false, false, true);
 	}
 
@@ -189,9 +167,11 @@ public final class FileUtils {
 	 *            {@link boolean} the index is word-controlled
 	 * @param indexIsCharacter
 	 *            {@link boolean} the index is character-controlled
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public static void partOf(final InputStream inputStream, final OutputStream outputStream, final long startIndex, final long endIndex,
-			final boolean indexIsLine, final boolean indexIsWord, final boolean indexIsCharacter) {
+			final boolean indexIsLine, final boolean indexIsWord, final boolean indexIsCharacter) throws IOException {
 		try {
 			final int bufferSize = 1024;
 			byte[] c = new byte[bufferSize];
@@ -212,14 +192,8 @@ public final class FileUtils {
 					}
 				}
 			}
-		} catch (IOException e) {
-			log.fatal("IO Exception occurred while reading input-stream:\n" + StringUtils.getStackTrace(e));
 		} finally {
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				log.fatal("IO Exception occurred while closing input-stream:\n" + StringUtils.getStackTrace(e));
-			}
+			inputStream.close();
 		}
 	}
 
@@ -234,9 +208,12 @@ public final class FileUtils {
 	 *            {@link long} the start character index
 	 * @param endCharacterIndex
 	 *            {@link long} the end character index
+	 * @return the part of by characters
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public static void getPartOfByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
-			final long endCharacterIndex) {
+			final long endCharacterIndex) throws IOException {
 		try {
 			final int bufferSize = 1024;
 			byte[] c = new byte[bufferSize];
@@ -250,14 +227,8 @@ public final class FileUtils {
 					}
 				}
 			}
-		} catch (IOException e) {
-			log.fatal("IO Exception occurred while reading input-stream:\n" + StringUtils.getStackTrace(e));
 		} finally {
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				log.fatal("IO Exception occurred while closing input-stream:\n" + StringUtils.getStackTrace(e));
-			}
+			inputStream.close();
 		}
 	}
 
@@ -273,8 +244,10 @@ public final class FileUtils {
 	 * @param input
 	 *            {@link String} the input string to scan
 	 * @return the count properties {@link CountProperties}
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static CountProperties getCountPropertiesOf(final String input) {
+	public static CountProperties getCountPropertiesOf(final String input) throws IOException {
 		return getCountPropertiesOf(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
 	}
 
@@ -289,14 +262,11 @@ public final class FileUtils {
 	 * @param file
 	 *            {@link File} the file to open for scanning
 	 * @return the count properties {@link CountProperties}
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static CountProperties getCountPropertiesOf(final File file) {
-		try {
-			return getCountPropertiesOf(new BufferedInputStream(new FileInputStream(file)));
-		} catch (FileNotFoundException e) {
-			log.fatal("File not found:\n" + StringUtils.getStackTrace(e));
-		}
-		return null;
+	public static CountProperties getCountPropertiesOf(final File file) throws IOException {
+		return getCountPropertiesOf(new BufferedInputStream(new FileInputStream(file)));
 	}
 
 	/**
@@ -311,8 +281,10 @@ public final class FileUtils {
 	 * @param inputStream
 	 *            {@link InputStream} the input stream to scan
 	 * @return the count properties {@link CountProperties}
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static CountProperties getCountPropertiesOf(final InputStream inputStream) {
+	public static CountProperties getCountPropertiesOf(final InputStream inputStream) throws IOException {
 		try {
 			final int bufferSize = 1024;
 			byte[] c = new byte[bufferSize];
@@ -334,31 +306,9 @@ public final class FileUtils {
 			lineCount++;
 			wordCount++;
 			return new CountProperties(lineCount, wordCount, characterCount);
-		} catch (IOException e) {
-			log.fatal("IO Exception occurred while reading input-stream:\n" + StringUtils.getStackTrace(e));
 		} finally {
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				log.fatal("IO Exception occurred while closing input-stream:\n" + StringUtils.getStackTrace(e));
-			}
+			inputStream.close();
 		}
-		return null;
-	}
-
-	/**
-	 * Clears file and creates a new empty one.
-	 *
-	 * @param fileName
-	 *            AS path and name
-	 * @author DBR
-	 */
-	public static void clearFile(final String fileName) {
-		final File file = new File(fileName);
-		log.info("Deleting file: " + fileName);
-		file.delete();
-		createFile(fileName);
-		log.info("Creating file: " + fileName);
 	}
 
 	/**
@@ -384,7 +334,9 @@ public final class FileUtils {
 						return false;
 					}
 				} else {
-					if (!FileUtils.copyFile(sourceFile, destination)) {
+					try {
+						FileUtils.copyFile(sourceFile, destination);
+					} catch (IOException e) {
 						return false;
 					}
 				}
@@ -403,25 +355,20 @@ public final class FileUtils {
 	 * @param destination
 	 *            {@link File} the destination
 	 * @return true is file was copied successfully
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	@SuppressWarnings("resource")
-	public static boolean copyFile(final File source, final File destination) {
+	public static void copyFile(final File source, final File destination) throws IOException {
+		FileChannel inputChannel = null;
+		FileChannel outputChannel = null;
 		try {
-			log.info("Copy file " + source.getAbsolutePath() + " to " + destination.getAbsolutePath());
-			FileChannel inputChannel = null;
-			FileChannel outputChannel = null;
-			try {
-				inputChannel = new FileInputStream(source).getChannel();
-				outputChannel = new FileOutputStream(destination).getChannel();
-				outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
-				return true;
-			} finally {
-				inputChannel.close();
-				outputChannel.close();
-			}
-		} catch (final IOException e) {
-			System.out.println(e.getMessage());
-			return false;
+			inputChannel = new FileInputStream(source).getChannel();
+			outputChannel = new FileOutputStream(destination).getChannel();
+			outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+		} finally {
+			inputChannel.close();
+			outputChannel.close();
 		}
 	}
 
@@ -435,21 +382,22 @@ public final class FileUtils {
 	 * @return true ({@link boolean}), if successful
 	 */
 	public static boolean copyDirectory(final String sourcePath, final String destinationPath) {
-		log.info("Copy files from " + sourcePath + " to " + destinationPath);
 		final File source = new File(sourcePath);
 		final File destination = new File(destinationPath);
 		return copyDirectory(source, destination);
 	}
 
 	/**
-	 * Copy file.
+	 * Copy a file.
 	 *
 	 * @param srcFile
-	 *            the src file
+	 *            the source file
 	 * @param dstFile
-	 *            the dst file
+	 *            the destination file
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static void copyFile(final String srcFile, final String dstFile) {
+	public static void copyFile(final String srcFile, final String dstFile) throws IOException {
 		final File src = new File(srcFile);
 		final File dest = new File(dstFile);
 		InputStream in = null;
@@ -458,16 +406,11 @@ public final class FileUtils {
 			in = new FileInputStream(src);
 			out = new FileOutputStream(dest);
 			final int buffersize = 1024;
-			log.info("Copy file " + srcFile + " to " + dstFile);
 			final byte[] buf = new byte[buffersize];
 			int len;
 			while ((len = in.read(buf)) > 0) {
 				out.write(buf, 0, len);
 			}
-		} catch (final FileNotFoundException e) {
-			System.out.println("File not found " + e.getMessage());
-		} catch (final IOException e) {
-			System.out.println("IO Exception occurred " + e.getMessage());
 		} finally {
 			try {
 				if (in != null) {
@@ -502,37 +445,18 @@ public final class FileUtils {
 	}
 
 	/**
-	 * Creates directory and returns success.
-	 *
-	 * @param directory
-	 *            AS path and name
-	 * @author DBR
-	 */
-	public static void createDirectory(final String directory) {
-		final File file = new File(directory);
-		if (!file.exists()) {
-			file.mkdirs();
-		}
-	}
-
-	/**
 	 * creates a file with known name.
 	 *
 	 * @param fileName
 	 *            file name and path
 	 * @return file
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static File createFile(final String fileName) {
-		try {
-			final File file = new File(fileName);
-			final boolean created = file.createNewFile();
-			if (created) {
-				log.info("File " + fileName + " created.");
-			}
-			return file;
-		} catch (final Exception e) {
-			return null;
-		}
+	public static File createFile(final String fileName) throws IOException {
+		final File file = new File(fileName);
+		file.createNewFile();
+		return file;
 	}
 
 	/**
@@ -542,21 +466,19 @@ public final class FileUtils {
 	 *            {@link File} the file to create with random content
 	 * @param length
 	 *            {@link long} the length of the random content in bytes
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static void createRandomFileContent(final File file, final long length) {
+	public static void createRandomFileContent(final File file, final long length) throws IOException {
 		FileOutputStream fos;
-		try {
-			fos = new FileOutputStream(file);
-			final byte[] b = new byte[1];
-			final Random rand = new Random();
-			for (long i = 0; i < length; i++) {
-				rand.nextBytes(b);
-				fos.write(b);
-			}
-			fos.close();
-		} catch (final IOException e) {
-			log.fatal("Fatal IO-error when working with file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+		fos = new FileOutputStream(file);
+		final byte[] b = new byte[1];
+		final Random rand = new Random();
+		for (long i = 0; i < length; i++) {
+			rand.nextBytes(b);
+			fos.write(b);
 		}
+		fos.close();
 	}
 
 	/**
@@ -681,8 +603,6 @@ public final class FileUtils {
 			if (fullFileName.contains(String.valueOf(File.separatorChar))) {
 				// Suspect Unix-style path delimiter
 				retVal = fullFileName.substring(0, fullFileName.lastIndexOf('/'));
-			} else {
-				log.info("Recieved filename '" + fullFileName + "' contains neither Windows nor Unix-style directory delimiter.");
 			}
 		}
 		return retVal;
@@ -719,30 +639,6 @@ public final class FileUtils {
 	}
 
 	/**
-	 * Calculates the path to the SCTM result directory (which is temporary by the way). If that path doesn't exist, null is returned, so you can choose your
-	 * actions accordingly.
-	 *
-	 * @return path to SCTM result directory.
-	 */
-	public static File getSctmTemporaryDirectoryPath() {
-		final File dirPath = new File(System.getenv("TMP") + "\\SCC_ExecServer_19124_19125\\PerfProjects");
-		long datelastmodified = 0;
-		File sctmdir = new File("");
-		if (dirPath.exists()) {
-			final File[] dircontent = dirPath.listFiles();
-			for (final File f : dircontent) {
-				if (datelastmodified < f.lastModified()) {
-					datelastmodified = f.lastModified();
-					sctmdir = f;
-				}
-			}
-			return sctmdir;
-		} else {
-			return null;
-		}
-	}
-
-	/**
 	 * Checks if is file existing.
 	 *
 	 * @param fileName
@@ -750,15 +646,8 @@ public final class FileUtils {
 	 * @return true {@link Boolean} , if is file existing
 	 */
 	public static boolean isFileExisting(final String fileName) {
-		boolean result = false;
-		try {
-			final File file = new File(fileName);
-			result = file.exists();
-		} catch (final Exception e) {
-			log.fatal("Exception occurred: " + e.getMessage());
-			result = false;
-		}
-		return result;
+		final File file = new File(fileName);
+		return file.exists();
 	}
 
 	/**
@@ -775,7 +664,11 @@ public final class FileUtils {
 	 */
 	public static String loadComponentIfNull(final String content, final File file, final Encoding encoding) {
 		if (content == null) {
-			return readFileToString(file, encoding);
+			try {
+				return readFileToString(file, encoding);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return content;
 	}
@@ -787,30 +680,12 @@ public final class FileUtils {
 	 *            {@link String} the path and name and extension
 	 * @return the properties {@link Properties} that where read from file
 	 */
-	public static Properties loadProperties(final String pathAndNameAndExtension) {
-		try {
-			final Properties properties = new Properties();
-			final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(pathAndNameAndExtension));
-			properties.load(stream);
-			stream.close();
-			return properties;
-		} catch (final IOException e) {
-			log.fatal("Problem opening resource bundle of application under test ['"
-					+ pathAndNameAndExtension
-					+ "'] could not be found. Exception:\n"
-					+ StringUtils.getStackTrace(e));
-		} catch (final IllegalArgumentException e) {
-			log.fatal("Problem opening resource bundle of application under test ['"
-					+ pathAndNameAndExtension
-					+ "'] could not be found. Exception:\n"
-					+ StringUtils.getStackTrace(e));
-		} catch (final SecurityException e) {
-			log.fatal("Problem opening resource bundle of application under test ['"
-					+ pathAndNameAndExtension
-					+ "'] could not be found. Exception:\n"
-					+ StringUtils.getStackTrace(e));
-		}
-		return null;
+	public static Properties loadProperties(final String pathAndNameAndExtension) throws IOException {
+		final Properties properties = new Properties();
+		final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(pathAndNameAndExtension));
+		properties.load(stream);
+		stream.close();
+		return properties;
 	}
 
 	/**
@@ -824,60 +699,8 @@ public final class FileUtils {
 	 *            {@link Boolean} the append
 	 * @return the prints the writer {@link PrintWriter}
 	 */
-	public static PrintWriter openFile(final File file, final Encoding encoding, final boolean append) {
-		PrintWriter out = null;
-		try {
-			out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file.getAbsoluteFile(), append), encoding.getEncoding()));
-		} catch (final UnsupportedEncodingException e) {
-			log.fatal("Error opening file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
-		} catch (final FileNotFoundException e) {
-			log.fatal("Error opening file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
-		}
-		return out;
-	}
-
-	/**
-	 * Read DataBase Name from File.
-	 *
-	 * @param fDatabaseFile
-	 *            Path to File
-	 * @return String
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @author thl
-	 */
-	public static String readDatabasefromFile(final File fDatabaseFile) throws IOException {
-		FileInputStream fis = null;
-		BufferedInputStream bis = null;
-		BufferedReader dis = null;
-		StringBuffer sFileContent = new StringBuffer("");
-		try {
-			if (fDatabaseFile.exists()) {
-				fis = new FileInputStream(fDatabaseFile);
-				// Here BufferedInputStream is added for fast reading.
-				bis = new BufferedInputStream(fis);
-				dis = new BufferedReader(new InputStreamReader(fis));
-				// dis.ready() true stream is not empty
-				while (dis.ready()) {
-					// this statement reads the line from the file and print it
-					// to
-					// the console.
-					sFileContent.append(dis.readLine());
-				}
-				fis.close();
-				bis.close();
-				dis.close();
-				return sFileContent.toString();
-			} else {
-				return sFileContent.toString();
-			}
-		} catch (final FileNotFoundException e) {
-			log.fatal(e.getMessage());
-			return sFileContent.toString();
-		} catch (final IOException e) {
-			log.fatal(e.getMessage());
-			return sFileContent.toString();
-		}
+	public static PrintWriter openFile(final File file, final Encoding encoding, final boolean append) throws IOException {
+		return new PrintWriter(new OutputStreamWriter(new FileOutputStream(file.getAbsoluteFile(), append), encoding.getEncoding()));
 	}
 
 	/**
@@ -887,38 +710,26 @@ public final class FileUtils {
 	 *            {@link File} the file
 	 * @return the string {@link String}
 	 */
-	public static byte[] readFileToByteArray(final File file) {
-		try {
-			return java.nio.file.Files.readAllBytes(Paths.get(file.getAbsolutePath()));
-		} catch (final IOException e) {
-			log.fatal("Error reading file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
-		}
-		return null;
+	public static byte[] readFileToByteArray(final File file) throws IOException {
+		return java.nio.file.Files.readAllBytes(Paths.get(file.getAbsolutePath()));
 	}
 
 	/**
-	 * Open a file and read content to a List.
+	 * Open a file and read its content to a list of strings.
 	 *
-	 * @param fFileName
-	 *            Path to the File
-	 * @return ArrayList
-	 * @author thl
+	 * @param file
+	 *            the path to the file to read
+	 * @return an ArrayList containing all the lines of the read file
 	 */
-	public static List<String> readFileToList(final File fFileName) {
-		String line = "";
+	public static List<String> readFileToList(final File file) throws IOException {
+		String line;
 		final ArrayList<String> data = new ArrayList<String>();
-		try {
-			final FileReader fr = new FileReader(fFileName);
-			final BufferedReader br = new BufferedReader(fr);
-			while ((line = br.readLine()) != null) {
-				data.add(line);
-			}
-			br.close();
-		} catch (final FileNotFoundException fN) {
-			log.fatal(fN.getMessage());
-		} catch (final IOException e) {
-			log.fatal(e.getMessage());
+		final FileReader fr = new FileReader(file);
+		final BufferedReader br = new BufferedReader(fr);
+		while ((line = br.readLine()) != null) {
+			data.add(line);
 		}
+		br.close();
 		return data;
 	}
 
@@ -931,13 +742,8 @@ public final class FileUtils {
 	 *            {@link Encoding} the encoding to expect when putting the file-content to a string
 	 * @return the string {@link String} that consists of the file-content
 	 */
-	public static String readFileToString(final File file, final Encoding encoding) {
-		try {
-			return new String(readFileToByteArray(file), encoding.getEncoding());
-		} catch (final IOException e) {
-			log.fatal("Error reading file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
-		}
-		return null;
+	public static String readFileToString(final File file, final Encoding encoding) throws IOException {
+		return new String(readFileToByteArray(file), encoding.getEncoding());
 	}
 
 	/**
@@ -949,16 +755,12 @@ public final class FileUtils {
 	 *            {@link Encoding} the encoding to expect when putting the file-content to a string
 	 * @return the string {@link String} that consists of the file-content
 	 */
-	public static List<String> readFileToList(final File file, final Encoding encoding) {
+	public static List<String> readFileToList(final File file, final Encoding encoding) throws IOException {
 		List<String> result = new ArrayList<>();
-		try {
-			List<String> lines = java.nio.file.Files.readAllLines(Paths.get(file.getAbsolutePath()), encoding.toCharset());
+		List<String> lines = java.nio.file.Files.readAllLines(Paths.get(file.getAbsolutePath()), encoding.toCharset());
 
-			for (String line : lines) {
-				Collections.addAll(result, line.split(";"));
-			}
-		} catch (final IOException e) {
-			log.fatal("Error reading file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
+		for (String line : lines) {
+			Collections.addAll(result, line.split(";"));
 		}
 		return result;
 	}
@@ -970,8 +772,10 @@ public final class FileUtils {
 	 *            path to the file
 	 * @param list
 	 *            list of strings which gets written into the file
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static void writeListToFile(final File file, final List<String> list) {
+	public static void writeListToFile(final File file, final List<String> list) throws IOException {
 		writeListToFile(file, list, true);
 	}
 
@@ -984,19 +788,17 @@ public final class FileUtils {
 	 *            list of strings which gets written into the file
 	 * @param append
 	 *            true = append to file, false = overwrite
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static void writeListToFile(final File file, final List<String> list, final boolean append) {
+	public static void writeListToFile(final File file, final List<String> list, final boolean append) throws IOException {
 		FileWriter fstream = null;
-		try {
-			fstream = new FileWriter(file, append);
-			final BufferedWriter out = new BufferedWriter(fstream);
-			for (Integer i = 0; i < list.size(); i++) {
-				out.write(list.get(i) + "\n");
-			}
-			out.close();
-		} catch (final IOException e) {
-			log.fatal(e.getMessage());
+		fstream = new FileWriter(file, append);
+		final BufferedWriter out = new BufferedWriter(fstream);
+		for (Integer i = 0; i < list.size(); i++) {
+			out.write(list.get(i) + "\n");
 		}
+		out.close();
 	}
 
 	/**
@@ -1010,8 +812,10 @@ public final class FileUtils {
 	 *            {@link Encoding} the encoding to be used
 	 * @param data
 	 *            {@link String} the data to be written
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static void writeToFile(final File file, final Encoding encoding, final String data) {
+	public static void writeToFile(final File file, final Encoding encoding, final String data) throws IOException {
 		writeToFile(file, encoding, data, true);
 	}
 
@@ -1027,7 +831,7 @@ public final class FileUtils {
 	 * @param append
 	 *            {@link Boolean} a flag indicating if the content of the file should be overwritten (replaced) or appended at the end of the existing file
 	 */
-	public static void writeToFile(final File file, final Encoding encoding, final String data, final boolean append) {
+	public static void writeToFile(final File file, final Encoding encoding, final String data, final boolean append) throws IOException {
 		OutputStream out = null;
 		Writer writer = null;
 		final CharsetEncoder charsetEncoder = Charset.forName(encoding.getEncoding()).newEncoder();
@@ -1035,24 +839,12 @@ public final class FileUtils {
 			out = new FileOutputStream(file, append);
 			writer = new OutputStreamWriter(out, charsetEncoder);
 			writer.write(data);
-		} catch (final IllegalArgumentException e) {
-			log.fatal("Error opening file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
-		} catch (final IOException e) {
-			log.fatal("Error writing to file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
 		} finally {
 			if (writer != null) {
-				try {
-					writer.close();
-				} catch (final IOException e) {
-					log.fatal("Fatal error closing file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
-				}
+				writer.close();
 			}
 			if (out != null) {
-				try {
-					out.close();
-				} catch (final IOException e) {
-					log.fatal("Fatal error closing file ['" + file.getAbsolutePath() + END + StringUtils.getStackTrace(e));
-				}
+				out.close();
 			}
 		}
 	}
@@ -1061,9 +853,8 @@ public final class FileUtils {
 	 * Gets all sub-directories of given directory.
 	 *
 	 * @param directory
-	 *            AS path
-	 * @return file array
-	 * @author DBR
+	 *            the path of the directory to scan
+	 * @return a file array containing all the sub-directories found
 	 */
 	public File[] getSubDirectories(final String directory) {
 		final File source = new File(directory);
@@ -1074,30 +865,6 @@ public final class FileUtils {
 			}
 		};
 		return source.listFiles(fileFilter);
-	}
-
-	/**
-	 * Prints the last bytes.
-	 *
-	 * @param from
-	 *            the from
-	 * @param scope
-	 *            the scope
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
-	public static void printLastBytes(final Path from, final int scope) throws IOException {
-		final long size = java.nio.file.Files.size(from);
-		try (SeekableByteChannel sourceChannel = java.nio.file.Files.newByteChannel(from, EnumSet.of(StandardOpenOption.READ))) {
-			sourceChannel.position(size - scope);
-			ByteBuffer buf = ByteBuffer.allocate(scope);
-			String encoding = System.getProperty("file.encoding");
-			while (sourceChannel.read(buf) > 0) {
-				buf.rewind();
-				log.fatal(Charset.forName(encoding).decode(buf).toString());
-				buf.flip();
-			}
-		}
 	}
 
 	/**

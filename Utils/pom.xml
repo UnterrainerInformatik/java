@@ -6,6 +6,7 @@
 	<artifactId>utils</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Utils</name>
+	<packaging>jar</packaging>
 	<description>This class contains static helper classes for various occasions.</description>
 
 	<properties>

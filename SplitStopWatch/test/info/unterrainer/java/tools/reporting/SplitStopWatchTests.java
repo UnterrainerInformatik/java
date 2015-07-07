@@ -1,33 +1,32 @@
-package info.unterrainer.java.tools.reporting;
 /**************************************************************************
  * <pre>
- * 
+ *
  * Copyright (c) Unterrainer Informatik OG.
  * This source is subject to the Microsoft Public License.
- * 
+ *
  * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
  * All other rights reserved.
- * 
+ *
  * (In other words you may copy, use, change and redistribute it without
  * any restrictions except for not suing me because it broke something.)
- * 
+ *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
- * 
+ *
  * </pre>
  ***************************************************************************/
+
+package info.unterrainer.java.tools.reporting;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import info.unterrainer.java.tools.reporting.SplitStopWatch;
-
 /**
  * This is the test class for the SplipStopWatch - tool.
- * 
+ *
  * @author UNGE
  * @since 11.07.2013
  */
