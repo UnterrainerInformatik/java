@@ -19,6 +19,26 @@ import lombok.Setter;
  * You may specify if your console supports control-characters (like standard-out) or not (like the Eclipse console-implementation (before Mars (4.5)) or a pipe
  * to a file) if you'd like to use one of the two standard {@link DrawableComponent} implementations.<br/>
  * You also may implement your own {@link DrawableComponent} and use that in your applications.
+ * <p>
+ * Default values are:
+ * <table>
+ * <tr>
+ * <td><b>width</b></td>
+ * <td>50</td>
+ * </tr>
+ * <tr>
+ * <td><b>minValue</b></td>
+ * <td>0.0d</td>
+ * </tr>
+ * <tr>
+ * <td><b>maxValue</b></td>
+ * <td>1.0d</td>
+ * </tr>
+ * <tr>
+ * <td><b>controlCharacterSupport</b></td>
+ * <td>true</td>
+ * </tr>
+ * </table>
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConsoleProgressBar {
@@ -30,18 +50,14 @@ public class ConsoleProgressBar {
 
 	@Getter
 	@Setter
-	private boolean controlCharacterSupport = true;
+	private boolean controlCharacterSupport;
 
 	@Getter
 	@Setter
-	private Integer width = 50;
+	private Integer width;
 
-	@Setter(value = AccessLevel.PROTECTED)
 	private boolean drawInitialized = false;
-
-	@Setter(value = AccessLevel.PROTECTED)
 	private int lastNumberOfCharactersDrawn;
-
 	private DrawableComponent component;
 
 	@Builder

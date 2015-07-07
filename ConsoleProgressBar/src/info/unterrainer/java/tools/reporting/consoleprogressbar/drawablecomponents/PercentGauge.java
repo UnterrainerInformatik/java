@@ -16,16 +16,43 @@ import lombok.Setter;
  *
  * <pre>
  * {@code
+ * [  4%]
+ *
+ * ...
+ *
  * [ 56%]
+ *
+ * ...
+ *
+ * [100%]
  * }
  * </pre>
  *
  * This bar ignores the width-parameter for the drawing of the percentage. However you may use it to regulate the sensitivity of the gauge (a higher width
  * updates the gauge more often). Widths over 100 don't make sense in this context since it will be drawn more often but the value won't change.
  * <p>
- * You may specify any other begin- ('['), end- (']'), percent- ('%') or empty-character (' ') you like.<br />
+ * You may specify any other begin- , end- , percent- or empty-character you like.<br />
  * This bar is only a good choice if your console supports control characters since for this representation you have to to clear all characters on each redraw
  * using '\b' (backspace).
+ * <p>
+ * <table>
+ * <tr>
+ * <td><b>begin</b></td>
+ * <td>"["</td>
+ * </tr>
+ * <tr>
+ * <td><b>end</b></td>
+ * <td>"]"</td>
+ * </tr>
+ * <tr>
+ * <td><b>percent</b></td>
+ * <td>"%"</td>
+ * </tr>
+ * <tr>
+ * <td><b>empty</b></td>
+ * <td>{@code ' '}</td>
+ * </tr>
+ * </table>
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PercentGauge implements DrawableComponent {

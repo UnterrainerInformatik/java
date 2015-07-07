@@ -16,13 +16,40 @@ import lombok.Setter;
  *
  * <pre>
  * {@code
+ * [####-----------]
+ *
+ * ...
+ *
  * [########-------]
+ *
+ * ...
+ *
+ * [###############]
  * }
  * </pre>
  *
- * You may specify any other begin- ('['), end- (']'), full- ('#') or empty-character ('-') you like.<br />
+ * You may specify any other begin- , end- , full- or empty-character you like.<br />
  * This bar is only a good choice if your console supports control characters since for this representation you have to to clear all characters on each redraw
  * using '\b' (backspace).
+ * <p>
+ * <table>
+ * <tr>
+ * <td><b>begin</b></td>
+ * <td>"["</td>
+ * </tr>
+ * <tr>
+ * <td><b>end</b></td>
+ * <td>"]"</td>
+ * </tr>
+ * <tr>
+ * <td><b>full</b></td>
+ * <td>'#'</td>
+ * </tr>
+ * <tr>
+ * <td><b>empty</b></td>
+ * <td>'-'</td>
+ * </tr>
+ * </table>
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProgressBar implements DrawableComponent {

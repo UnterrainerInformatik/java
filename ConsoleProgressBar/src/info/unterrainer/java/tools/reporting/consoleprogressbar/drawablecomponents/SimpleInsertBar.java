@@ -17,14 +17,44 @@ import lombok.Setter;
  * <pre>
  * {@code
  * [>>>>>>>>>>>>>>>]
- *  ########
+ *  ####
+ *
+ *  ...
+ *
+ * [>>>>>>>>>>>>>>>]
+ *  ############
+ *
+ *  ...
+ *
+ * [>>>>>>>>>>>>>>>]
+ *  ###############
  * }
  * </pre>
  *
- * ... with an ever growing number of '#' characters You may specify any other begin- ('['), end- (']'), full- ('#') or legendFill-character ('>') you like.
- * <br />
+ * ... with an ever growing number of '#' characters.</br/>
+ * You may specify any other begin- , end- , full- or legendFill-character you like. <br />
  * This bar is always working. Even if your console doesn't support control characters like the Eclipse console-implementation (before Mars (4.5)) or a pipe to
  * a file.
+ * <p>
+ * Default values are:
+ * <table>
+ * <tr>
+ * <td><b>begin</b></td>
+ * <td>"["</td>
+ * </tr>
+ * <tr>
+ * <td><b>end</b></td>
+ * <td>"]"</td>
+ * </tr>
+ * <tr>
+ * <td><b>full</b></td>
+ * <td>'#'</td>
+ * </tr>
+ * <tr>
+ * <td><b>legendFill</b></td>
+ * <td>'>'</td>
+ * </tr>
+ * </table>
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SimpleInsertBar implements DrawableComponent {
