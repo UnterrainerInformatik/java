@@ -2,12 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>info.unterrainer.java.tools</groupId>
-	<artifactId>data-structures</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>DataStructures</name>
+	<groupId>info.unterrainer.java.tools.reporting</groupId>
+	<artifactId>console-progressbar</artifactId>
+	<version>0.2.1-SNAPSHOT</version>
+	<name>ConsoleProgressBar</name>
 	<packaging>jar</packaging>
-	<description>This package contains several data-structures to ease your every-day life.</description>
+	<description>A progress bar for console applications.</description>
 
 	<properties>
 		<javaVersion>1.8</javaVersion>
@@ -35,10 +35,25 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.4</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.unterrainer.java.tools</groupId>
+			<artifactId>utils</artifactId>
+			<version>0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>info.unterrainer.java.tools</groupId>
+			<artifactId>data-structures</artifactId>
+			<version>0.2</version>
 		</dependency>
 	</dependencies>
 
