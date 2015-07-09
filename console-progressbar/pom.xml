@@ -33,6 +33,19 @@
 		</plugins>
 	</build>
 
+	<licenses>
+		<license>
+			<name>Microsoft Public License</name>
+			<url>http://opensource.org/licenses/MS-PL</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<organization>
+		<name>Unterrainer Informatik OG</name>
+		<url>http://www.unterrainer.info</url>
+	</organization>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
