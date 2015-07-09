@@ -8,7 +8,17 @@
 	<name>SplitStopWatch</name>
 	<packaging>jar</packaging>
 	<description>Using this tool you can streamline your debug-output when timing the duration of your methods or tasks.</description>
+	<url>https://www.unterrainer.info:8443/projects/JAV/repos/general/browse</url>
 
+	<developers>
+		<developer>
+			<name>Gerald Unterrainer</name>
+			<email>psilo@unterrainer.info</email>
+			<organization>Unterrainer Informatik OG</organization>
+			<organizationUrl>http://www.unterrainer.info</organizationUrl>
+		</developer>
+	</developers>
+	
 	<properties>
 		<javaVersion>1.8</javaVersion>
 		<project.compile.sourceEncoding>UTF-8</project.compile.sourceEncoding>
