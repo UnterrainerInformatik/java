@@ -155,7 +155,7 @@ For the younger ones: CSV means Comma Separated Values and is a very old system 
 You may read or write those files using this library and you may specify all possible variations of different control-characters like new-line or end-of-row (or quoting).  
 
 ##### Example CsvReader
-```
+```java
 StringReader stringReader = new StringReader("\"test\";test1;A 01;t;;");
 
 csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
@@ -163,7 +163,7 @@ List<String> row = csvReader.readRow();
 ```
 
 ##### Example CsvWriter
-```
+```java
 CsvWriter csvWriter = CsvWriter.builder().stringWriter(stringWriter).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
 
 csvWriter.write("Great");
