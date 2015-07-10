@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.java.tools.reporting</groupId>
 	<artifactId>console-progressbar</artifactId>
-	<version>0.2</version>
+	<version>0.2.1-SNAPSHOT</version>
 	<name>ConsoleProgressBar</name>
 	<packaging>jar</packaging>
 	<description>A progress bar for console applications.</description>
@@ -135,12 +135,12 @@
 		<dependency>
 			<groupId>info.unterrainer.java.tools</groupId>
 			<artifactId>utils</artifactId>
-			<version>0.2</version>
+			<version>0.2.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>info.unterrainer.java.tools</groupId>
 			<artifactId>data-structures</artifactId>
-			<version>0.2</version>
+			<version>0.2.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

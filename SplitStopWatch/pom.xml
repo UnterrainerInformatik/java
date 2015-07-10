@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.java.tools.reporting</groupId>
 	<artifactId>splitstopwatch</artifactId>
-	<version>0.2</version>
+	<version>0.2.1-SNAPSHOT</version>
 	<name>SplitStopWatch</name>
 	<packaging>jar</packaging>
 	<description>Using this tool you can streamline your debug-output when timing the duration of your methods or tasks.</description>
