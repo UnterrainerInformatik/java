@@ -26,14 +26,11 @@ public class Interval<T extends Comparable<T>> {
 	private T minimalValue;
 
 	/**
-	 * Initializes a new instance of the {@link Interface} structure.
+	 * Initializes a new instance of the {@link Interval} structure.
 	 *
-	 * @param min
-	 *            the minimal value
-	 * @param max
-	 *            the maximal value
-	 * @throws IllegalArgumentException
-	 *             if the given maximal-value is smaller than the given minimal-value
+	 * @param min the minimal value
+	 * @param max the maximal value
+	 * @throws IllegalArgumentException if the given maximal-value is smaller than the given minimal-value
 	 */
 	public Interval(T min, T max) {
 
@@ -80,7 +77,7 @@ public class Interval<T extends Comparable<T>> {
 	 * Clamps the given value to the {@link Interval}. If the value is greater than the interval's maximal-value, the interval's maximal-value is returned. If
 	 * the value is smaller than the interval's minimal-value, the interval's minimal-value is returned.
 	 *
-	 * @param value
+	 * @param value the value
 	 * @return the clamped value
 	 */
 	public T clamp(T value) {
@@ -96,8 +93,7 @@ public class Interval<T extends Comparable<T>> {
 	/**
 	 * Determines whether a specified value is in between the intervals boundaries.
 	 *
-	 * @param value
-	 *            the value
+	 * @param value the value
 	 * @return true if the given value is in between the specified boundaries
 	 */
 	public boolean isInBetween(T value) {

@@ -33,10 +33,8 @@ import lombok.NoArgsConstructor;
  * <p>
  * It implements {@link Serializable}, so it is serializable as long as the parameters are serializable.
  *
- * @param <A>
- *            the type of the first parameter.
- * @param <B>
- *            the type of the second parameter.
+ * @param <A> the type of the first parameter.
+ * @param <B> the type of the second parameter.
  */
 @Data
 @AllArgsConstructor

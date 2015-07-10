@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.java.tools.reporting</groupId>
 	<artifactId>splitstopwatch</artifactId>
@@ -18,13 +18,26 @@
 			<organizationUrl>http://www.unterrainer.info</organizationUrl>
 		</developer>
 	</developers>
-	
+
 	<properties>
 		<javaVersion>1.8</javaVersion>
 		<project.compile.sourceEncoding>UTF-8</project.compile.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<scm>
+		<connection>scm:git:https://www.unterrainer.info:8443/scm/jav/general.git</connection>
+		<developerConnection>scm:git:https://psilo@www.unterrainer.info:8443/scm/jav/general.git</developerConnection>
+		<url>https://www.unterrainer.info:8443/scm/jav/general.git</url>
+	</scm>
 
 	<build>
 		<sourceDirectory>${project.basedir}\src</sourceDirectory>
@@ -67,6 +80,30 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -77,12 +114,12 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
 	<organization>
 		<name>Unterrainer Informatik OG</name>
 		<url>http://www.unterrainer.info</url>
 	</organization>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

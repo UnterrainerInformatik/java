@@ -72,11 +72,9 @@ public final class SerializationUtils {
 	 * <p>
 	 * Be sure to have the source-class annotated accordingly.
 	 *
-	 * @param serializableObject
-	 *            {@link Object} the serializable object
+	 * @param serializableObject {@link Object} the serializable object
 	 * @return the string {@link String} containing the serialized form of the given object.
-	 * @throws JAXBException
-	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
 	 *             <li>No JAXB implementation was discovered</li>
 	 *             <li>Classes use JAXB annotations incorrectly</li>
@@ -84,9 +82,7 @@ public final class SerializationUtils {
 	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
 	 *             development time.)</li>
 	 *             </ol>
-	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static String jaxBXmlSerialize(final Object serializableObject) throws JAXBException, IOException {
 
@@ -115,12 +111,9 @@ public final class SerializationUtils {
 	 * <p>
 	 * Be sure to have the source-class annotated accordingly.
 	 *
-	 * @param serializableObject
-	 *            {@link Object} the serializable object
-	 * @param targetFile
-	 *            {@link File} the target file
-	 * @throws JAXBException
-	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 * @param serializableObject {@link Object} the serializable object
+	 * @param targetFile {@link File} the target file
+	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
 	 *             <li>No JAXB implementation was discovered</li>
 	 *             <li>Classes use JAXB annotations incorrectly</li>
@@ -128,9 +121,7 @@ public final class SerializationUtils {
 	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
 	 *             development time.)</li>
 	 *             </ol>
-	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void jaxBXmlSerialize(final Object serializableObject, final File targetFile) throws JAXBException, IOException {
 		FileWriter fw = new FileWriter(targetFile);
@@ -145,14 +136,11 @@ public final class SerializationUtils {
 	 * <p>
 	 * Be sure to have the source-class annotated accordingly.
 	 *
-	 * @param serializableObject
-	 *            {@link Object} the serializable object
-	 * @param targetFile
-	 *            {@link File} the target file
-	 * @param elementsEncapsulatedInCdataTags
-	 *            {@link String} a white-space delimited list of the elements whose content you want to be encapsulated in CDATA tags
-	 * @throws JAXBException
-	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 * @param serializableObject {@link Object} the serializable object
+	 * @param targetFile {@link File} the target file
+	 * @param elementsEncapsulatedInCdataTags {@link String} a white-space delimited list of the elements whose content you want to be encapsulated in CDATA
+	 *            tags
+	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
 	 *             <li>No JAXB implementation was discovered</li>
 	 *             <li>Classes use JAXB annotations incorrectly</li>
@@ -160,11 +148,8 @@ public final class SerializationUtils {
 	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
 	 *             development time.)</li>
 	 *             </ol>
-	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws TransformerException
-	 *             If an unrecoverable error occurs during the course of the transformation.
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws TransformerException If an unrecoverable error occurs during the course of the transformation.
 	 */
 	public static void jaxBXmlTransformerSerialize(final Object serializableObject, final File targetFile, final String elementsEncapsulatedInCdataTags)
 			throws JAXBException, IOException, TransformerException {
@@ -177,17 +162,13 @@ public final class SerializationUtils {
 	 * <p>
 	 * Be sure to have the source-class annotated accordingly.
 	 *
-	 * @param serializableObject
-	 *            {@link Object} the serializable object
-	 * @param elementsEncapsulatedInCdataTags
-	 *            {@link String} a white-space delimited list of the elements whose content you want to be encapsulated in CDATA tags
-	 * @param indent
-	 *            {@link int} the indent. Specify zero if you don't want any
-	 * @param omitXmlDeclaration
-	 *            {@link boolean} true, if the XML-declaration shall be omitted. False otherwise
+	 * @param serializableObject {@link Object} the serializable object
+	 * @param elementsEncapsulatedInCdataTags {@link String} a white-space delimited list of the elements whose content you want to be encapsulated in CDATA
+	 *            tags
+	 * @param indent the indent. Specify zero if you don't want any
+	 * @param omitXmlDeclaration true, if the XML-declaration shall be omitted. False otherwise
 	 * @return the string {@link String}
-	 * @throws JAXBException
-	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
 	 *             <li>No JAXB implementation was discovered</li>
 	 *             <li>Classes use JAXB annotations incorrectly</li>
@@ -195,13 +176,9 @@ public final class SerializationUtils {
 	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
 	 *             development time.)</li>
 	 *             </ol>
-	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws TransformerConfigurationException
-	 *             When it is not possible to create a {@link Transformer} instance.
-	 * @throws TransformerException
-	 *             If an unrecoverable error occurs during the course of the transformation.
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws TransformerConfigurationException When it is not possible to create a {@link Transformer} instance.
+	 * @throws TransformerException If an unrecoverable error occurs during the course of the transformation.
 	 */
 	public static String jaxBXmlTransformerSerialize(final Object serializableObject, final String elementsEncapsulatedInCdataTags, final int indent,
 			final boolean omitXmlDeclaration) throws JAXBException, IOException, TransformerConfigurationException, TransformerException {
@@ -251,18 +228,13 @@ public final class SerializationUtils {
 	 * <p>
 	 * Be sure to have the source-class annotated accordingly.
 	 *
-	 * @param serializableObject
-	 *            {@link Object} the serializable object
-	 * @param targetFile
-	 *            {@link File} the target file
-	 * @param elementsEncapsulatedInCdataTags
-	 *            {@link String} a white-space delimited list of the elements whose content you want to be encapsulated in CDATA tags
-	 * @param indent
-	 *            {@link int} the indent. Specify zero if you don't want any
-	 * @param omitXmlDeclaration
-	 *            {@link boolean} true, if the XML-declaration shall be omitted. False otherwise
-	 * @throws JAXBException
-	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 * @param serializableObject {@link Object} the serializable object
+	 * @param targetFile {@link File} the target file
+	 * @param elementsEncapsulatedInCdataTags {@link String} a white-space delimited list of the elements whose content you want to be encapsulated in CDATA
+	 *            tags
+	 * @param indent the indent. Specify zero if you don't want any
+	 * @param omitXmlDeclaration true, if the XML-declaration shall be omitted. False otherwise
+	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
 	 *             <li>No JAXB implementation was discovered</li>
 	 *             <li>Classes use JAXB annotations incorrectly</li>
@@ -270,11 +242,8 @@ public final class SerializationUtils {
 	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
 	 *             development time.)</li>
 	 *             </ol>
-	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws TransformerException
-	 *             If an unrecoverable error occurs during the course of the transformation.
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws TransformerException If an unrecoverable error occurs during the course of the transformation.
 	 */
 	public static void jaxBXmlTransformerSerialize(final Object serializableObject, final File targetFile, final String elementsEncapsulatedInCdataTags,
 			final int indent, final boolean omitXmlDeclaration) throws JAXBException, IOException, TransformerException {
@@ -290,15 +259,11 @@ public final class SerializationUtils {
 	 * Be sure to have the target-class annotated accordingly.<br>
 	 * This one should work with most generated XML-files.
 	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param source
-	 *            {@link String} the source
-	 * @param type
-	 *            {@link Class<T>} the type
-	 * @return the t {@link T}
-	 * @throws JAXBException
-	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 * @param <T> the generic type
+	 * @param source {@link String} the source
+	 * @param type the type
+	 * @return the t
+	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
 	 *             <li>No JAXB implementation was discovered</li>
 	 *             <li>Classes use JAXB annotations incorrectly</li>
@@ -321,17 +286,12 @@ public final class SerializationUtils {
 	 * Be sure to have the target-class annotated accordingly.<br>
 	 * This one should work with most generated XML-files.
 	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param sourceFile
-	 *            {@link File} the source file
-	 * @param type
-	 *            {@link Class<T>} the type
-	 * @return the t {@link T}
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws JAXBException
-	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 * @param <T> the generic type
+	 * @param sourceFile {@link File} the source file
+	 * @param type the type
+	 * @return the t
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
 	 *             <li>No JAXB implementation was discovered</li>
 	 *             <li>Classes use JAXB annotations incorrectly</li>
@@ -352,19 +312,13 @@ public final class SerializationUtils {
 	 * Be sure to have the target-class annotated accordingly.<br>
 	 * This one should work with most generated XML-files.
 	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param sourceFile
-	 *            {@link File} the source file
-	 * @param encoding
-	 *            {@link Encoding} the encoding
-	 * @param type
-	 *            {@link Class<T>} the type
-	 * @return the t {@link T}
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws JAXBException
-	 *             if an error was encountered while creating the JAXBContext, such as (but not limited to):
+	 * @param <T> the generic type
+	 * @param sourceFile {@link File} the source file
+	 * @param encoding {@link Encoding} the encoding
+	 * @param type the type
+	 * @return the t
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
 	 *             <li>No JAXB implementation was discovered</li>
 	 *             <li>Classes use JAXB annotations incorrectly</li>
@@ -382,13 +336,10 @@ public final class SerializationUtils {
 	/**
 	 * Serializes a given class (that has to implement Serializable) to a file using java-bean XML-serialization.
 	 *
-	 * @param serializableObject
-	 *            {@link Object} the serializable object
-	 * @param targetFile
-	 *            {@link File} the target file
-	 * @throws FileNotFoundException
-	 *             if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other
-	 *             reason
+	 * @param serializableObject {@link Object} the serializable object
+	 * @param targetFile {@link File} the target file
+	 * @throws FileNotFoundException if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened
+	 *             for any other reason
 	 */
 	public static void beansXmlEncode(final Object serializableObject, final File targetFile) throws FileNotFoundException {
 
@@ -407,16 +358,12 @@ public final class SerializationUtils {
 	/**
 	 * Deserializes a class from a given source-file that has been serialized using java-bean XML-serialization.
 	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param sourceFile
-	 *            {@link File} the source file
-	 * @param type
-	 *            {@link Class<T>} the type
-	 * @return the t {@link T}
-	 * @throws FileNotFoundException
-	 *             if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other
-	 *             reason
+	 * @param <T> the generic type
+	 * @param sourceFile {@link File} the source file
+	 * @param type the type
+	 * @return the t
+	 * @throws FileNotFoundException if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened
+	 *             for any other reason
 	 */
 	public static <T> T beansXmlDecode(final File sourceFile, final Class<T> type) throws FileNotFoundException {
 
@@ -437,15 +384,11 @@ public final class SerializationUtils {
 	/**
 	 * Serializes a given class (that has to implement Serializable) to a file using byte-serialization.
 	 *
-	 * @param serializableObject
-	 *            {@link Object} the serializable object
-	 * @param targetFile
-	 *            {@link File} the target file
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws FileNotFoundException
-	 *             if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other
-	 *             reason
+	 * @param serializableObject {@link Object} the serializable object
+	 * @param targetFile {@link File} the target file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws FileNotFoundException if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened
+	 *             for any other reason
 	 */
 	public static void objectSerialize(final Object serializableObject, final File targetFile) throws IOException, FileNotFoundException {
 
@@ -470,11 +413,9 @@ public final class SerializationUtils {
 	/**
 	 * Serializes a given class (that has to implement Serializable) using byte-serialization.
 	 *
-	 * @param serializableObject
-	 *            {@link Object} the serializable object
+	 * @param serializableObject {@link Object} the serializable object
 	 * @return the byte array output stream {@link ByteArrayOutputStream}
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static ByteArrayOutputStream objectSerialize(final Object serializableObject) throws IOException {
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
@@ -494,17 +435,12 @@ public final class SerializationUtils {
 	/**
 	 * Deserializes a class from a given source-file that has been serialized using byte-serialization and an.
 	 *
-	 * @param <T>
-	 *            the generic type of the class that is contained in the ByteArrayOutputStream
-	 * @param sourceFile
-	 *            {@link File} the source file to read the object from
-	 * @param type
-	 *            {@link Class<T>} the type that should be deserialized
-	 * @return the t {@link T} the class that was deserialized {@link ObjectOutputStream}.
-	 * @throws ClassNotFoundException
-	 *             Class of a serialized object cannot be found
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param <T> the generic type of the class that is contained in the ByteArrayOutputStream
+	 * @param sourceFile {@link File} the source file to read the object from
+	 * @param type the type that should be deserialized
+	 * @return the t the class that was deserialized {@link ObjectOutputStream}.
+	 * @throws ClassNotFoundException Class of a serialized object cannot be found
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static <T> T objectDeserialize(final File sourceFile, final Class<T> type) throws ClassNotFoundException, IOException {
 		ByteArrayOutputStream baos = null;
@@ -524,17 +460,12 @@ public final class SerializationUtils {
 	/**
 	 * Deserializes a class from a given ByteArrayOutputStream that has been serialized using byte-serialization.
 	 *
-	 * @param <T>
-	 *            the generic type of the class that is contained in the ByteArrayOutputStream
-	 * @param baos
-	 *            {@link ByteArrayOutputStream} the ByteArrayOutputStream to read the object from
-	 * @param type
-	 *            {@link Class<T>} the type that should be deserialized
-	 * @return the t {@link T} the class that was deserialized
-	 * @throws IOException
-	 *             if an I/O error occurs while reading the stream header of the input stream
-	 * @throws ClassNotFoundException
-	 *             Class of a serialized object cannot be found
+	 * @param <T> the generic type of the class that is contained in the ByteArrayOutputStream
+	 * @param baos {@link ByteArrayOutputStream} the ByteArrayOutputStream to read the object from
+	 * @param type the type that should be deserialized
+	 * @return the t the class that was deserialized
+	 * @throws IOException if an I/O error occurs while reading the stream header of the input stream
+	 * @throws ClassNotFoundException Class of a serialized object cannot be found
 	 */
 	public static <T> T objectDeserialize(final ByteArrayOutputStream baos, final Class<T> type) throws IOException, ClassNotFoundException {
 		ObjectInputStream in = null;
@@ -555,15 +486,11 @@ public final class SerializationUtils {
 	 * <p>
 	 * <b>BEWARE!</b> It's slow and only works for serializable data-structures.
 	 *
-	 * @param <T>
-	 *            the generic type of the handle to the data-structure
-	 * @param objectToClone
-	 *            {@link T} the data-structure to clone
-	 * @return the t {@link T} which now is a perfect clone of the source-data-structure
-	 * @throws ClassNotFoundException
-	 *             Class of a serialized object cannot be found
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param <T> the generic type of the handle to the data-structure
+	 * @param objectToClone the data-structure to clone
+	 * @return the t which now is a perfect clone of the source-data-structure
+	 * @throws ClassNotFoundException Class of a serialized object cannot be found
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static <T> T serialClone(final T objectToClone) throws ClassNotFoundException, IOException {
 		return serialCloneInternal(objectToClone);
@@ -572,15 +499,11 @@ public final class SerializationUtils {
 	/**
 	 * Internal implementation of serial-clone.
 	 *
-	 * @param <T>
-	 *            the generic type
-	 * @param x
-	 *            {@link T} the x
-	 * @return the t {@link T}
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws ClassNotFoundException
-	 *             Class of a serialized object cannot be found
+	 * @param <T> the generic type
+	 * @param x the x
+	 * @return the t
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws ClassNotFoundException Class of a serialized object cannot be found
 	 */
 	private static <T> T serialCloneInternal(final T x) throws IOException, ClassNotFoundException {
 

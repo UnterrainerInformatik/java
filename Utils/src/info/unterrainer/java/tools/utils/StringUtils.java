@@ -36,10 +36,8 @@ public class StringUtils {
 	/**
 	 * Returns a string consisting of a specific number of concatenated copies of an input string. For example, repeat("hey", 3) returns the string "heyheyhey".
 	 *
-	 * @param string
-	 *            {@link String} any non-null string
-	 * @param count
-	 *            {@link int} the number of times to repeat it; a nonnegative integer
+	 * @param string {@link String} any non-null string
+	 * @param count the number of times to repeat it; a nonnegative integer
 	 * @return the string {@link String} containing string repeated count times (the empty string if count is zero)
 	 */
 	public static String repeat(final String string, final int count) {
@@ -57,8 +55,7 @@ public class StringUtils {
 	/**
 	 * Gets the stack trace as a formatted String.
 	 *
-	 * @param throwable
-	 *            {@link Throwable} the throwable
+	 * @param throwable {@link Throwable} the throwable
 	 * @return the stack trace {@link String}
 	 */
 	public static String getStackTrace(final Throwable throwable) {
@@ -72,11 +69,9 @@ public class StringUtils {
 	/**
 	 * Contains check if the name contains any of the items in matches.
 	 *
-	 * @param matches
-	 *            {@link List<String>} the matches
-	 * @param name
-	 *            {@link String} the name
-	 * @return true ({@link boolean}), if successful
+	 * @param matches the matches
+	 * @param name {@link String} the name
+	 * @return true, if successful
 	 */
 	public static synchronized boolean contains(final List<String> matches, final String name) {
 		boolean result = false;
@@ -90,8 +85,7 @@ public class StringUtils {
 	 * Strips the leading and trailing quotes {@code (")} from a string if it starts with one and ends with one. Does not trim the string first; That's up to
 	 * you.
 	 *
-	 * @param text
-	 *            {@link String} the text to strip the quotes from
+	 * @param text {@link String} the text to strip the quotes from
 	 * @return the string {@link String} the text without the quotes or the original text, if the condition was not satisfied
 	 */
 	public static String stripQuotes(final String text) {

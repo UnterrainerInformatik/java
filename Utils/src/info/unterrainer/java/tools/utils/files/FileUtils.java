@@ -63,16 +63,11 @@ public final class FileUtils {
 	/**
 	 * Gets a part of a stream given by a start-index and end-index by lines.
 	 *
-	 * @param inputStream
-	 *            {@link InputStream} the input stream to read from
-	 * @param outputStream
-	 *            {@link OutputStream} the output stream to write to
-	 * @param startLineIndex
-	 *            {@link long} the start line index
-	 * @param endLineIndex
-	 *            {@link long} the end line index. If you want all until the file ends, just specify -1 here
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param inputStream {@link InputStream} the input stream to read from
+	 * @param outputStream {@link OutputStream} the output stream to write to
+	 * @param startLineIndex the start line index
+	 * @param endLineIndex the end line index. If you want all until the file ends, just specify -1 here
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void partOfByLines(final InputStream inputStream, final OutputStream outputStream, final long startLineIndex, final long endLineIndex)
 			throws IOException {
@@ -82,16 +77,11 @@ public final class FileUtils {
 	/**
 	 * Gets a part of a stream given by a start-index and end-index by words.
 	 *
-	 * @param inputStream
-	 *            {@link InputStream} the input stream to read from
-	 * @param outputStream
-	 *            {@link OutputStream} the output stream to write to
-	 * @param startWordIndex
-	 *            {@link long} the start word index
-	 * @param endWordIndex
-	 *            {@link long} the end word index. If you want all until the file ends, just specify -1 here
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param inputStream {@link InputStream} the input stream to read from
+	 * @param outputStream {@link OutputStream} the output stream to write to
+	 * @param startWordIndex the start word index
+	 * @param endWordIndex the end word index. If you want all until the file ends, just specify -1 here
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void partOfByWords(final InputStream inputStream, final OutputStream outputStream, final long startWordIndex, final long endWordIndex)
 			throws IOException {
@@ -136,14 +126,10 @@ public final class FileUtils {
 	/**
 	 * Gets a part of a stream given by a start-index and end-index by characters.
 	 *
-	 * @param inputStream
-	 *            {@link InputStream} the input stream to read from
-	 * @param outputStream
-	 *            {@link OutputStream} the output stream to write to
-	 * @param startCharacterIndex
-	 *            {@link long} the start character index
-	 * @param endCharacterIndex
-	 *            {@link long} the end character index. If you want all until the file ends, just specify -1 here
+	 * @param inputStream {@link InputStream} the input stream to read from
+	 * @param outputStream {@link OutputStream} the output stream to write to
+	 * @param startCharacterIndex the start character index
+	 * @param endCharacterIndex the end character index. If you want all until the file ends, just specify -1 here
 	 */
 	public static void partOfByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
 			final long endCharacterIndex) throws IOException {
@@ -153,22 +139,14 @@ public final class FileUtils {
 	/**
 	 * Gets a part of a stream given by a start-index and end-index.
 	 *
-	 * @param inputStream
-	 *            {@link InputStream} the input stream to read from
-	 * @param outputStream
-	 *            {@link OutputStream} the output stream to write to
-	 * @param startIndex
-	 *            {@link long} the start index
-	 * @param endIndex
-	 *            {@link long} the end index. If you want all until the file ends, just specify -1 here
-	 * @param indexIsLine
-	 *            {@link boolean} the index is line-controlled
-	 * @param indexIsWord
-	 *            {@link boolean} the index is word-controlled
-	 * @param indexIsCharacter
-	 *            {@link boolean} the index is character-controlled
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param inputStream {@link InputStream} the input stream to read from
+	 * @param outputStream {@link OutputStream} the output stream to write to
+	 * @param startIndex the start index
+	 * @param endIndex the end index. If you want all until the file ends, just specify -1 here
+	 * @param indexIsLine the index is line-controlled
+	 * @param indexIsWord the index is word-controlled
+	 * @param indexIsCharacter the index is character-controlled
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void partOf(final InputStream inputStream, final OutputStream outputStream, final long startIndex, final long endIndex,
 			final boolean indexIsLine, final boolean indexIsWord, final boolean indexIsCharacter) throws IOException {
@@ -200,17 +178,11 @@ public final class FileUtils {
 	/**
 	 * Gets a part of a stream given by a start-index and end-index by characters.
 	 *
-	 * @param inputStream
-	 *            {@link InputStream} the input stream to read from
-	 * @param outputStream
-	 *            {@link OutputStream} the output stream to write to
-	 * @param startCharacterIndex
-	 *            {@link long} the start character index
-	 * @param endCharacterIndex
-	 *            {@link long} the end character index
-	 * @return the part of by characters
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param inputStream {@link InputStream} the input stream to read from
+	 * @param outputStream {@link OutputStream} the output stream to write to
+	 * @param startCharacterIndex the start character index
+	 * @param endCharacterIndex the end character index
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void getPartOfByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
 			final long endCharacterIndex) throws IOException {
@@ -241,11 +213,9 @@ public final class FileUtils {
 	 * This method is by far the fastest method to do that.<br/>
 	 * Info: The word-count is done by counting spaces.
 	 *
-	 * @param input
-	 *            {@link String} the input string to scan
+	 * @param input {@link String} the input string to scan
 	 * @return the count properties {@link CountProperties}
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static CountProperties getCountPropertiesOf(final String input) throws IOException {
 		return getCountPropertiesOf(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
@@ -259,11 +229,9 @@ public final class FileUtils {
 	 * This method is by far the fastest method to do that.<br/>
 	 * Info: The word-count is done by counting spaces.
 	 *
-	 * @param file
-	 *            {@link File} the file to open for scanning
+	 * @param file {@link File} the file to open for scanning
 	 * @return the count properties {@link CountProperties}
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static CountProperties getCountPropertiesOf(final File file) throws IOException {
 		return getCountPropertiesOf(new BufferedInputStream(new FileInputStream(file)));
@@ -278,11 +246,9 @@ public final class FileUtils {
 	 * This method is by far the fastest method to do that.<br/>
 	 * Info: The word-count is done by counting spaces.
 	 *
-	 * @param inputStream
-	 *            {@link InputStream} the input stream to scan
+	 * @param inputStream {@link InputStream} the input stream to scan
 	 * @return the count properties {@link CountProperties}
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static CountProperties getCountPropertiesOf(final InputStream inputStream) throws IOException {
 		try {
@@ -314,11 +280,9 @@ public final class FileUtils {
 	/**
 	 * Copy directory.
 	 *
-	 * @param sourcePath
-	 *            path of the directory which should be copied
-	 * @param destinationPath
-	 *            path where the directory gets copied to
-	 * @return true ({@link boolean}), if successful
+	 * @param sourcePath path of the directory which should be copied
+	 * @param destinationPath path where the directory gets copied to
+	 * @return true, if successful
 	 */
 	public static boolean copyDirectory(final File sourcePath, final File destinationPath) {
 		if (sourcePath.isDirectory()) {
@@ -350,13 +314,9 @@ public final class FileUtils {
 	/**
 	 * Copies the given file to the given destination.
 	 *
-	 * @param source
-	 *            {@link File} the source
-	 * @param destination
-	 *            {@link File} the destination
-	 * @return true is file was copied successfully
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param source {@link File} the source
+	 * @param destination {@link File} the destination
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@SuppressWarnings("resource")
 	public static void copyFile(final File source, final File destination) throws IOException {
@@ -375,11 +335,9 @@ public final class FileUtils {
 	/**
 	 * Copy directory.
 	 *
-	 * @param sourcePath
-	 *            path of the directory which should be copied
-	 * @param destinationPath
-	 *            path where the directory gets copied to
-	 * @return true ({@link boolean}), if successful
+	 * @param sourcePath path of the directory which should be copied
+	 * @param destinationPath path where the directory gets copied to
+	 * @return true, if successful
 	 */
 	public static boolean copyDirectory(final String sourcePath, final String destinationPath) {
 		final File source = new File(sourcePath);
@@ -390,12 +348,9 @@ public final class FileUtils {
 	/**
 	 * Copy a file.
 	 *
-	 * @param srcFile
-	 *            the source file
-	 * @param dstFile
-	 *            the destination file
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param srcFile the source file
+	 * @param dstFile the destination file
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void copyFile(final String srcFile, final String dstFile) throws IOException {
 		final File src = new File(srcFile);
@@ -432,10 +387,8 @@ public final class FileUtils {
 	/**
 	 * Creates the directory/sub-directory-structure as a sibling of the given parent directory (if it doesn't already exist in the first place).
 	 *
-	 * @param parent
-	 *            {@link File} the parent directory to create the new structure in
-	 * @param directory
-	 *            {@link String} the directory or directory with sub-directories to create, if it doesn't already exist
+	 * @param parent {@link File} the parent directory to create the new structure in
+	 * @param directory {@link String} the directory or directory with sub-directories to create, if it doesn't already exist
 	 */
 	public static void createDirectory(final File parent, final String directory) {
 		final File dir = new File(parent, directory);
@@ -447,11 +400,9 @@ public final class FileUtils {
 	/**
 	 * creates a file with known name.
 	 *
-	 * @param fileName
-	 *            file name and path
+	 * @param fileName file name and path
 	 * @return file
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static File createFile(final String fileName) throws IOException {
 		final File file = new File(fileName);
@@ -462,12 +413,9 @@ public final class FileUtils {
 	/**
 	 * Creates random file content in a given file.
 	 *
-	 * @param file
-	 *            {@link File} the file to create with random content
-	 * @param length
-	 *            {@link long} the length of the random content in bytes
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param file {@link File} the file to create with random content
+	 * @param length the length of the random content in bytes
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void createRandomFileContent(final File file, final long length) throws IOException {
 		FileOutputStream fos;
@@ -484,9 +432,8 @@ public final class FileUtils {
 	/**
 	 * Delete a directory with all its sub-directories and files.
 	 *
-	 * @param directory
-	 *            which gets deleted
-	 * @return true ({@link boolean}), if successful
+	 * @param directory which gets deleted
+	 * @return true, if successful
 	 */
 	public static boolean deleteDirectory(final File directory) {
 		if (!directory.exists() || !directory.isDirectory()) {
@@ -509,9 +456,8 @@ public final class FileUtils {
 	/**
 	 * Delete a directory with all its sub-directories and files.
 	 *
-	 * @param directory
-	 *            path to the directory which gets deleted
-	 * @return true ({@link boolean}), if successful
+	 * @param directory path to the directory which gets deleted
+	 * @return true, if successful
 	 */
 	public static boolean deleteDirectory(final String directory) {
 		final File dir = new File(directory);
@@ -521,8 +467,7 @@ public final class FileUtils {
 	/**
 	 * Delete file.
 	 *
-	 * @param fileName
-	 *            the file name
+	 * @param fileName the file name
 	 * @return true, if delete file
 	 */
 	public static boolean deleteFile(final String fileName) {
@@ -537,8 +482,7 @@ public final class FileUtils {
 	/**
 	 * Returns the file extension.
 	 *
-	 * @param fileName
-	 *            {@link String} the file name
+	 * @param fileName {@link String} the file name
 	 * @return String file extension
 	 */
 	public static String getFileExtension(final String fileName) {
@@ -548,8 +492,7 @@ public final class FileUtils {
 	/**
 	 * Returns the file extension.
 	 *
-	 * @param fullFileName
-	 *            {@link String} the full file name
+	 * @param fullFileName {@link String} the full file name
 	 * @return String : file extension
 	 */
 	public static String getFileNameNoExt(final String fullFileName) {
@@ -565,8 +508,7 @@ public final class FileUtils {
 	/**
 	 * Returns the short filename for a filename with path.
 	 *
-	 * @param fullFileName
-	 *            {@link String} the full file name
+	 * @param fullFileName {@link String} the full file name
 	 * @return short file name
 	 */
 	public static String getFileNameOnly(final String fullFileName) {
@@ -589,8 +531,7 @@ public final class FileUtils {
 	/**
 	 * Returns the directory the file is located in.
 	 *
-	 * @param fullFileName
-	 *            {@link String} the full file name
+	 * @param fullFileName {@link String} the full file name
 	 * @return file directory
 	 */
 	public static String getFilePath(final String fullFileName) {
@@ -611,8 +552,7 @@ public final class FileUtils {
 	/**
 	 * Gets the file-name from a string containing a path and file-name.
 	 *
-	 * @param fileNameAndPath
-	 *            {@link String} the file name and path to get the file-name from
+	 * @param fileNameAndPath {@link String} the file name and path to get the file-name from
 	 * @return the name {@link String} of the file
 	 */
 	public static String getName(final String fileNameAndPath) {
@@ -626,8 +566,7 @@ public final class FileUtils {
 	/**
 	 * Gets the path from a string containing a file-name.
 	 *
-	 * @param fileNameAndPath
-	 *            {@link String} the file name and path to get the path from
+	 * @param fileNameAndPath {@link String} the file name and path to get the path from
 	 * @return the path {@link String} or an empty string, if the given fileNameAndPath only contained a file-name.
 	 */
 	public static String getPath(final String fileNameAndPath) {
@@ -641,9 +580,8 @@ public final class FileUtils {
 	/**
 	 * Checks if is file existing.
 	 *
-	 * @param fileName
-	 *            {@link String} the file name
-	 * @return true {@link Boolean} , if is file existing
+	 * @param fileName {@link String} the file name
+	 * @return true, if is file existing
 	 */
 	public static boolean isFileExisting(final String fileName) {
 		final File file = new File(fileName);
@@ -654,12 +592,9 @@ public final class FileUtils {
 	 * Load an external component if and only if the given component is null. Returns the found external component's content or the given content, if it wasn't
 	 * null in the first place.
 	 *
-	 * @param content
-	 *            {@link String} the component's content
-	 * @param file
-	 *            {@link File} the file
-	 * @param encoding
-	 *            {@link Encoding} the encoding
+	 * @param content {@link String} the component's content
+	 * @param file {@link File} the file
+	 * @param encoding {@link Encoding} the encoding
 	 * @return the string {@link String}
 	 */
 	public static String loadComponentIfNull(final String content, final File file, final Encoding encoding) {
@@ -676,8 +611,7 @@ public final class FileUtils {
 	/**
 	 * Loads a properties-file from disk and returns a properties-object.
 	 *
-	 * @param pathAndNameAndExtension
-	 *            {@link String} the path and name and extension
+	 * @param pathAndNameAndExtension {@link String} the path and name and extension
 	 * @return the properties {@link Properties} that where read from file
 	 */
 	public static Properties loadProperties(final String pathAndNameAndExtension) throws IOException {
@@ -691,12 +625,9 @@ public final class FileUtils {
 	/**
 	 * Opens a file either to be replaced by a new content or to append.
 	 *
-	 * @param file
-	 *            {@link File} the file
-	 * @param encoding
-	 *            {@link Encoding} the encoding
-	 * @param append
-	 *            {@link Boolean} the append
+	 * @param file {@link File} the file
+	 * @param encoding {@link Encoding} the encoding
+	 * @param append the append
 	 * @return the prints the writer {@link PrintWriter}
 	 */
 	public static PrintWriter openFile(final File file, final Encoding encoding, final boolean append) throws IOException {
@@ -706,8 +637,7 @@ public final class FileUtils {
 	/**
 	 * Reads the contents of a file and returns it as a byteArray taking into account all the exceptions that might occur.
 	 *
-	 * @param file
-	 *            {@link File} the file
+	 * @param file {@link File} the file
 	 * @return the string {@link String}
 	 */
 	public static byte[] readFileToByteArray(final File file) throws IOException {
@@ -717,8 +647,7 @@ public final class FileUtils {
 	/**
 	 * Open a file and read its content to a list of strings.
 	 *
-	 * @param file
-	 *            the path to the file to read
+	 * @param file the path to the file to read
 	 * @return an ArrayList containing all the lines of the read file
 	 */
 	public static List<String> readFileToList(final File file) throws IOException {
@@ -736,10 +665,8 @@ public final class FileUtils {
 	/**
 	 * Reads the contents of a file and returns it as a string taking into account all the exceptions that might occur.
 	 *
-	 * @param file
-	 *            {@link File} the file to read
-	 * @param encoding
-	 *            {@link Encoding} the encoding to expect when putting the file-content to a string
+	 * @param file {@link File} the file to read
+	 * @param encoding {@link Encoding} the encoding to expect when putting the file-content to a string
 	 * @return the string {@link String} that consists of the file-content
 	 */
 	public static String readFileToString(final File file, final Encoding encoding) throws IOException {
@@ -749,10 +676,8 @@ public final class FileUtils {
 	/**
 	 * Reads the contents of a file and returns it as a List<String> taking into account all the exceptions that might occur.
 	 *
-	 * @param file
-	 *            {@link File} the file to read
-	 * @param encoding
-	 *            {@link Encoding} the encoding to expect when putting the file-content to a string
+	 * @param file {@link File} the file to read
+	 * @param encoding {@link Encoding} the encoding to expect when putting the file-content to a string
 	 * @return the string {@link String} that consists of the file-content
 	 */
 	public static List<String> readFileToList(final File file, final Encoding encoding) throws IOException {
@@ -768,12 +693,9 @@ public final class FileUtils {
 	/**
 	 * Write a list of strings to a file separated by a newline character. Always appends to the target-file.
 	 *
-	 * @param file
-	 *            path to the file
-	 * @param list
-	 *            list of strings which gets written into the file
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param file path to the file
+	 * @param list list of strings which gets written into the file
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void writeListToFile(final File file, final List<String> list) throws IOException {
 		writeListToFile(file, list, true);
@@ -782,14 +704,10 @@ public final class FileUtils {
 	/**
 	 * Write a list of strings to a file separated by a newline character.
 	 *
-	 * @param file
-	 *            path to the file
-	 * @param list
-	 *            list of strings which gets written into the file
-	 * @param append
-	 *            true = append to file, false = overwrite
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param file path to the file
+	 * @param list list of strings which gets written into the file
+	 * @param append true = append to file, false = overwrite
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void writeListToFile(final File file, final List<String> list, final boolean append) throws IOException {
 		FileWriter fstream = null;
@@ -806,14 +724,10 @@ public final class FileUtils {
 	 * <p>
 	 * If the file already exists, the content will be appended (append = true).
 	 *
-	 * @param file
-	 *            {@link File} the file to write to. May or may not exist.
-	 * @param encoding
-	 *            {@link Encoding} the encoding to be used
-	 * @param data
-	 *            {@link String} the data to be written
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param file {@link File} the file to write to. May or may not exist.
+	 * @param encoding {@link Encoding} the encoding to be used
+	 * @param data {@link String} the data to be written
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void writeToFile(final File file, final Encoding encoding, final String data) throws IOException {
 		writeToFile(file, encoding, data, true);
@@ -822,14 +736,10 @@ public final class FileUtils {
 	/**
 	 * Writes a string to file taking into account the character encoding and all exceptions that might be thrown.
 	 *
-	 * @param file
-	 *            {@link File} the file to write to. May or may not exist.
-	 * @param encoding
-	 *            {@link Encoding} the encoding to be used
-	 * @param data
-	 *            {@link String} the data to be written
-	 * @param append
-	 *            {@link Boolean} a flag indicating if the content of the file should be overwritten (replaced) or appended at the end of the existing file
+	 * @param file {@link File} the file to write to. May or may not exist.
+	 * @param encoding {@link Encoding} the encoding to be used
+	 * @param data {@link String} the data to be written
+	 * @param append a flag indicating if the content of the file should be overwritten (replaced) or appended at the end of the existing file
 	 */
 	public static void writeToFile(final File file, final Encoding encoding, final String data, final boolean append) throws IOException {
 		OutputStream out = null;
@@ -852,8 +762,7 @@ public final class FileUtils {
 	/**
 	 * Gets all sub-directories of given directory.
 	 *
-	 * @param directory
-	 *            the path of the directory to scan
+	 * @param directory the path of the directory to scan
 	 * @return a file array containing all the sub-directories found
 	 */
 	public File[] getSubDirectories(final String directory) {
@@ -870,8 +779,7 @@ public final class FileUtils {
 	/**
 	 * Creates the contains file name filter.
 	 *
-	 * @param matches
-	 *            {@link List<String>} the matches
+	 * @param matches the matches
 	 * @return the filename filter {@link FilenameFilter}
 	 */
 	public static FilenameFilter createContainsFileNameFilter(final List<String> matches) {
@@ -886,10 +794,7 @@ public final class FileUtils {
 	/**
 	 * Creates the replaced contains file name filter.
 	 *
-	 * @param matches
-	 *            {@link List<String>} the matches
-	 * @param replaceString
-	 *            {@link String} the replace string
+	 * @param matches the matches
 	 * @return the filename filter {@link FilenameFilter}
 	 */
 	public static FilenameFilter createSubStringContainsFileNameFilter(final List<String> matches, final String importInterFacePkg) {
@@ -904,8 +809,7 @@ public final class FileUtils {
 	/**
 	 * Creates the contains file filter.
 	 *
-	 * @param matches
-	 *            {@link List<String>} the matches
+	 * @param matches the matches
 	 * @return the file filter {@link FileFilter}
 	 */
 	public static FileFilter createContainsFileFilter(final List<String> matches) {
@@ -920,9 +824,8 @@ public final class FileUtils {
 	/**
 	 * Creates the file list.
 	 *
-	 * @param path
-	 *            {@link String} the path
-	 * @return the list {@link List<File>}
+	 * @param path {@link String} the path
+	 * @return the list
 	 */
 	public static List<File> createRecursiveFileList(final String path) {
 		List<File> result = new ArrayList<File>();
@@ -941,9 +844,8 @@ public final class FileUtils {
 	/**
 	 * Assure that the given directory exists.
 	 *
-	 * @param targetFolder
-	 *            {@link String} the target folder
-	 * @return true ({@link boolean}), if successful
+	 * @param targetFolder {@link String} the target folder
+	 * @return true, if successful
 	 */
 	public static boolean assureDirExists(final String targetFolder) {
 		File f = new File(targetFolder);

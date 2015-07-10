@@ -79,8 +79,7 @@ public class Fader {
 	/**
 	 * Gets or sets the faders value. Automatically recalculates the percentage accordingly.
 	 *
-	 * @param value
-	 *            the current value of the fader
+	 * @param value the current value of the fader
 	 */
 	public void setValue(double value) {
 		this.value = interval.clamp(value);
@@ -90,8 +89,7 @@ public class Fader {
 	/**
 	 * Gets or sets the percentage for the slider. A double value between 0.0 and 1.0.
 	 *
-	 * @param value
-	 *            the value of the slider in percent
+	 * @param value the value of the slider in percent
 	 */
 	public void setPercentage(double value) {
 		this.value = getValueAtPercentage(clampPercent(value));
@@ -111,8 +109,7 @@ public class Fader {
 	/**
 	 * Getter for the value at a certain percentage of this {@link Fader}.
 	 *
-	 * @param percentage
-	 *            the percentage to get the value for
+	 * @param percentage the percentage to get the value for
 	 * @return what the value of the fader would be if it was at the given percentage
 	 */
 	private double getValueAtPercentage(double percentage) {
@@ -125,8 +122,7 @@ public class Fader {
 	/**
 	 * Getter for the percentage at a certain value of this {@link Fader}.
 	 *
-	 * @param value
-	 *            the value to get the percentage for
+	 * @param value the value to get the percentage for
 	 * @return what the percentage of the fader would be if it was at the given value
 	 */
 	private double getPercentageAtValue(double value) {
@@ -144,7 +140,7 @@ public class Fader {
 	}
 
 	/**
-	 * Gets or sets the quadratic value of the fader: y = x * x
+	 * Gets quadratic value of the fader: y = x * x
 	 *
 	 * @return value
 	 */
@@ -153,7 +149,7 @@ public class Fader {
 	}
 
 	/**
-	 * Gets or sets the quadratic value of the fader: y = x * x
+	 * Sets the quadratic value of the fader: y = x * x
 	 *
 	 * @param value
 	 */
@@ -162,7 +158,7 @@ public class Fader {
 	}
 
 	/**
-	 * Gets or sets the cubic value of the fader: y = x * x * x
+	 * Gets the cubic value of the fader: y = x * x * x
 	 *
 	 * @return value
 	 */
@@ -171,7 +167,7 @@ public class Fader {
 	}
 
 	/**
-	 * Gets or sets the cubic value of the fader: y = x * x * x
+	 * Sets the cubic value of the fader: y = x * x * x
 	 *
 	 * @param value
 	 */
@@ -180,7 +176,7 @@ public class Fader {
 	}
 
 	/**
-	 * Gets or sets the exponential value of the fader: y = (20^x - 1) / 20
+	 * Gets exponential value of the fader: y = (20^x - 1) / 20
 	 *
 	 * @return value
 	 */
@@ -189,7 +185,7 @@ public class Fader {
 	}
 
 	/**
-	 * Gets or sets the exponential value of the fader: y = (20^x - 1) / 20
+	 * Sets the exponential value of the fader: y = (20^x - 1) / 20
 	 *
 	 * @param value
 	 */
@@ -198,7 +194,7 @@ public class Fader {
 	}
 
 	/**
-	 * Gets the bidirectional slow start: y = (cos((x - 1)* PI) + 1) / 2
+	 * Gets the bidirectional slow start value: y = (cos((x - 1)* PI) + 1) / 2
 	 *
 	 * @return value
 	 */
@@ -207,6 +203,7 @@ public class Fader {
 	}
 
 	/**
+	 * Sets the bidirectional slow start value: y = (cos((x - 1)* PI) + 1) / 2
 	 *
 	 * @param value
 	 */
@@ -224,7 +221,7 @@ public class Fader {
 	}
 
 	/**
-	 * Gets the bidirectional quick start: y = ((2x - 1)^3+1)/2
+	 * Sets the bidirectional quick start: y = ((2x - 1)^3+1)/2
 	 *
 	 * @param value
 	 */
