@@ -22,7 +22,8 @@
 
 The general JAVA tools section of our GIT repository is free. You may copy, use or rewrite every single one of its contained projects to your hearts content.
 In order to get help with basic GIT commands you may try [the GIT cheat-sheet][2] on our [homepage][1].
-
+  
+    
 ## utils
 
 This jar contains various utility-classes used throughout our programs.  
@@ -30,7 +31,7 @@ Feel free to use them or help correcting errors or writing tests on the develop-
 
 For additional information check the `readme.md` file in the sub-directory.  
 
-#### Apache Maven artifact to use in your pom
+##### Apache Maven artifact to use in your pom
 ```xml
 <dependency>
     <groupId>info.unterrainer.java.tools</groupId>
@@ -38,14 +39,15 @@ For additional information check the `readme.md` file in the sub-directory.
     <version>0.2</version>
 </dependency>
 ```
-
+  
+  
 ## data-structures
 
 This jar contains several classes designed to do common tasks.
 
 For additional information check the `readme.md` file in the sub-directory.  
 
-#### Apache Maven artifact to use in your pom
+##### Apache Maven artifact to use in your pom
 ```xml
 <dependency>
     <groupId>info.unterrainer.java.tools</groupId>
@@ -53,7 +55,8 @@ For additional information check the `readme.md` file in the sub-directory.
     <version>0.2</version>
 </dependency>
 ```
-
+  
+  
 ## console-progressbar
 
 The console-progressbar is designed to show progress when writing long-running console-applications.  
@@ -61,7 +64,7 @@ It was designed to be used with consoles that support control-characters (like c
 
 For additional information check the `readme.md` file in the sub-directory.  
 
-#### Apache Maven artifact to use in your pom
+##### Apache Maven artifact to use in your pom
 ```xml
 <dependency>
     <groupId>info.unterrainer.java.tools.reporting</groupId>
@@ -69,7 +72,8 @@ For additional information check the `readme.md` file in the sub-directory.
     <version>0.2</version>
 </dependency>
 ```
-
+  
+  
 ## splitstopwatch
 
 This class implements a stopWatch.
@@ -78,7 +82,7 @@ Additionally to the normal stopWatch-functionality it may be used to debug out s
 
 For additional information check the `readme.md` file in the sub-directory.  
 
-#### Apache Maven artifact to use in your pom
+##### Apache Maven artifact to use in your pom
 ```xml
 <dependency>
     <groupId>info.unterrainer.java.tools.reporting</groupId>
@@ -86,7 +90,8 @@ For additional information check the `readme.md` file in the sub-directory.
     <version>0.2</version>
 </dependency>
 ```
-
+  
+  
 ## csv-tools
 
 This library should ease dealing with (admittedly legacy) CSV files.  
@@ -94,7 +99,7 @@ For the younger ones: CSV means Comma Separated Values and is a very old system 
 
 For additional information check the `readme.md` file in the sub-directory.  
 
-#### Apache Maven artifact to use in your pom
+##### Apache Maven artifact to use in your pom
 ```xml
 <dependency>
     <groupId>info.unterrainer.java.tools</groupId>
