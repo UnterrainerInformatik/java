@@ -22,8 +22,7 @@
 
 The general JAVA tools section of our GIT repository is free. You may copy, use or rewrite every single one of its contained projects to your hearts content.
 In order to get help with basic GIT commands you may try [the GIT cheat-sheet][2] on our [homepage][1].
-  
-    
+
 ## utils
 
 This jar contains various utility-classes used throughout our programs.  
@@ -39,8 +38,7 @@ For additional information check the `readme.md` file in the sub-directory.
     <version>0.2</version>
 </dependency>
 ```
-  
-  
+
 ## data-structures
 
 This jar contains several classes designed to do common tasks.
@@ -55,8 +53,7 @@ For additional information check the `readme.md` file in the sub-directory.
     <version>0.2</version>
 </dependency>
 ```
-  
-  
+
 ## console-progressbar
 
 The console-progressbar is designed to show progress when writing long-running console-applications.  
@@ -72,8 +69,7 @@ For additional information check the `readme.md` file in the sub-directory.
     <version>0.2</version>
 </dependency>
 ```
-  
-  
+
 ## splitstopwatch
 
 This class implements a stopWatch.
@@ -90,8 +86,7 @@ For additional information check the `readme.md` file in the sub-directory.
     <version>0.2</version>
 </dependency>
 ```
-  
-  
+
 ## csv-tools
 
 This library should ease dealing with (admittedly legacy) CSV files.  
