@@ -1,4 +1,4 @@
-```
+```java
 /**************************************************************************
  * 
  * Copyright (c) Unterrainer Informatik OG.
@@ -17,25 +17,49 @@
  * 
  ***************************************************************************/
 ```
+ 
+# csv-tools
 
-You may copy, use or rewrite every single one of its contained projects to your hearts content.
-In order to get help with basic GIT commands you may try [the GIT cheat-sheet][2] on our [homepage][1].
+This library should ease dealing with (admittedly legacy) CSV files.  
+For the younger ones: CSV means Comma Separated Values and is a very old system to write lists to files. It's commonly used to export to Excel since that is the default program to open .csv files on most systems.  
+You may read or write those files using this library and you may specify all possible variations of different control-characters like new-line or end-of-row (or quoting).  
 
-# Csvs
+#### Example CsvReader
+```java
+StringReader stringReader = new StringReader("\"test\";test1;A 01;t;;");
 
-This class implements tools that should support you when you have to deal with comma-separated-value files.
+csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
+List<String> row = csvReader.readRow();
+```
 
-## CsvReader
+#### Example CsvWriter
+```java
+CsvWriter csvWriter = CsvWriter.builder().stringWriter(stringWriter).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
 
-`under construction`
+csvWriter.write("Great");
+csvWriter.write("Totally");
+csvWriter.write("This is a" + newLine + "break");
+// The next two lines do the same as calling csvWriter.writeLine("");
+csvWriter.write();
+csvWriter.writeLine();
 
-## CsvWriter
+csvWriter.write();
+csvWriter.write("Gr;eat");
+csvWriter.writeLine("Totally");
 
-`under construction`
+csvWriter.write("Great");
+csvWriter.write("ssfe\"s");
+csvWriter.write("");
+csvWriter.write("Totally");
 
-## Example
-	
-`under construction`
+csvWriter.close();
+```
 
-[1]: http://www.unterrainer.info
-[2]: http://www.unterrainer.info/Home/Coding
+#### Apache Maven artifact to use in your pom
+```xml
+<dependency>
+    <groupId>info.unterrainer.java.tools</groupId>
+    <artifactId>csv-tools</artifactId>
+    <version>0.2</version>
+</dependency>
+```

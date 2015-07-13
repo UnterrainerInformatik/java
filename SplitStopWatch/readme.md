@@ -1,4 +1,4 @@
-```
+```java
 /**************************************************************************
  * 
  * Copyright (c) Unterrainer Informatik OG.
@@ -17,11 +17,8 @@
  * 
  ***************************************************************************/
 ```
-
-You may copy, use or rewrite every single one of its contained projects to your hearts content.
-In order to get help with basic GIT commands you may try [the GIT cheat-sheet][2] on our [homepage][1].
-
-# SplitStopWatch
+ 
+# splitstopwatch
 
 This class implements a stopWatch.
 
@@ -36,8 +33,8 @@ This class is automatically created using millisecond-precision. If you want to 
 All public methods within this class are synchronized so you may use it concurrently within many threads.
 It has a property 'isActive' that defaults to true. When this is set to false all calls to this class are aborted within a single if-statement in the called method. This is a convenience function so that you may leave your logging-code in the production code.
 
-## Example
-
+#### Example
+    
 ```java
 SplitStopWatch ssw = new SplitStopWatch();
 ssw.start("started.");
@@ -47,5 +44,11 @@ ssw.split("split.");
 ssw.stop("stopped.");
 ```
 
-[1]: http://www.unterrainer.info
-[2]: http://www.unterrainer.info/Home/Coding
+#### Apache Maven artifact to use in your pom
+```xml
+<dependency>
+    <groupId>info.unterrainer.java.tools.reporting</groupId>
+    <artifactId>splitstopwatch</artifactId>
+    <version>0.2</version>
+</dependency>
+```
