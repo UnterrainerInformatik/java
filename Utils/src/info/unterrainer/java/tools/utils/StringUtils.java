@@ -25,13 +25,10 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
-public class StringUtils {
+import lombok.experimental.UtilityClass;
 
-	/**
-	 * Private constructor in order to hide constructor of static helper-class.
-	 */
-	private StringUtils() {
-	}
+@UtilityClass
+public class StringUtils {
 
 	/**
 	 * Returns a string consisting of a specific number of concatenated copies of an input string. For example, repeat("hey", 3) returns the string "heyheyhey".

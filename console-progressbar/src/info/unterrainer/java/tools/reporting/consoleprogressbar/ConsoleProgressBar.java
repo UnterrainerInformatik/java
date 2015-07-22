@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * This class enables your console-applications to draw a progress-bar.
@@ -41,6 +42,7 @@ import lombok.Setter;
  * </table>
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Accessors(fluent = true)
 public class ConsoleProgressBar {
 
 	@Getter
@@ -88,8 +90,7 @@ public class ConsoleProgressBar {
 	/**
 	 * Updates the bar to a given value.
 	 *
-	 * @param v
-	 *            the value to set the bar to
+	 * @param v the value to set the bar to
 	 * @return the console progress bar
 	 */
 	public ConsoleProgressBar updateValue(double v) {
@@ -101,8 +102,7 @@ public class ConsoleProgressBar {
 	/**
 	 * Updates the bar by a given value.
 	 *
-	 * @param v
-	 *            the value
+	 * @param v the value
 	 * @return the console progress bar
 	 */
 	public ConsoleProgressBar updateValueBy(double v) {
@@ -114,8 +114,7 @@ public class ConsoleProgressBar {
 	/**
 	 * Updates the bar to a given percentage.
 	 *
-	 * @param p
-	 *            the percentage to set the bar to
+	 * @param p the percentage to set the bar to
 	 * @return the console progress bar
 	 */
 	public ConsoleProgressBar updatePercentage(double p) {
@@ -127,8 +126,7 @@ public class ConsoleProgressBar {
 	/**
 	 * Updates the bar by a given percentage.
 	 *
-	 * @param p
-	 *            the percentage
+	 * @param p the percentage
 	 * @return the console progress bar
 	 */
 	public ConsoleProgressBar updatePercentageBy(double p) {
@@ -165,8 +163,7 @@ public class ConsoleProgressBar {
 	 * Please call this as frequent as possible. The real draw-call will only be issued if there really has been a change in the graphical representation of the
 	 * bar.
 	 *
-	 * @param ps
-	 *            the print-stream to draw to
+	 * @param ps the print-stream to draw to
 	 * @return the console progress bar
 	 */
 	public ConsoleProgressBar draw(PrintStream ps) {

@@ -52,19 +52,15 @@ import org.xml.sax.InputSource;
 
 import info.unterrainer.java.tools.utils.files.Encoding;
 import info.unterrainer.java.tools.utils.files.FileUtils;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 @SuppressWarnings({ "unchecked" })
 public final class SerializationUtils {
 
 	private static final String JAXB_TRANSFORM_INDENT_AMOUNT = "{http://xml.apache.org/xslt}indent-amount";
 	private static final String JAXB_TRANSFORM_PROPERTY_YES = "yes";
 	private static final String JAXB_TRANSFORM_PROPERTY_NO = "no";
-
-	/**
-	 * Private constructor in order to hide constructor of static helper-class.
-	 */
-	private SerializationUtils() {
-	}
 
 	/**
 	 * Serializes a given class (that has to implement Serializable) to a file using built in JaxB XML-serialization. Your file is written 'as-is'. No changes

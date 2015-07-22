@@ -22,13 +22,12 @@ package info.unterrainer.java.tools.csvtools;
 
 import java.io.Closeable;
 
+import lombok.Getter;
+
 /**
  * The Class CsvBase.
  * <p>
  * This is the base-class for both the reader and the writer. It's mainly used to share default-values.
- *
- * @author GEUNT
- * @since 20.09.2013
  */
 public abstract class CsvBase implements Closeable {
 
@@ -55,15 +54,18 @@ public abstract class CsvBase implements Closeable {
 	/**
 	 * The value of the column separator that is used by the program.
 	 */
+	@Getter
 	protected Character columnSeparator = DEFAULT_COLUMN_SEPARATOR;
 
 	/**
 	 * The value of the field delimiter that is used by the program.
 	 */
+	@Getter
 	protected String fieldDelimiter = DEFAULT_FIELD_DELIMITER;
 
 	/**
 	 * The value of the row separator that is used by the program.
 	 */
+	@Getter
 	protected String rowSeparator = DEFAULT_ROW_SEPARATOR;
 }

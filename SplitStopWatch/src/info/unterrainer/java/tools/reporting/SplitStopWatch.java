@@ -26,6 +26,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * This class implements a stopWatch.
@@ -47,6 +50,7 @@ import lombok.Builder;
  * It has a property 'isActive' that defaults to true. When this is set to false all calls to this class are aborted within a single if-statement in the called
  * method. This is a convenience function so that you may leave your logging-code in the production code.
  */
+@Accessors(fluent = true)
 public class SplitStopWatch {
 
 	/**
@@ -62,23 +66,75 @@ public class SplitStopWatch {
 	private static final String COMMAND_RESET = "RESET";
 	private static final String COMMAND_SPLIT_AND_STOP = "SPLITANDSTOP";
 
-	private boolean active = true;
-
 	private long startTime;
 	private long time;
 	private long totalTime;
 	private boolean isRunning;
-
-	private boolean nanoPrecision = false;
 
 	private final PrintStream printStream;
 
 	private Logger logger;
 	private Level logLevel;
 
+	/**
+	 * When this is set to false all calls to this class are aborted within a single if-statement in the called method. This is a convenience function so that
+	 * you may leave your logging-code in the production code.
+	 *
+	 * @param isActive the new active
+	 * @return true, or false.
+	 */
+	@Getter
+	@Setter
+	private boolean active = true;
+
+	/**
+	 * A flag indicating the precision of the means of measurement used. This may have a small performance impact.
+	 *
+	 * @param isNanoPrecision the new nanosecond precision
+	 * @return true if nanosecond-precision is used, false if millisecond-precision is used.
+	 */
+	@Getter
+	@Setter
+	private boolean nanoPrecision = false;
+
+	/**
+	 * The prefix is written every time an output is made (if this default behavior isn't turned off using setDisplayPrefix()).
+	 *
+	 * @param prefixFormatString the new prefix format string
+	 * @return The format string for a Formatter.
+	 */
+	@Getter
+	@Setter
 	private String prefixFormatString = FORMAT_STRING_TOTAL_SPLIT_OWN_MS;
+
+	/**
+	 * A flag indicating whether a given prefix (the default one or set one) is printed in front of the actual time or not.
+	 *
+	 * @param displayPrefix the new display prefix
+	 * @return true if the prefix is written, false otherwise.
+	 */
+	@Getter
+	@Setter
 	private boolean displayPrefix = true;
+
+	/**
+	 * A flag indicating if the stream is flushed immediately after each write.
+	 *
+	 * @param isFlushImmediately a boolean parameter indicating if flush is automatically called after each write-operation
+	 * @return true if the stream is flushed immediately after each write, false otherwise.
+	 */
+	@Getter
+	@Setter
 	private boolean flushImmediately;
+
+	/**
+	 * The string which is used when outputting one indent. The default value are three spaces per indent, so this string consists of three spaces per default.
+	 *
+	 * @param indentString the new indent string
+	 * @return The indentString currently used.
+	 */
+	@Getter
+	@Setter
 	private String indentString = "  ";
 
 	private final float NANO_CONVERSION_QUOTIENT = 1000000f;
@@ -95,8 +151,7 @@ public class SplitStopWatch {
 	/**
 	 * Instantiates a new split stop watch.
 	 *
-	 * @param logger
-	 *            {@link Logger} the logger to use for output (default log-level is INFO)
+	 * @param logger {@link Logger} the logger to use for output (default log-level is INFO)
 	 */
 	public SplitStopWatch(final Logger logger) {
 		this.logger = logger;
@@ -107,10 +162,8 @@ public class SplitStopWatch {
 	/**
 	 * Instantiates a new split stop watch.
 	 *
-	 * @param logger
-	 *            {@link Logger} the logger to use for output (default log-level is INFO)
-	 * @param level
-	 *            {@link Level} the log-level
+	 * @param logger {@link Logger} the logger to use for output (default log-level is INFO)
+	 * @param level {@link Level} the log-level
 	 */
 	public SplitStopWatch(final Logger logger, final Level level) {
 		this.logger = logger;
@@ -121,8 +174,7 @@ public class SplitStopWatch {
 	/**
 	 * Initializes a new instance of the SplitStopwatch class.
 	 *
-	 * @param printStream
-	 *            The printStream to write to.
+	 * @param printStream The printStream to write to.
 	 */
 	public SplitStopWatch(final PrintStream printStream) {
 		logger = null;
@@ -133,10 +185,8 @@ public class SplitStopWatch {
 	/**
 	 * Initializes a new instance of the SplitStopwatch class.
 	 *
-	 * @param printStream
-	 *            The printStream to write to.
-	 * @param flushImmediately
-	 *            If set to true the writer is immediately flushed every time a write is done.
+	 * @param printStream The printStream to write to.
+	 * @param flushImmediately If set to true the writer is immediately flushed every time a write is done.
 	 */
 	public SplitStopWatch(final PrintStream printStream, final boolean flushImmediately) {
 		logger = null;
@@ -183,8 +233,7 @@ public class SplitStopWatch {
 	/**
 	 * Starts, or resumes measuring elapsed time for an interval. You may start after a stop as well.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
 	 */
 	public synchronized SplitStopWatch start(final String text) {
 		if (!active) {
@@ -197,10 +246,8 @@ public class SplitStopWatch {
 	/**
 	 * Starts, or resumes measuring elapsed time for an interval. You may start after a stop as well.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
-	 * @param indentLevel
-	 *            The indent level.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param indentLevel The indent level.
 	 */
 	public synchronized SplitStopWatch start(final String text, final int indentLevel) {
 		if (!active) {
@@ -225,8 +272,7 @@ public class SplitStopWatch {
 	/**
 	 * Initializes a new instance, sets the elapsed time property to zero, and starts measuring elapsed time.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
 	 */
 	public synchronized SplitStopWatch startNew(final String text) {
 		if (!active) {
@@ -239,10 +285,8 @@ public class SplitStopWatch {
 	/**
 	 * Initializes a new instance, sets the elapsed time property to zero, and starts measuring elapsed time.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
-	 * @param indentLevel
-	 *            The indent level.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param indentLevel The indent level.
 	 */
 	public synchronized SplitStopWatch startNew(final String text, final int indentLevel) {
 		if (!active) {
@@ -269,8 +313,7 @@ public class SplitStopWatch {
 	/**
 	 * Stops measuring elapsed time for an interval. You may stop and restart afterward resulting in a pause of the timer.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
 	 */
 	public synchronized SplitStopWatch stop(final String text) {
 		if (!active) {
@@ -283,10 +326,8 @@ public class SplitStopWatch {
 	/**
 	 * Stops measuring elapsed time for an interval. You may stop and restart afterward resulting in a pause of the timer.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
-	 * @param indentLevel
-	 *            The indent level.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param indentLevel The indent level.
 	 */
 	public synchronized SplitStopWatch stop(final String text, final int indentLevel) {
 		if (!active) {
@@ -312,8 +353,7 @@ public class SplitStopWatch {
 	/**
 	 * Stops time interval measurement and resets the time to zero.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
 	 */
 	public synchronized SplitStopWatch reset(final String text) {
 		if (!active) {
@@ -326,10 +366,8 @@ public class SplitStopWatch {
 	/**
 	 * Stops time interval measurement and resets the time to zero.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
-	 * @param indentLevel
-	 *            The indent level.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param indentLevel The indent level.
 	 */
 	public synchronized SplitStopWatch reset(final String text, final int indentLevel) {
 		if (!active) {
@@ -356,8 +394,7 @@ public class SplitStopWatch {
 	/**
 	 * Takes a split-time and restarts the timer.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
 	 * @return The split time in milliseconds.
 	 */
 	public synchronized long split(final String text) {
@@ -370,10 +407,8 @@ public class SplitStopWatch {
 	/**
 	 * Takes a split-time and restarts the timer.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
-	 * @param indentLevel
-	 *            The indent level.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param indentLevel The indent level.
 	 * @return The split time in milliseconds.
 	 */
 	public synchronized long split(final String text, final int indentLevel) {
@@ -407,8 +442,7 @@ public class SplitStopWatch {
 	/**
 	 * Takes a split-time and does not restart the timer. You may restart it with start again at any time.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
 	 * @return The split time in milliseconds.
 	 */
 	public synchronized long splitAndStop(final String text) {
@@ -421,10 +455,8 @@ public class SplitStopWatch {
 	/**
 	 * Takes a split-time and does not restart the timer. You may restart it with start again at any time.
 	 *
-	 * @param text
-	 *            The text to output on the PrintStream you specified when creating this instance or System.out as the default.
-	 * @param indentLevel
-	 *            The indent level.
+	 * @param text The text to output on the PrintStream you specified when creating this instance or System.out as the default.
+	 * @param indentLevel The indent level.
 	 * @return The split time in milliseconds.
 	 */
 	public synchronized long splitAndStop(final String text, final int indentLevel) {
@@ -472,131 +504,9 @@ public class SplitStopWatch {
 	}
 
 	/**
-	 * The prefix is written every time an output is made (if this default behavior isn't turned off using setDisplayPrefix()).
-	 *
-	 * @return The format string for a Formatter.
-	 */
-	public synchronized String getPrefixFormatString() {
-		return prefixFormatString;
-	}
-
-	/**
-	 * Sets the prefix format string.
-	 *
-	 * @param prefixFormatString
-	 *            the new prefix format string
-	 */
-	public synchronized SplitStopWatch setPrefixFormatString(final String prefixFormatString) {
-		this.prefixFormatString = prefixFormatString;
-		return this;
-	}
-
-	/**
-	 * A flag indicating whether a given prefix (the default one or set one) is printed in front of the actual time or not.
-	 *
-	 * @return true if the prefix is written, false otherwise.
-	 */
-	public synchronized boolean isDisplayPrefix() {
-		return displayPrefix;
-	}
-
-	/**
-	 * Sets the display prefix.
-	 *
-	 * @param displayPrefix
-	 *            the new display prefix
-	 */
-	public synchronized SplitStopWatch setDisplayPrefix(final boolean displayPrefix) {
-		this.displayPrefix = displayPrefix;
-		return this;
-	}
-
-	/**
-	 * A flag indicating if the stream is flushed immediately after each write.
-	 *
-	 * @return true if the stream is flushed immediately after each write, false otherwise.
-	 */
-	public synchronized boolean isFlushImmediately() {
-		return flushImmediately;
-	}
-
-	/**
-	 * Sets the flush immediately.
-	 *
-	 * @param isFlushImmediately
-	 *            the new flush immediately
-	 */
-	public synchronized SplitStopWatch setFlushImmediately(final boolean isFlushImmediately) {
-		flushImmediately = isFlushImmediately;
-		return this;
-	}
-
-	/**
-	 * The string which is used when outputting one indent. The default value are three spaces per indent, so this string consists of three spaces per default.
-	 *
-	 * @return The indentString currently used.
-	 */
-	public synchronized String getIndentString() {
-		return indentString;
-	}
-
-	/**
-	 * Sets the indent string.
-	 *
-	 * @param indentString
-	 *            the new indent string
-	 */
-	public synchronized SplitStopWatch setIndentString(final String indentString) {
-		this.indentString = indentString;
-		return this;
-	}
-
-	/**
-	 * A flag indicating the precision of the means of measurement used. This may have a small performance impact.
-	 *
-	 * @return true if nanosecond-precision is used, false if millisecond-precision is used.
-	 */
-	public synchronized boolean isNanoPrecision() {
-		return nanoPrecision;
-	}
-
-	/**
-	 * Sets the nanosecond precision.
-	 *
-	 * @param isNanoPrecision
-	 *            the new nanosecond precision
-	 */
-	public synchronized SplitStopWatch setNanoPrecision(final boolean isNanoPrecision) {
-		nanoPrecision = isNanoPrecision;
-		return this;
-	}
-
-	/**
-	 * When this is set to false all calls to this class are aborted within a single if-statement in the called method. This is a convenience function so that
-	 * you may leave your logging-code in the production code.
-	 *
-	 * @return true, or false.
-	 */
-	public boolean isActive() {
-		return active;
-	}
-
-	/**
-	 * Sets the active.
-	 *
-	 * @param isActive
-	 *            the new active
-	 */
-	public SplitStopWatch setActive(final boolean isActive) {
-		active = isActive;
-		return this;
-	}
-
-	/**
 	 * Gets the actual Time.
 	 *
-	 * @param isNanoPrecision
-	 *            True, if nanosecond-precision is used, false otherwise.
+	 * @param isNanoPrecision True, if nanosecond-precision is used, false otherwise.
 	 * @return The actual time.
 	 */
 	private long getActualTime(final boolean isNanoPrecision) {
@@ -655,14 +565,10 @@ public class SplitStopWatch {
 	/**
 	 * Writes the given text to the underlying PrintStream.
 	 *
-	 * @param text
-	 *            The text to be written.
-	 * @param command
-	 *            The name of the command that triggered the output.
-	 * @param elapsedTimeSinceLastSplit
-	 *            The time elapsed since the last split or start.
-	 * @param indentLevel
-	 *            The level to indent to.
+	 * @param text The text to be written.
+	 * @param command The name of the command that triggered the output.
+	 * @param elapsedTimeSinceLastSplit The time elapsed since the last split or start.
+	 * @param indentLevel The level to indent to.
 	 */
 	private void writeText(final String text, final String command, final long elapsedTimeSinceLastSplit, final int indentLevel) {
 		String indent = "";

@@ -47,10 +47,8 @@ public class CsvReader extends CsvBase {
 	 * Initializes a new instance of the CsvReader class. Call close() on it before moving on in order to close the underlying reader. If you don't do this, the
 	 * garbage collector will do that for you at an undefined point in time.
 	 *
-	 * @param stringReader
-	 *            The StringReader you want the CsvReader to attach to.
-	 * @throws IllegalArgumentException
-	 *             If the provided stringReader is null.
+	 * @param stringReader The StringReader you want the CsvReader to attach to.
+	 * @throws IllegalArgumentException If the provided stringReader is null.
 	 */
 	public CsvReader(final StringReader stringReader) throws IllegalArgumentException {
 		if (stringReader == null) {
@@ -64,14 +62,10 @@ public class CsvReader extends CsvBase {
 	 * Initializes a new instance of the CsvReader class. Call close() on it before moving on in order to close the underlying reader. If you don't do this, the
 	 * garbage collector will do that for you at an undefined point in time.
 	 *
-	 * @param stringReader
-	 *            The StringReader you want the CsvReader to attach to.
-	 * @param columnSeparator
-	 *            A delimiter to separate columns (e.g. ';').
-	 * @param rowSeparator
-	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
-	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
+	 * @param stringReader The StringReader you want the CsvReader to attach to.
+	 * @param columnSeparator A delimiter to separate columns (e.g. ';').
+	 * @param rowSeparator A delimiter to separate rows (e.g. System.getProperty("line.separator")).
+	 * @param fieldDelimiter A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 */
 	public CsvReader(final StringReader stringReader, final char columnSeparator, final String rowSeparator, final String fieldDelimiter) {
 		this(stringReader);
@@ -84,17 +78,12 @@ public class CsvReader extends CsvBase {
 	 * Initializes a new instance of the CsvReader class. Call close() on it before moving on in order to close the underlying reader. If you don't do this, the
 	 * garbage collector will do that for you at an undefined point in time.
 	 *
-	 * @param stringReader
-	 *            The StringReader you want the CsvReader to attach to.
-	 * @param columnSeparator
-	 *            A delimiter to separate columns (e.g. ';').
-	 * @param rowSeparator
-	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
-	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
-	 * @param readChunkSize
-	 *            Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The bufferSize
-	 *            is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
+	 * @param stringReader The StringReader you want the CsvReader to attach to.
+	 * @param columnSeparator A delimiter to separate columns (e.g. ';').
+	 * @param rowSeparator A delimiter to separate rows (e.g. System.getProperty("line.separator")).
+	 * @param fieldDelimiter A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
+	 * @param readChunkSize Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The
+	 *            bufferSize is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
 	 */
 	@Builder
 	public CsvReader(final StringReader stringReader, final Character columnSeparator, final String rowSeparator, final String fieldDelimiter,
@@ -109,8 +98,7 @@ public class CsvReader extends CsvBase {
 	 * the buffer ends before the next 'length' characters could be read, then the string which is available is returned. (Meaning that a _Peek(8) with the
 	 * buffer [a23456] returns 'a23456'.)
 	 *
-	 * @param length
-	 *            The length which should be read ahead.
+	 * @param length The length which should be read ahead.
 	 * @return The preview-string consisting of the next 'length' unhandled characters.
 	 */
 	private synchronized String peek(final int length) {
@@ -129,8 +117,7 @@ public class CsvReader extends CsvBase {
 	 * Does essentially the same as {@link _Peek} but counts and returns the current nextChar as well. Example: buffer=[1234] & nextChar=0 then
 	 * peekInclusiveNextChar(3) would return [012].
 	 *
-	 * @param length
-	 *            The length which should be read ahead.
+	 * @param length The length which should be read ahead.
 	 * @return The preview-string consisting of the next 'length' unhandled characters.
 	 */
 	private synchronized String peekInclusiveNextChar(final int length) {
@@ -140,8 +127,7 @@ public class CsvReader extends CsvBase {
 	/**
 	 * Reads the next chunk.
 	 *
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	private synchronized void readNext() throws IOException {
 		nextChar = getNextChar();
@@ -167,10 +153,8 @@ public class CsvReader extends CsvBase {
 	/**
 	 * Omits some of the characters in the buffer by reading ahead for numberOfCharacters. _ReadNext() is equivalent to _ReadNext(1).
 	 *
-	 * @param numberOfCharacters
-	 *            The number of characters to read ahead.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @param numberOfCharacters The number of characters to read ahead.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	private synchronized void readNext(final int numberOfCharacters) throws IOException {
 		for (int i = 0; i < numberOfCharacters; i++) {
@@ -182,8 +166,7 @@ public class CsvReader extends CsvBase {
 	 * Gets the next character in the buffer and reads the next chunk if the buffer is empty.
 	 *
 	 * @return The next character or null if the end of the file is reached.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	private synchronized Character getNextChar() throws IOException {
 		if (numberOfUnparsedChars > 0) {
@@ -204,10 +187,8 @@ public class CsvReader extends CsvBase {
 	/**
 	 * Reads the next chunk of the input file.
 	 *
-	 * @param startIndex
-	 *            The start index in the buffer at which the next chunk should be appended.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @param startIndex The start index in the buffer at which the next chunk should be appended.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	private synchronized void readChunk(final int startIndex) throws IOException {
 		int readChars = stringReader.read(buffer, startIndex, chunkSize);
@@ -218,8 +199,7 @@ public class CsvReader extends CsvBase {
 	 * Reads the next field of the CSV.
 	 *
 	 * @return A string containing the next field of the underlying CSV.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	private synchronized String readField() throws IOException {
 		StringBuilder content = new StringBuilder();
@@ -255,8 +235,7 @@ public class CsvReader extends CsvBase {
 	 * Returns the next row, already split into fields. Returns null if the end of the source is reached.
 	 *
 	 * @return An array of string containing the fields of this row or null if the end of the source has been reached.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public synchronized List<String> readRow() throws IOException {
 		List<String> fields = new ArrayList<String>();
@@ -295,8 +274,7 @@ public class CsvReader extends CsvBase {
 	 * Reads all rows of the CSV and returns them in a List. The resulting structure is a List-of-List-of-string.
 	 *
 	 * @return A List-of-List-of-string representing the read CSV-file.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public synchronized List<List<String>> readAllRows() throws IOException {
 		List<List<String>> data = new ArrayList<List<String>>();
@@ -313,37 +291,9 @@ public class CsvReader extends CsvBase {
 	}
 
 	/**
-	 * Gets the column separator.
-	 *
-	 * @return The column separator.
-	 */
-	public char getColumnSeperator() {
-		return columnSeparator;
-	}
-
-	/**
-	 * Gets the row separator.
-	 *
-	 * @return The row separator.
-	 */
-	public String getRowSeperator() {
-		return rowSeparator;
-	}
-
-	/**
-	 * Gets the field delimiter.
-	 *
-	 * @return The field delimiter.
-	 */
-	public String getFieldDelimiter() {
-		return fieldDelimiter;
-	}
-
-	/**
 	 * Sets the size of the buffer and of the chunk.
 	 *
-	 * @param chunkSize
-	 *            The size of one chunk.
+	 * @param chunkSize The size of one chunk.
 	 */
 	private CsvReader setChunkAndBufferSize(final int chunkSize) {
 		this.chunkSize = chunkSize;
@@ -357,7 +307,6 @@ public class CsvReader extends CsvBase {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see java.io.Closeable#close()
 	 */
 	@Override
@@ -371,7 +320,6 @@ public class CsvReader extends CsvBase {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see java.lang.Object#finalize()
 	 */
 	@Override

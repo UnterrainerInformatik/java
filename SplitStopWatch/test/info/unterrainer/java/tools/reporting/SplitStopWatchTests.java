@@ -26,9 +26,6 @@ import org.junit.Test;
 
 /**
  * This is the test class for the SplipStopWatch - tool.
- *
- * @author UNGE
- * @since 11.07.2013
  */
 public class SplitStopWatchTests {
 
@@ -175,8 +172,7 @@ public class SplitStopWatchTests {
 	 */
 	@Test
 	public void SplitStopWatchBehaviorTest_NanoPrecision() {
-		SplitStopWatch ssw = new SplitStopWatch();
-		ssw.setNanoPrecision(true);
+		SplitStopWatch ssw = new SplitStopWatch().nanoPrecision(true);
 
 		try {
 			System.out.println("TEST 1");

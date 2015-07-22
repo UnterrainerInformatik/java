@@ -20,13 +20,10 @@
 
 package info.unterrainer.java.tools.utils;
 
-public class NullUtils {
+import lombok.experimental.UtilityClass;
 
-	/**
-	 * Private constructor in order to hide constructor of static helper-class.
-	 */
-	private NullUtils() {
-	}
+@UtilityClass
+public class NullUtils {
 
 	/**
 	 * Checks if the given object is null.<br/>

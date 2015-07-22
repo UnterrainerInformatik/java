@@ -51,14 +51,10 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 import info.unterrainer.java.tools.utils.StringUtils;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public final class FileUtils {
-
-	/**
-	 * Private constructor in order to hide constructor of static helper-class.
-	 */
-	private FileUtils() {
-	}
 
 	/**
 	 * Gets a part of a stream given by a start-index and end-index by lines.
