@@ -25,12 +25,14 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
-import info.unterrainer.java.tools.utils.NullUtils;
+import info.unterrainer.java.tools.utils.ExtensionMethods;
 import lombok.Builder;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * This data-structure represents a comma-separated-values file. It helps in dealing with such files and delivers various manipulation routines.
  */
+@ExtensionMethod(ExtensionMethods.class)
 public class CsvWriter extends CsvBase {
 
 	private final Writer stringWriter;
@@ -192,9 +194,9 @@ public class CsvWriter extends CsvBase {
 	@Builder
 	public CsvWriter(final StringWriter stringWriter, final Character columnSeparator, final String rowSeparator, final String fieldDelimiter,
 			final Integer writeChunkSize, final QuotingBehavior quotingBehavior) {
-		this(stringWriter, NullUtils.defaultIfNull(columnSeparator, DEFAULT_COLUMN_SEPARATOR), NullUtils.defaultIfNull(rowSeparator, DEFAULT_ROW_SEPARATOR),
-				NullUtils.defaultIfNull(fieldDelimiter, DEFAULT_FIELD_DELIMITER), NullUtils.defaultIfNull(writeChunkSize, DEFAULT_CHUNK_SIZE));
-		this.quotingBehavior = NullUtils.defaultIfNull(quotingBehavior, QuotingBehavior.MINIMAL);
+		this(stringWriter, columnSeparator.or(DEFAULT_COLUMN_SEPARATOR), rowSeparator.or(DEFAULT_ROW_SEPARATOR),
+				fieldDelimiter.or(DEFAULT_FIELD_DELIMITER), writeChunkSize.or(DEFAULT_CHUNK_SIZE));
+		this.quotingBehavior = quotingBehavior.or(QuotingBehavior.MINIMAL);
 	}
 
 	/**

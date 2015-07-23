@@ -19,20 +19,23 @@
  ***************************************************************************/
 package info.unterrainer.java.tools.csvtools;
 
+import info.unterrainer.java.tools.utils.ExtensionMethods;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import info.unterrainer.java.tools.utils.NullUtils;
 import lombok.Builder;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * The Class CsvReader.
  * <p>
  * Enables you to read CSV-files using various types of delimiters (column and row) and quotes.
  */
+@ExtensionMethod(ExtensionMethods.class)
 public class CsvReader extends CsvBase {
 
 	private final static int DEFAULT_CHUNK_SIZE = 16384;
@@ -88,9 +91,9 @@ public class CsvReader extends CsvBase {
 	@Builder
 	public CsvReader(final StringReader stringReader, final Character columnSeparator, final String rowSeparator, final String fieldDelimiter,
 			final Integer readChunkSize) {
-		this(stringReader, NullUtils.defaultIfNull(columnSeparator, DEFAULT_COLUMN_SEPARATOR), NullUtils.defaultIfNull(rowSeparator, DEFAULT_ROW_SEPARATOR),
-				NullUtils.defaultIfNull(fieldDelimiter, DEFAULT_FIELD_DELIMITER));
-		setChunkAndBufferSize(NullUtils.defaultIfNull(readChunkSize, DEFAULT_CHUNK_SIZE));
+		this(stringReader, columnSeparator.or(DEFAULT_COLUMN_SEPARATOR), rowSeparator.or(DEFAULT_ROW_SEPARATOR),
+				fieldDelimiter.or(DEFAULT_FIELD_DELIMITER));
+		setChunkAndBufferSize(readChunkSize.or(DEFAULT_CHUNK_SIZE));
 	}
 
 	/**
@@ -305,10 +308,6 @@ public class CsvReader extends CsvBase {
 		return this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.io.Closeable#close()
-	 */
 	@Override
 	public void close() throws IOException {
 		if (stringReader == null) {
@@ -318,10 +317,6 @@ public class CsvReader extends CsvBase {
 		stringReader = null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#finalize()
-	 */
 	@Override
 	protected void finalize() throws Throwable {
 		try {

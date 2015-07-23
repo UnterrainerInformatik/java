@@ -3,13 +3,14 @@ package info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecompone
 import java.io.PrintStream;
 
 import info.unterrainer.java.tools.datastructures.Fader;
-import info.unterrainer.java.tools.utils.NullUtils;
+import info.unterrainer.java.tools.utils.ExtensionMethods;
 import info.unterrainer.java.tools.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * This progress-bar draws a bar like:
@@ -54,6 +55,7 @@ import lombok.Setter;
  * </tr>
  * </table>
  */
+@ExtensionMethod(ExtensionMethods.class)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PercentGauge implements DrawableComponent {
 
@@ -73,10 +75,10 @@ public class PercentGauge implements DrawableComponent {
 	@Builder
 	public PercentGauge(String begin, String end, String percent, Character empty) {
 		super();
-		this.begin = NullUtils.defaultIfNull(begin, "[");
-		this.end = NullUtils.defaultIfNull(end, "]");
-		this.percent = NullUtils.defaultIfNull(percent, "%");
-		this.empty = NullUtils.defaultIfNull(empty, ' ');
+		this.begin = begin.or("[");
+		this.end = end.or("]");
+		this.percent = percent.or("%");
+		this.empty = empty.or(' ');
 	}
 
 	@Override

@@ -6,13 +6,14 @@ import info.unterrainer.java.tools.datastructures.Fader;
 import info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents.DrawableComponent;
 import info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents.ProgressBar;
 import info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents.SimpleInsertBar;
-import info.unterrainer.java.tools.utils.NullUtils;
+import info.unterrainer.java.tools.utils.ExtensionMethods;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * This class enables your console-applications to draw a progress-bar.
@@ -41,6 +42,7 @@ import lombok.experimental.Accessors;
  * </tr>
  * </table>
  */
+@ExtensionMethod(ExtensionMethods.class)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Accessors(chain = true)
 public class ConsoleProgressBar {
@@ -65,10 +67,10 @@ public class ConsoleProgressBar {
 	@Builder
 	public ConsoleProgressBar(Integer width, Double minValue, Double maxValue, Boolean controlCharacterSupport, DrawableComponent component) {
 
-		this.minValue = NullUtils.defaultIfNull(minValue, 0.0d);
-		this.maxValue = NullUtils.defaultIfNull(maxValue, 1.0d);
-		this.width = NullUtils.defaultIfNull(width, 50);
-		this.controlCharacterSupport = NullUtils.defaultIfNull(controlCharacterSupport, true);
+		this.minValue = minValue.or(0.0d);
+		this.maxValue = maxValue.or(1.0d);
+		this.width = width.or(50);
+		this.controlCharacterSupport = controlCharacterSupport.or(true);
 
 		if (component == null) {
 			if (controlCharacterSupport) {
@@ -83,7 +85,7 @@ public class ConsoleProgressBar {
 
 	private void checkFader() {
 		if (fader == null) {
-			fader = new Fader(NullUtils.defaultIfNull(minValue, 0.0d), NullUtils.defaultIfNull(maxValue, 1.0d));
+			fader = new Fader(minValue.or(0.0d), maxValue.or(1.0d));
 		}
 	}
 

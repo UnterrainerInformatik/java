@@ -1,15 +1,17 @@
 package info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents;
 
+import info.unterrainer.java.tools.datastructures.Fader;
+import info.unterrainer.java.tools.utils.ExtensionMethods;
+import info.unterrainer.java.tools.utils.StringUtils;
+
 import java.io.PrintStream;
 
-import info.unterrainer.java.tools.datastructures.Fader;
-import info.unterrainer.java.tools.utils.NullUtils;
-import info.unterrainer.java.tools.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * This progress-bar draws a bar like:
@@ -51,6 +53,7 @@ import lombok.Setter;
  * </tr>
  * </table>
  */
+@ExtensionMethod(ExtensionMethods.class)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProgressBar implements DrawableComponent {
 
@@ -70,10 +73,10 @@ public class ProgressBar implements DrawableComponent {
 	@Builder
 	public ProgressBar(String begin, String end, Character full, Character empty) {
 		super();
-		this.begin = NullUtils.defaultIfNull(begin, "[");
-		this.end = NullUtils.defaultIfNull(end, "]");
-		this.full = NullUtils.defaultIfNull(full, '#');
-		this.empty = NullUtils.defaultIfNull(empty, '-');
+		this.begin = begin.or("[");
+		this.end = end.or("]");
+		this.full = full.or('#');
+		this.empty = empty.or('-');
 	}
 
 	@Override

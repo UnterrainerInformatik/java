@@ -481,7 +481,7 @@ public class SplitStopWatch {
 	 *
 	 * @return true if the watch is running at the moment, false otherwise.
 	 */
-	public synchronized boolean isRunning() {
+	public boolean isRunning() {
 		return startTime == 0;
 	}
 
@@ -490,7 +490,7 @@ public class SplitStopWatch {
 	 *
 	 * @return The time in milliseconds.
 	 */
-	public synchronized long getElapsedSinceLastSplitInMilliseconds() {
+	public long getElapsedSinceLastSplitInMilliseconds() {
 		return timerElapsedTime();
 	}
 
