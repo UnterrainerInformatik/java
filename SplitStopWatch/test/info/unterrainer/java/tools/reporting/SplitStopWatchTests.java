@@ -172,7 +172,7 @@ public class SplitStopWatchTests {
 	 */
 	@Test
 	public void SplitStopWatchBehaviorTest_NanoPrecision() {
-		SplitStopWatch ssw = new SplitStopWatch().nanoPrecision(true);
+		SplitStopWatch ssw = new SplitStopWatch().setNanoPrecision(true);
 
 		try {
 			System.out.println("TEST 1");

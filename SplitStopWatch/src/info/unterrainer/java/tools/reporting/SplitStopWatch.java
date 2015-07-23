@@ -50,7 +50,7 @@ import lombok.experimental.Accessors;
  * It has a property 'isActive' that defaults to true. When this is set to false all calls to this class are aborted within a single if-statement in the called
  * method. This is a convenience function so that you may leave your logging-code in the production code.
  */
-@Accessors(fluent = true)
+@Accessors(chain = true)
 public class SplitStopWatch {
 
 	/**
@@ -490,7 +490,7 @@ public class SplitStopWatch {
 	 *
 	 * @return The time in milliseconds.
 	 */
-	public synchronized long getElapsedSinceLastSplitMilliseconds() {
+	public synchronized long getElapsedSinceLastSplitInMilliseconds() {
 		return timerElapsedTime();
 	}
 

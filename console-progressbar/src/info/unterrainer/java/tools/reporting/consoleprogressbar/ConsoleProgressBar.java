@@ -42,7 +42,7 @@ import lombok.experimental.Accessors;
  * </table>
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Accessors(fluent = true)
+@Accessors(chain = true)
 public class ConsoleProgressBar {
 
 	@Getter
