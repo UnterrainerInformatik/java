@@ -34,6 +34,19 @@ Displays the percentage.
 
 You may extend the visual representations by implementing new graphical variants. 
 
+All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
+We use the following parts of Project Lombok:  
+
+* @Data
+* @Getter/@Setter
+* @Builder
+* @NoArgsConstructor/@AllArgsConstructor
+* @UtilityClass *(experimental - outlook: positive)*
+* @Accessors *(experimental - outlook: positive)*
+* @ExtensionMethos *(experimental - outlook: positive)*
+
+**Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
+
 #### Example
 ```java
     ConsoleProgressBar bar = ConsoleProgressBar.builder().maxValue((double) list.size()).controlCharacterSupport(!isForFileOut).build();
@@ -57,3 +70,5 @@ You may extend the visual representations by implementing new graphical variants
     <version>0.2</version>
 </dependency>
 ```
+
+[lombok]: https://projectlombok.org

@@ -22,7 +22,20 @@
 
 This library should ease dealing with (admittedly legacy) CSV files.  
 For the younger ones: CSV means Comma Separated Values and is a very old system to write lists to files. It's commonly used to export to Excel since that is the default program to open .csv files on most systems.  
-You may read or write those files using this library and you may specify all possible variations of different control-characters like new-line or end-of-row (or quoting).  
+You may read or write those files using this library and you may specify all possible variations of different control-characters like new-line or end-of-row (or quoting). 
+
+All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
+We use the following parts of Project Lombok:  
+
+* @Data
+* @Getter/@Setter
+* @Builder
+* @NoArgsConstructor/@AllArgsConstructor
+* @UtilityClass *(experimental - outlook: positive)*
+* @Accessors *(experimental - outlook: positive)*
+* @ExtensionMethos *(experimental - outlook: positive)*
+
+**Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
 
 #### Example CsvReader
 ```java
@@ -63,3 +76,5 @@ csvWriter.close();
     <version>0.2</version>
 </dependency>
 ```
+
+[lombok]: https://projectlombok.org

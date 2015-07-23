@@ -34,7 +34,20 @@ Contains helper methods to convert from and to ISO8601 dates like `2009-06-30T18
 * ##### NullUtils
 This class only contains a single method, which is called `defaultIfNull(T obj, T defaultValue)`.
 * ##### SerializationUtils
-Eases your life when doing JAXB-XML- or ByteArray- serialization and deserialization.
+Eases your life when doing JAXB-XML- or ByteArray- serialization and deserialization. 
+
+All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
+We use the following parts of Project Lombok:  
+
+* @Data
+* @Getter/@Setter
+* @Builder
+* @NoArgsConstructor/@AllArgsConstructor
+* @UtilityClass *(experimental - outlook: positive)*
+* @Accessors *(experimental - outlook: positive)*
+* @ExtensionMethos *(experimental - outlook: positive)*
+
+**Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
 
 #### Apache Maven artifact to use in your pom
 ```xml
@@ -44,3 +57,5 @@ Eases your life when doing JAXB-XML- or ByteArray- serialization and deserializa
     <version>0.2</version>
 </dependency>
 ```
+
+[lombok]: https://projectlombok.org
