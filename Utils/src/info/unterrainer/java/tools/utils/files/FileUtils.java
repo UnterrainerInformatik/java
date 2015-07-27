@@ -314,6 +314,21 @@ public final class FileUtils {
 	}
 
 	/**
+	 * Deletes a file.
+	 *
+	 * @param fileName the file name
+	 * @return true, if the file has been deleted, otherwise false
+	 */
+	public static boolean deleteFile(final String fileName) {
+		boolean success = false;
+		final File file = new File(fileName);
+		if (file.exists()) {
+			success = file.delete();
+		}
+		return success;
+	}
+
+	/**
 	 * Returns the file extension.
 	 *
 	 * @param fullFileName {@link String} the full file name
