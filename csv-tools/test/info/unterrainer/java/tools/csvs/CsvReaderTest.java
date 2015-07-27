@@ -20,6 +20,8 @@
 
 package info.unterrainer.java.tools.csvs;
 
+import info.unterrainer.java.tools.csvtools.CsvReader;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -30,8 +32,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import info.unterrainer.java.tools.csvtools.CsvReader;
 
 /**
  * The Class CsvReaderTest.
@@ -76,11 +76,10 @@ public class CsvReaderTest {
 	/**
 	 * Test empty fields.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testEmptyFields() throws IOException {
+	public void emptyFieldsTest() throws IOException {
 		stringReader = new StringReader("\"test\";test1;A 01;t;;");
 
 		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
@@ -96,11 +95,10 @@ public class CsvReaderTest {
 	/**
 	 * Test empty fields variant.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testEmptyFieldsVariant() throws IOException {
+	public void emptyFieldsVariantTest() throws IOException {
 		stringReader = new StringReader("A;;A;T;;\r\nGreat");
 
 		csvReader = new CsvReader(stringReader);
@@ -114,11 +112,10 @@ public class CsvReaderTest {
 	/**
 	 * Test special characters.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testSpecialCharacters() throws IOException {
+	public void specialCharactersTest() throws IOException {
 		stringReader = new StringReader("����;\"!\"\"�$%&/()=?\"\r\n\"_:;'*\";<>.-,,#+");
 
 		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
@@ -136,11 +133,10 @@ public class CsvReaderTest {
 	/**
 	 * Test escaped field delimiters.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testEscapedFieldDelimiters() throws IOException {
+	public void escapedFieldDelimitersTest() throws IOException {
 		stringReader = new StringReader("\"A\",01,\"A\"\" \"\"01\",\"t\"\"\",,\"\"");
 
 		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(',').rowSeparator(newLine).fieldDelimiter("\"").build();
@@ -158,11 +154,10 @@ public class CsvReaderTest {
 	/**
 	 * Test quote special.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testQuoteSpecial() throws IOException {
+	public void quoteSpecialTest() throws IOException {
 		stringReader = new StringReader("9008390101544,öäü,\"Normal\" Test a string.,,");
 
 		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(',').rowSeparator(newLine).fieldDelimiter("").build();
@@ -180,11 +175,10 @@ public class CsvReaderTest {
 	/**
 	 * Test read all rows.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testReadAllRows() throws IOException {
+	public void readAllRowsTest() throws IOException {
 		stringReader = new StringReader("test;test1;test5\r\n\"test2\";test3\r\ntest6;;\"test8\"");
 
 		csvReader = CsvReader.builder().stringReader(stringReader).build();
@@ -205,13 +199,17 @@ public class CsvReaderTest {
 	/**
 	 * Test three line file with line breaks and evil delimiters.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testThreeLineFileWithLineBreaksAndEvilDelimiters() throws IOException {
-		stringReader = new StringReader(
-				"\"Great\";\"Totally\";\"Cool\"" + newLine + "\"Gr" + newLine + "eat\";\"Totally\";Cool" + newLine + "Great;Totally;Cool");
+	public void threeLineFileWithLineBreaksAndEvilDelimitersTest() throws IOException {
+		stringReader = new StringReader("\"Great\";\"Totally\";\"Cool\""
+				+ newLine
+				+ "\"Gr"
+				+ newLine
+				+ "eat\";\"Totally\";Cool"
+				+ newLine
+				+ "Great;Totally;Cool");
 
 		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("\"").build();
 		Assert.assertNotNull(csvReader);
@@ -235,11 +233,10 @@ public class CsvReaderTest {
 	/**
 	 * Test two lines with empty last line and previous field delimiter.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testTwoLinesWithEmptyLastLineAndPreviousFieldDelimiter() throws IOException {
+	public void twoLinesWithEmptyLastLineAndPreviousFieldDelimiterTest() throws IOException {
 		stringReader = new StringReader("Great;Totally;");
 		csvReader = CsvReader.builder().stringReader(stringReader).columnSeparator(';').rowSeparator(newLine).fieldDelimiter("").build();
 
@@ -254,11 +251,10 @@ public class CsvReaderTest {
 	/**
 	 * Test buffer normal.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testBufferNormal() throws IOException {
+	public void bufferNormalTest() throws IOException {
 		// 10 rows with 5 fields each containing 100 characters each.
 		// = 5000 characters.
 		final String FIELD_DATA = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
@@ -285,36 +281,27 @@ public class CsvReaderTest {
 	/**
 	 * Test buffer small.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	/*
-	 * @Test public void testBufferSmall() throws IOException { // 10 rows with 5 fields each containing 100 characters each. // = 5000 characters. final String
+	 * @Test public void bufferSmallTest() throws IOException { // 10 rows with 5 fields each containing 100 characters each. // = 5000 characters. final String
 	 * FIELD_DATA = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"; String[] rowData = (String[])
 	 * (Arrays.asList(FIELD_DATA, FIELD_DATA, FIELD_DATA, FIELD_DATA, FIELD_DATA)).toArray(); String[][] csvData = (String[][]) (Arrays.asList(rowData, rowData,
 	 * rowData, rowData, rowData, rowData, rowData, rowData, rowData, rowData)).toArray(); String csvToWrite = writeCsv(csvData, ';', "tooLong" + newLine);
-	 * stringReader = new StringReader(csvToWrite);
-	 * 
-	 * csvReader = CsvReader .builder() .stringReader(stringReader) .columnSeparator(';') .rowSeparator("tooLong" + newLine) .fieldDelimiter("\"")
-	 * .readChunkSize(1) .build(); // ChunkSize should be RowSeparator.length after this constructor call ("tooLong\r\n" = 9 characters).
-	 * 
-	 * // ReadAllRows calls ReadRow consecutively... List<List<String>> csv = csvReader.readAllRows(); Assert.assertNotNull(csv);
-	 * 
-	 * checkCsvValues(csv, csvData);
-	 * 
-	 * // all following read-attempts should return null... List<String> row = csvReader.readRow(); Assert.assertNull(row);
-	 * 
+	 * stringReader = new StringReader(csvToWrite); csvReader = CsvReader .builder() .stringReader(stringReader) .columnSeparator(';') .rowSeparator("tooLong" +
+	 * newLine) .fieldDelimiter("\"") .readChunkSize(1) .build(); // ChunkSize should be RowSeparator.length after this constructor call ("tooLong\r\n" = 9
+	 * characters). // ReadAllRows calls ReadRow consecutively... List<List<String>> csv = csvReader.readAllRows(); Assert.assertNotNull(csv);
+	 * checkCsvValues(csv, csvData); // all following read-attempts should return null... List<String> row = csvReader.readRow(); Assert.assertNull(row);
 	 * List<List<String>> rows = csvReader.readAllRows(); Assert.assertNull(rows); }
 	 */
 
 	/**
 	 * Test read row.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testReadRow() throws IOException {
+	public void readRowTest() throws IOException {
 		stringReader = new StringReader("test;test1;test2\r\ntest4;test5;test6");
 
 		csvReader = CsvReader.builder().stringReader(stringReader).build();
@@ -332,11 +319,10 @@ public class CsvReaderTest {
 	/**
 	 * Test breaks between delimiters.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testBreaksBetweenDelimiters() throws IOException {
+	public void breaksBetweenDelimitersTest() throws IOException {
 		stringReader = new StringReader("test;\"test\r\nnewlineTest\";test2\r\ntest4;test5;test6");
 
 		csvReader = CsvReader.builder().stringReader(stringReader).build();

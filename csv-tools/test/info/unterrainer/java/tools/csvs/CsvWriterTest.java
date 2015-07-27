@@ -20,6 +20,9 @@
 
 package info.unterrainer.java.tools.csvs;
 
+import info.unterrainer.java.tools.csvtools.CsvWriter;
+import info.unterrainer.java.tools.csvtools.QuotingBehavior;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -29,9 +32,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import info.unterrainer.java.tools.csvtools.CsvWriter;
-import info.unterrainer.java.tools.csvtools.QuotingBehavior;
 
 /**
  * The Class CsvWriterTest.
@@ -82,11 +82,10 @@ public class CsvWriterTest {
 	/**
 	 * Test multiple rows with special characters as data.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testMultiRowsWithSpecialCharactersAsData() throws IOException {
+	public void multiRowsWithSpecialCharactersAsDataTest() throws IOException {
 		List<List<String>> csv = new ArrayList<List<String>>();
 
 		List<String> row = new ArrayList<String>();
@@ -120,11 +119,10 @@ public class CsvWriterTest {
 	/**
 	 * Test multi rows with special characters.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testMultiRowsWithSpecialCharacters() throws IOException {
+	public void multiRowsWithSpecialCharactersTest() throws IOException {
 		Assert.assertNotNull(csvWriter);
 
 		csvWriter.write("Great");
@@ -152,11 +150,10 @@ public class CsvWriterTest {
 	/**
 	 * Test building methods minimal quoting.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testBuildingMethodsMinimalQuoting() throws IOException {
+	public void buildingMethodsMinimalQuotingTest() throws IOException {
 		Assert.assertNotNull(csvWriter);
 
 		csvWriter = CsvWriter
@@ -191,11 +188,10 @@ public class CsvWriterTest {
 	/**
 	 * Test building methods maximal quoting.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testBuildingMethodsMaximalQuoting() throws IOException {
+	public void buildingMethodsMaximalQuotingTest() throws IOException {
 		csvWriter = CsvWriter
 				.builder()
 				.stringWriter(stringWriter)
@@ -223,19 +219,18 @@ public class CsvWriterTest {
 
 		csvWriter.close();
 
-		Assert.assertEquals(
-				"\"Great\";\"Totally\";\"This is a\r\nbreak" + "\";\"\"\r\n\"\";\"Gr;eat\";\"Totally\"\r\n\"" + "Great\";\"���\"\"�\";\"\";\"Totally\"",
-				stringWriter.toString());
+		Assert.assertEquals("\"Great\";\"Totally\";\"This is a\r\nbreak"
+				+ "\";\"\"\r\n\"\";\"Gr;eat\";\"Totally\"\r\n\""
+				+ "Great\";\"���\"\"�\";\"\";\"Totally\"", stringWriter.toString());
 	}
 
 	/**
 	 * Test appending null with write string.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testAppendingNullWithWriteString() throws IOException {
+	public void appendingNullWithWriteStringTest() throws IOException {
 		csvWriter = CsvWriter
 				.builder()
 				.stringWriter(stringWriter)
@@ -264,11 +259,10 @@ public class CsvWriterTest {
 	/**
 	 * Test appending null with write all.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testAppendingNullWithWriteAll() throws IOException {
+	public void appendingNullWithWriteAllTest() throws IOException {
 		List<List<String>> csv = new ArrayList<List<String>>();
 
 		List<String> row = new ArrayList<String>();
@@ -303,11 +297,10 @@ public class CsvWriterTest {
 	/**
 	 * Test write empty string.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testWriteEmptyString() throws IOException {
+	public void writeEmptyStringTest() throws IOException {
 		Assert.assertNotNull(csvWriter);
 
 		List<String> ls = new ArrayList<String>();
@@ -331,11 +324,10 @@ public class CsvWriterTest {
 	/**
 	 * Test write single string.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testWriteSingleString() throws IOException {
+	public void writeSingleStringTest() throws IOException {
 		Assert.assertNotNull(csvWriter);
 
 		String str = "test";
@@ -349,11 +341,10 @@ public class CsvWriterTest {
 	/**
 	 * Test write list of string.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testWriteListOfString() throws IOException {
+	public void writeListOfStringTest() throws IOException {
 		Assert.assertNotNull(csvWriter);
 
 		List<String> ls = new ArrayList<String>();
@@ -370,11 +361,10 @@ public class CsvWriterTest {
 	/**
 	 * Test write all.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testWriteAll() throws IOException {
+	public void writeAllTest() throws IOException {
 		Assert.assertNotNull(csvWriter);
 
 		List<List<String>> data = new ArrayList<List<String>>();
@@ -400,11 +390,10 @@ public class CsvWriterTest {
 	/**
 	 * Test write line single string.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testWriteLineSingleString() throws IOException {
+	public void writeLineSingleStringTest() throws IOException {
 		Assert.assertNotNull(csvWriter);
 
 		String str = "test";
@@ -418,11 +407,10 @@ public class CsvWriterTest {
 	/**
 	 * Test write line list string.
 	 *
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testWriteLineListString() throws IOException {
+	public void writeLineListStringTest() throws IOException {
 		Assert.assertNotNull(csvWriter);
 
 		List<String> ls = new ArrayList<String>();

@@ -24,9 +24,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * This is the test class for the SplipStopWatch - tool.
- */
 public class SplitStopWatchTests {
 
 	/**
@@ -47,7 +44,7 @@ public class SplitStopWatchTests {
 	 * Test the splitStopWatch by outputting a sample trace. Please verify it manually.
 	 */
 	@Test
-	public void SplitStopWatchBehaviorTest_StandardPrecision() {
+	public void splitStopWatchBehaviorStandardPrecisionTest() {
 		SplitStopWatch ssw = new SplitStopWatch();
 
 		try {
@@ -171,7 +168,7 @@ public class SplitStopWatchTests {
 	 * Test the splitStopWatch by outputting a sample trace. Please verify it manually.
 	 */
 	@Test
-	public void SplitStopWatchBehaviorTest_NanoPrecision() {
+	public void splitStopWatchBehaviorNanoPrecisionTest() {
 		SplitStopWatch ssw = new SplitStopWatch().setNanoPrecision(true);
 
 		try {

@@ -24,14 +24,12 @@ import info.unterrainer.java.tools.utils.StreamUtils;
 import info.unterrainer.java.tools.utils.StringUtils;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -44,6 +42,8 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +52,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
 
 import lombok.Cleanup;
 import lombok.experimental.ExtensionMethod;
@@ -268,8 +271,9 @@ public final class FileUtils {
 	 *
 	 * @param directory which gets deleted
 	 * @return true, if successful
+	 * @throws IOException if an I/O error occurs
 	 */
-	public static boolean deleteDirectory(final File directory) {
+	public static boolean deleteDirectory(final File directory) throws IOException {
 		if (!directory.exists() || !directory.isDirectory()) {
 			return false;
 		}
@@ -279,10 +283,10 @@ public final class FileUtils {
 			if (f.isDirectory()) {
 				deleteDirectory(f);
 			} else {
-				FileUtils.deleteFile(f.getAbsolutePath());
+				Files.deleteIfExists(Paths.get(f.getAbsolutePath()));
 			}
 		}
-		FileUtils.deleteFile(directory.getAbsolutePath());
+		Files.deleteIfExists(Paths.get(directory.getAbsolutePath()));
 		directory.delete();
 		return true;
 	}
@@ -292,25 +296,11 @@ public final class FileUtils {
 	 *
 	 * @param directory path to the directory which gets deleted
 	 * @return true, if successful
+	 * @throws IOException if an I/O error occurs
 	 */
-	public static boolean deleteDirectory(final String directory) {
+	public static boolean deleteDirectory(final String directory) throws IOException {
 		final File dir = new File(directory);
 		return FileUtils.deleteDirectory(dir);
-	}
-
-	/**
-	 * Delete file.
-	 *
-	 * @param fileName the file name
-	 * @return true, if delete file
-	 */
-	public static boolean deleteFile(final String fileName) {
-		boolean success = false;
-		final File file = new File(fileName);
-		if (file.exists()) {
-			success = file.delete();
-		}
-		return success;
 	}
 
 	/**
@@ -333,7 +323,7 @@ public final class FileUtils {
 		String retVal = null;
 		// Get file name only
 		final String fileName = getFileNameOnly(fullFileName);
-		if (!fileName.isNullOrEmpty() && fileName.contains(".")) {
+		if (!fileName.isEmpty() && fileName.contains(".")) {
 			retVal = fileName.substring(0, fileName.lastIndexOf('.'));
 		}
 		return retVal;
@@ -417,9 +407,12 @@ public final class FileUtils {
 	 * @param fileName {@link String} the file name
 	 * @return true, if is file existing
 	 */
-	public static boolean isFileExisting(final String fileName) {
-		final File file = new File(fileName);
-		return file.exists();
+	public static boolean isFileExisting(@Nullable String fileName) {
+		if (fileName == null) {
+			return false;
+		}
+		Path path = Paths.get(fileName);
+		return Files.exists(path);
 	}
 
 	/**
@@ -480,20 +473,31 @@ public final class FileUtils {
 
 	/**
 	 * Open a file and read its content to a list of strings.
+	 * <p>
+	 * Assumes UTF8 as default {@link Charset}.
 	 *
-	 * @param file the path to the file to read
+	 * @param path the path to the file to read
 	 * @return an ArrayList containing all the lines of the read file
 	 */
-	public static List<String> readFileToList(final File file) throws IOException {
-		String line;
-		final ArrayList<String> data = new ArrayList<String>();
-		final FileReader fr = new FileReader(file);
-		final BufferedReader br = new BufferedReader(fr);
-		while ((line = br.readLine()) != null) {
-			data.add(line);
+	public static List<String> readToList(@Nullable Path path) throws IOException {
+		return Files.lines(path).collect(Collectors.toList());
+	}
+
+	/**
+	 * Open a file and read its content to a list of strings.
+	 *
+	 * @param path the path to the file to read
+	 * @return an ArrayList containing all the lines of the read file
+	 */
+	public static List<String> readToList(@Nullable Path path, @Nullable Charset cs) throws IOException {
+		if (path == null) {
+			return Collections.emptyList();
 		}
-		br.close();
-		return data;
+		Charset charSet = cs;
+		if (cs == null) {
+			charSet = Encoding.UTF8.toCharset();
+		}
+		return Arrays.asList((String[]) Files.lines(path, charSet).toArray());
 	}
 
 	/**
