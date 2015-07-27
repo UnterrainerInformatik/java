@@ -38,13 +38,13 @@ import lombok.experimental.ExtensionMethod;
  * <pre>
  * {@code
  * [  4%]
- * 
+ *
  * ...
- * 
+ *
  * [ 56%]
- * 
+ *
  * ...
- * 
+ *
  * [100%]
  * }
  * </pre>
@@ -75,7 +75,7 @@ import lombok.experimental.ExtensionMethod;
  * </tr>
  * </table>
  */
-@ExtensionMethod(NullUtils.class)
+@ExtensionMethod({ NullUtils.class, StringUtils.class })
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PercentGauge implements DrawableComponent {
 
@@ -107,7 +107,7 @@ public class PercentGauge implements DrawableComponent {
 
 		if (drawInitialized) {
 			// Delete already drawn bar using command-characters.
-			s += StringUtils.repeat("\b", begin.length() + percent.length() + 3 + end.length());
+			s += "\b".repeat(begin.length() + percent.length() + 3 + end.length());
 		}
 
 		int v = (int) (fader.getPercentage() * 100);

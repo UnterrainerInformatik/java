@@ -68,9 +68,9 @@ public class StreamUtils {
 	 * @param endLineIndex the end line index. If you want all until the file ends, just specify -1 here
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void partOfByLines(final InputStream inputStream, final OutputStream outputStream, final long startLineIndex, final long endLineIndex)
+	public static void partByLines(final InputStream inputStream, final OutputStream outputStream, final long startLineIndex, final long endLineIndex)
 			throws IOException {
-		partOf(inputStream, outputStream, startLineIndex, endLineIndex, true, false, false);
+		part(inputStream, outputStream, startLineIndex, endLineIndex, true, false, false);
 	}
 
 	/**
@@ -82,9 +82,9 @@ public class StreamUtils {
 	 * @param endWordIndex the end word index. If you want all until the file ends, just specify -1 here
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void partOfByWords(final InputStream inputStream, final OutputStream outputStream, final long startWordIndex, final long endWordIndex)
+	public static void partByWords(final InputStream inputStream, final OutputStream outputStream, final long startWordIndex, final long endWordIndex)
 			throws IOException {
-		partOf(inputStream, outputStream, startWordIndex, endWordIndex, false, true, false);
+		part(inputStream, outputStream, startWordIndex, endWordIndex, false, true, false);
 	}
 
 	/**
@@ -95,9 +95,9 @@ public class StreamUtils {
 	 * @param startCharacterIndex the start character index
 	 * @param endCharacterIndex the end character index. If you want all until the file ends, just specify -1 here
 	 */
-	public static void partOfByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
+	public static void partByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
 			final long endCharacterIndex) throws IOException {
-		partOf(inputStream, outputStream, startCharacterIndex, endCharacterIndex, false, false, true);
+		part(inputStream, outputStream, startCharacterIndex, endCharacterIndex, false, false, true);
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class StreamUtils {
 	 * @param indexIsCharacter the index is character-controlled
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void partOf(final InputStream inputStream, final OutputStream outputStream, final long startIndex, final long endIndex,
+	public static void part(final InputStream inputStream, final OutputStream outputStream, final long startIndex, final long endIndex,
 			final boolean indexIsLine, final boolean indexIsWord, final boolean indexIsCharacter) throws IOException {
 		try {
 			final int bufferSize = 1024;
@@ -148,7 +148,7 @@ public class StreamUtils {
 	 * @param endCharacterIndex the end character index
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void getPartOfByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
+	public static void getPartByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
 			final long endCharacterIndex) throws IOException {
 		try {
 			final int bufferSize = 1024;
@@ -181,7 +181,7 @@ public class StreamUtils {
 	 * @return the count properties {@link CountProperties}
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static CountProperties getCountPropertiesOf(final InputStream inputStream) throws IOException {
+	public static CountProperties getCountProperties(final InputStream inputStream) throws IOException {
 		try {
 			final int bufferSize = 1024;
 			byte[] c = new byte[bufferSize];

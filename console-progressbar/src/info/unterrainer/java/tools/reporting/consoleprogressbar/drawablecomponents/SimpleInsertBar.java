@@ -39,14 +39,14 @@ import lombok.experimental.ExtensionMethod;
  * {@code
  * [>>>>>>>>>>>>>>>]
  *  ####
- * 
+ *
  *  ...
- * 
+ *
  * [>>>>>>>>>>>>>>>]
  *  ############
- * 
+ *
  *  ...
- * 
+ *
  * [>>>>>>>>>>>>>>>]
  *  ###############
  * }
@@ -76,7 +76,7 @@ import lombok.experimental.ExtensionMethod;
  * </tr>
  * </table>
  */
-@ExtensionMethod(NullUtils.class)
+@ExtensionMethod({ NullUtils.class, StringUtils.class })
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SimpleInsertBar implements DrawableComponent {
 
@@ -107,11 +107,11 @@ public class SimpleInsertBar implements DrawableComponent {
 
 		if (!drawInitialized) {
 			// Draw the lead-line, the legend to the bar.
-			ps.print(begin + StringUtils.repeat(legendFill + "", width) + end + "\n" + StringUtils.repeat(" ", begin.length()));
+			ps.print(begin + legendFill + "".repeat(width) + end + "\n" + " ".repeat(begin.length()));
 			ps.flush();
 		}
 
-		ps.print(StringUtils.repeat(full + "", value - lastValue));
+		ps.print(full + "".repeat(value - lastValue));
 		ps.flush();
 	}
 }

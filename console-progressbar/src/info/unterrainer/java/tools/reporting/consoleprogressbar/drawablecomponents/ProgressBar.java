@@ -38,13 +38,13 @@ import lombok.experimental.ExtensionMethod;
  * <pre>
  * {@code
  * [####-----------]
- * 
+ *
  * ...
- * 
+ *
  * [########-------]
- * 
+ *
  * ...
- * 
+ *
  * [###############]
  * }
  * </pre>
@@ -72,7 +72,7 @@ import lombok.experimental.ExtensionMethod;
  * </tr>
  * </table>
  */
-@ExtensionMethod(NullUtils.class)
+@ExtensionMethod({ NullUtils.class, StringUtils.class })
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProgressBar implements DrawableComponent {
 
@@ -104,12 +104,12 @@ public class ProgressBar implements DrawableComponent {
 
 		if (drawInitialized) {
 			// Delete already drawn bar using command-characters.
-			s += StringUtils.repeat("\b", begin.length() + width + end.length());
+			s += "\b".repeat(begin.length() + width + end.length());
 		}
 
 		s += begin;
-		s += StringUtils.repeat(full + "", value);
-		s += StringUtils.repeat(empty + "", width - value);
+		s += full + "".repeat(value);
+		s += empty + "".repeat(width - value);
 		s += end;
 
 		ps.print(s);

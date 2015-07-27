@@ -52,12 +52,14 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import lombok.Cleanup;
+import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 
 import org.xml.sax.InputSource;
 
 @UtilityClass
 @SuppressWarnings({ "unchecked" })
+@ExtensionMethod({ FileUtils.class })
 public final class SerializationUtils {
 
 	private static final String JAXB_TRANSFORM_INDENT_AMOUNT = "{http://xml.apache.org/xslt}indent-amount";
@@ -274,7 +276,7 @@ public final class SerializationUtils {
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Class<T> type) throws IOException, JAXBException {
 
-		String source = FileUtils.readFileToString(sourceFile, Encoding.UTF8);
+		String source = sourceFile.readFileToString(Encoding.UTF8);
 		return jaxBXmlDeserializer(source, type);
 	}
 
@@ -299,7 +301,7 @@ public final class SerializationUtils {
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Encoding encoding, final Class<T> type) throws IOException, JAXBException {
 
-		String source = FileUtils.readFileToString(sourceFile, encoding);
+		String source = sourceFile.readFileToString(encoding);
 		return jaxBXmlDeserializer(source, type);
 	}
 
@@ -392,7 +394,7 @@ public final class SerializationUtils {
 		@Cleanup
 		ByteArrayOutputStream baos = null;
 
-		byte[] ba = FileUtils.readFileToByteArray(sourceFile);
+		byte[] ba = sourceFile.readFileToByteArray();
 		baos = new ByteArrayOutputStream();
 		baos.write(ba);
 		baos.flush();

@@ -58,7 +58,7 @@ import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-@ExtensionMethod(StringUtils.class)
+@ExtensionMethod({ StringUtils.class, StreamUtils.class })
 public final class FileUtils {
 
 	public static List<String> getFileList(File dir, String ending, boolean isRecursive) {
@@ -109,7 +109,7 @@ public final class FileUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static CountProperties getCountPropertiesOf(final String input) throws IOException {
-		return StreamUtils.getCountPropertiesOf(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+		return new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)).getCountProperties();
 	}
 
 	/**
@@ -125,7 +125,7 @@ public final class FileUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static CountProperties getCountPropertiesOf(final File file) throws IOException {
-		return StreamUtils.getCountPropertiesOf(new BufferedInputStream(new FileInputStream(file)));
+		return new BufferedInputStream(new FileInputStream(file)).getCountProperties();
 	}
 
 	/**
@@ -333,7 +333,7 @@ public final class FileUtils {
 		String retVal = null;
 		// Get file name only
 		final String fileName = getFileNameOnly(fullFileName);
-		if (!StringUtils.isNullOrEmpty(fileName) && fileName.contains(".")) {
+		if (!fileName.isNullOrEmpty() && fileName.contains(".")) {
 			retVal = fileName.substring(0, fileName.lastIndexOf('.'));
 		}
 		return retVal;
