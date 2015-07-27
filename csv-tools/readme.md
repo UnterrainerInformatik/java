@@ -20,20 +20,16 @@
  
 # csv-tools
 
+This repository is private since this is the master- and release-branch. You may clone it, but it will be read-only.  
+If you want to contribute to our repository (push, open pull requests), please use the copy on github located here: [the public github repository][github]
+
 This library should ease dealing with (admittedly legacy) CSV files.  
-For the younger ones: CSV means Comma Separated Values and is a very old system to write lists to files. It's commonly used to export to Excel since that is the default program to open .csv files on most systems.  
+
+For the younger readers: CSV means Comma Separated Values and is a very old system to write lists to files. It's commonly used to export to Excel since that is the default program to open .csv files on most systems.  
 You may read or write those files using this library and you may specify all possible variations of different control-characters like new-line or end-of-row (or quoting). 
 
 All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
 We use the following parts of Project Lombok:  
-
-* @Data
-* @Getter/@Setter
-* @Builder
-* @NoArgsConstructor/@AllArgsConstructor
-* @UtilityClass *(experimental - outlook: positive)*
-* @Accessors *(experimental - outlook: positive)*
-* @ExtensionMethos *(experimental - outlook: positive)*
 
 **Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
 
@@ -78,3 +74,4 @@ csvWriter.close();
 ```
 
 [lombok]: https://projectlombok.org
+[github] : https://github.com/UnterrainerInformatik/java

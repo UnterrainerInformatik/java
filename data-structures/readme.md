@@ -22,6 +22,9 @@
 
 This jar contains several classes designed to do common tasks.
 
+This repository is private since this is the master- and release-branch. You may clone it, but it will be read-only.  
+If you want to contribute to our repository (push, open pull requests), please use the copy on github located here: [the public github repository][github]
+
 Currently this contains the following classes:
 
 * ##### Tuple2  
@@ -35,14 +38,6 @@ It adds a percentage getter and setter as well allowing you to do conversions fr
 All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
 We use the following parts of Project Lombok:  
 
-* @Data
-* @Getter/@Setter
-* @Builder
-* @NoArgsConstructor/@AllArgsConstructor
-* @UtilityClass *(experimental - outlook: positive)*
-* @Accessors *(experimental - outlook: positive)*
-* @ExtensionMethos *(experimental - outlook: positive)*
-
 **Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
 
 #### Apache Maven artifact to use in your pom
@@ -55,3 +50,4 @@ We use the following parts of Project Lombok:
 ```
 
 [lombok]: https://projectlombok.org
+[github] : https://github.com/UnterrainerInformatik/java

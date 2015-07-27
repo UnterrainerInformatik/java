@@ -20,6 +20,9 @@
  
 # console-progressbar
 
+This repository is private since this is the master- and release-branch. You may clone it, but it will be read-only.  
+If you want to contribute to our repository (push, open pull requests), please use the copy on github located here: [the public github repository][github]
+
 The console-progressbar is designed to show progress when writing long-running console-applications.  
 It was designed to be used with consoles that support control-characters (like cmd) or that don't (Eclipse console implementation before Mars (4.5)).  
 
@@ -35,15 +38,6 @@ Displays the percentage.
 You may extend the visual representations by implementing new graphical variants. 
 
 All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
-We use the following parts of Project Lombok:  
-
-* @Data
-* @Getter/@Setter
-* @Builder
-* @NoArgsConstructor/@AllArgsConstructor
-* @UtilityClass *(experimental - outlook: positive)*
-* @Accessors *(experimental - outlook: positive)*
-* @ExtensionMethos *(experimental - outlook: positive)*
 
 **Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
 
@@ -72,3 +66,4 @@ We use the following parts of Project Lombok:
 ```
 
 [lombok]: https://projectlombok.org
+[github] : https://github.com/UnterrainerInformatik/java

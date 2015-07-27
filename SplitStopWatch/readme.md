@@ -22,6 +22,9 @@
 
 This class implements a stopWatch.
 
+This repository is private since this is the master- and release-branch. You may clone it, but it will be read-only.  
+If you want to contribute to our repository (push, open pull requests), please use the copy on github located here: [the public github repository][github]
+
 Additionally to the normal stopWatch-functionality it may be used to debug out split-times as well. It measures the split-times and keeps track of the overall times in a variable.
 Don't be afraid to stop the watch. Stopping doesn't mean you loose any value whatsoever. Think of it as a real-life stopWatch where you may press the start-button at any time after previously pressing the stop-button.
 
@@ -34,15 +37,6 @@ All public methods within this class are synchronized so you may use it concurre
 It has a property 'isActive' that defaults to true. When this is set to false all calls to this class are aborted within a single if-statement in the called method. This is a convenience function so that you may leave your logging-code in the production code. 
 
 All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
-We use the following parts of Project Lombok:  
-
-* @Data
-* @Getter/@Setter
-* @Builder
-* @NoArgsConstructor/@AllArgsConstructor
-* @UtilityClass *(experimental - outlook: positive)*
-* @Accessors *(experimental - outlook: positive)*
-* @ExtensionMethos *(experimental - outlook: positive)*
 
 **Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
 
@@ -67,3 +61,4 @@ ssw.stop("stopped.");
 ```
 
 [lombok]: https://projectlombok.org
+[github] : https://github.com/UnterrainerInformatik/java
