@@ -21,7 +21,20 @@
 # General JAVA Tools
 
 The general JAVA tools section of our GIT repository is free. You may copy, use or rewrite every single one of its contained projects to your hearts content.
-In order to get help with basic GIT commands you may try [the GIT cheat-sheet][2] on our [homepage][1].
+In order to get help with basic GIT commands you may try [the GIT cheat-sheet][coding] on our [homepage][homepage].  
+
+All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
+We use the following parts of Project Lombok:  
+
+* @Data
+* @Getter/@Setter
+* @Builder
+* @NoArgsConstructor/@AllArgsConstructor
+* @UtilityClass *(experimental - outlook: positive)*
+* @Accessors *(experimental - outlook: positive)*
+* @ExtensionMethos *(experimental - outlook: positive)*
+
+**Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
 
 ## utils
 
@@ -103,5 +116,6 @@ For additional information check the `readme.md` file in the sub-directory.
 </dependency>
 ```
 
-[1]: http://www.unterrainer.info
-[2]: http://www.unterrainer.info/Home/Coding
+[homepage]: http://www.unterrainer.info
+[coding]: http://www.unterrainer.info/Home/Coding
+[lombok]: https://projectlombok.org

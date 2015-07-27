@@ -31,7 +31,20 @@ All the write-operations are performed as a printLine-call, so you don't need to
 This class is automatically created using millisecond-precision. If you want to enable nanoseconds-precision albeit performance impacts, though the impact of this is very small indeed, you may do so after creating the stopWatch via the setIsNanoPrecision-Setter.
 
 All public methods within this class are synchronized so you may use it concurrently within many threads.
-It has a property 'isActive' that defaults to true. When this is set to false all calls to this class are aborted within a single if-statement in the called method. This is a convenience function so that you may leave your logging-code in the production code.
+It has a property 'isActive' that defaults to true. When this is set to false all calls to this class are aborted within a single if-statement in the called method. This is a convenience function so that you may leave your logging-code in the production code. 
+
+All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
+We use the following parts of Project Lombok:  
+
+* @Data
+* @Getter/@Setter
+* @Builder
+* @NoArgsConstructor/@AllArgsConstructor
+* @UtilityClass *(experimental - outlook: positive)*
+* @Accessors *(experimental - outlook: positive)*
+* @ExtensionMethos *(experimental - outlook: positive)*
+
+**Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
 
 #### Example
     
@@ -52,3 +65,5 @@ ssw.stop("stopped.");
     <version>0.2</version>
 </dependency>
 ```
+
+[lombok]: https://projectlombok.org

@@ -32,6 +32,19 @@ Is exactly what the name suggests. An interval defined by a minimum and a maximu
 The fader consists of an interval and adds a value (double) to it. The value is always in between the interval.  
 It adds a percentage getter and setter as well allowing you to do conversions from a percentage-value to your interval and backwards.
 
+All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
+We use the following parts of Project Lombok:  
+
+* @Data
+* @Getter/@Setter
+* @Builder
+* @NoArgsConstructor/@AllArgsConstructor
+* @UtilityClass *(experimental - outlook: positive)*
+* @Accessors *(experimental - outlook: positive)*
+* @ExtensionMethos *(experimental - outlook: positive)*
+
+**Beware:** Project Lombok currently doesn't play well with Eclipse Mars (4.5). You'll get build-errors using the extension methods as of now.
+
 #### Apache Maven artifact to use in your pom
 ```xml
 <dependency>
@@ -40,3 +53,5 @@ It adds a percentage getter and setter as well allowing you to do conversions fr
     <version>0.2</version>
 </dependency>
 ```
+
+[lombok]: https://projectlombok.org
