@@ -31,12 +31,17 @@
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<site>
+			<id>github-project-site</id>
+			<name>GitHub Project Pages</name>
+			<url>gitsite:https://github.com/UnterrainerInformatik/java</url>
+		</site>
 	</distributionManagement>
 
 	<scm>
-		<connection>scm:git:https://www.unterrainer.info:8443/scm/jav/general.git</connection>
-		<developerConnection>scm:git:https://psilo@www.unterrainer.info:8443/scm/jav/general.git</developerConnection>
-		<url>https://www.unterrainer.info:8443/scm/jav/general.git</url>
+		<connection>scm:git:https://github.com/UnterrainerInformatik/java</connection>
+		<developerConnection>scm:git:https://guFalcon@github.com/UnterrainerInformatik/java</developerConnection>
+		<url>https://github.com/UnterrainerInformatik/java</url>
 	</scm>
 
 	<build>
