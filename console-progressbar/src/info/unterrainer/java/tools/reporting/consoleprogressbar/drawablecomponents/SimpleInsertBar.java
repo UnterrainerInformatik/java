@@ -1,7 +1,26 @@
+/**************************************************************************
+ * <pre>
+ *
+ * Copyright (c) Unterrainer Informatik OG.
+ * This source is subject to the Microsoft Public License.
+ *
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ *
+ * (In other words you may copy, use, change and redistribute it without
+ * any restrictions except for not suing me because it broke something.)
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * </pre>
+ ***************************************************************************/
 package info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents;
 
 import info.unterrainer.java.tools.datastructures.Fader;
-import info.unterrainer.java.tools.utils.ExtensionMethods;
+import info.unterrainer.java.tools.utils.NullUtils;
 import info.unterrainer.java.tools.utils.StringUtils;
 
 import java.io.PrintStream;
@@ -20,21 +39,20 @@ import lombok.experimental.ExtensionMethod;
  * {@code
  * [>>>>>>>>>>>>>>>]
  *  ####
- *
+ * 
  *  ...
- *
+ * 
  * [>>>>>>>>>>>>>>>]
  *  ############
- *
+ * 
  *  ...
- *
+ * 
  * [>>>>>>>>>>>>>>>]
  *  ###############
  * }
  * </pre>
  *
- * ... with an ever growing number of '#' characters.</br/>
- * You may specify any other begin- , end- , full- or legendFill-character you like. <br />
+ * ... with an ever growing number of '#' characters.</br/> You may specify any other begin- , end- , full- or legendFill-character you like. <br />
  * This bar is always working. Even if your console doesn't support control characters like the Eclipse console-implementation (before Mars (4.5)) or a pipe to
  * a file.
  * <p>
@@ -58,7 +76,7 @@ import lombok.experimental.ExtensionMethod;
  * </tr>
  * </table>
  */
-@ExtensionMethod(ExtensionMethods.class)
+@ExtensionMethod(NullUtils.class)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SimpleInsertBar implements DrawableComponent {
 

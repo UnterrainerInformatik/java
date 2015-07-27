@@ -20,6 +20,9 @@
 
 package info.unterrainer.java.tools.utils.serialization;
 
+import info.unterrainer.java.tools.utils.files.Encoding;
+import info.unterrainer.java.tools.utils.files.FileUtils;
+
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
@@ -48,11 +51,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.xml.sax.InputSource;
-
-import info.unterrainer.java.tools.utils.files.Encoding;
-import info.unterrainer.java.tools.utils.files.FileUtils;
+import lombok.Cleanup;
 import lombok.experimental.UtilityClass;
+
+import org.xml.sax.InputSource;
 
 @UtilityClass
 @SuppressWarnings({ "unchecked" })
@@ -72,33 +74,25 @@ public final class SerializationUtils {
 	 * @return the string {@link String} containing the serialized form of the given object.
 	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
-	 *             <li>No JAXB implementation was discovered</li>
-	 *             <li>Classes use JAXB annotations incorrectly</li>
-	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
-	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
-	 *             development time.)</li>
+	 *             <li>No JAXB implementation was discovered</li> <li>Classes use JAXB annotations incorrectly</li> <li>Classes have colliding annotations
+	 *             (i.e., two classes with the same type name)</li> <li>The JAXB implementation was unable to locate provider-specific out-of-band information
+	 *             (such as additional files generated at the development time.)</li>
 	 *             </ol>
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static String jaxBXmlSerialize(final Object serializableObject) throws JAXBException, IOException {
 
 		JAXBContext jaxbContext;
+		@Cleanup
 		StringWriter sw = null;
-		try {
-			jaxbContext = JAXBContext.newInstance(serializableObject.getClass());
-			Marshaller marsh = jaxbContext.createMarshaller();
-			marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			sw = new StringWriter();
+		jaxbContext = JAXBContext.newInstance(serializableObject.getClass());
+		Marshaller marsh = jaxbContext.createMarshaller();
+		marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		sw = new StringWriter();
 
-			marsh.marshal(serializableObject, sw);
-			sw.flush();
-			return sw.toString();
-
-		} finally {
-			if (sw != null) {
-				sw.close();
-			}
-		}
+		marsh.marshal(serializableObject, sw);
+		sw.flush();
+		return sw.toString();
 	}
 
 	/**
@@ -111,11 +105,9 @@ public final class SerializationUtils {
 	 * @param targetFile {@link File} the target file
 	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
-	 *             <li>No JAXB implementation was discovered</li>
-	 *             <li>Classes use JAXB annotations incorrectly</li>
-	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
-	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
-	 *             development time.)</li>
+	 *             <li>No JAXB implementation was discovered</li> <li>Classes use JAXB annotations incorrectly</li> <li>Classes have colliding annotations
+	 *             (i.e., two classes with the same type name)</li> <li>The JAXB implementation was unable to locate provider-specific out-of-band information
+	 *             (such as additional files generated at the development time.)</li>
 	 *             </ol>
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
@@ -138,11 +130,9 @@ public final class SerializationUtils {
 	 *            tags
 	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
-	 *             <li>No JAXB implementation was discovered</li>
-	 *             <li>Classes use JAXB annotations incorrectly</li>
-	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
-	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
-	 *             development time.)</li>
+	 *             <li>No JAXB implementation was discovered</li> <li>Classes use JAXB annotations incorrectly</li> <li>Classes have colliding annotations
+	 *             (i.e., two classes with the same type name)</li> <li>The JAXB implementation was unable to locate provider-specific out-of-band information
+	 *             (such as additional files generated at the development time.)</li>
 	 *             </ol>
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws TransformerException If an unrecoverable error occurs during the course of the transformation.
@@ -166,11 +156,9 @@ public final class SerializationUtils {
 	 * @return the string {@link String}
 	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
-	 *             <li>No JAXB implementation was discovered</li>
-	 *             <li>Classes use JAXB annotations incorrectly</li>
-	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
-	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
-	 *             development time.)</li>
+	 *             <li>No JAXB implementation was discovered</li> <li>Classes use JAXB annotations incorrectly</li> <li>Classes have colliding annotations
+	 *             (i.e., two classes with the same type name)</li> <li>The JAXB implementation was unable to locate provider-specific out-of-band information
+	 *             (such as additional files generated at the development time.)</li>
 	 *             </ol>
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws TransformerConfigurationException When it is not possible to create a {@link Transformer} instance.
@@ -180,42 +168,36 @@ public final class SerializationUtils {
 			final boolean omitXmlDeclaration) throws JAXBException, IOException, TransformerConfigurationException, TransformerException {
 		Transformer t;
 		JAXBContext jaxbContext;
+
+		@Cleanup
 		StringWriter sw1 = null;
+		@Cleanup
 		StringWriter sw2 = null;
-		try {
-			t = TransformerFactory.newInstance().newTransformer();
 
-			if (indent > 0) {
-				t.setOutputProperty(OutputKeys.INDENT, JAXB_TRANSFORM_PROPERTY_YES);
-				t.setOutputProperty(JAXB_TRANSFORM_INDENT_AMOUNT, String.valueOf(indent));
-			}
-			if (omitXmlDeclaration) {
-				t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, JAXB_TRANSFORM_PROPERTY_YES);
-			} else {
-				t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, JAXB_TRANSFORM_PROPERTY_NO);
-			}
-			t.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS, elementsEncapsulatedInCdataTags);
+		t = TransformerFactory.newInstance().newTransformer();
 
-			jaxbContext = JAXBContext.newInstance(serializableObject.getClass());
-			Marshaller marsh = jaxbContext.createMarshaller();
-			marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			sw1 = new StringWriter();
-			marsh.marshal(serializableObject, sw1);
-			sw1.flush();
-			Source xmlInput = new StreamSource(new StringReader(sw1.toString()));
-			sw2 = new StringWriter();
-			t.transform(xmlInput, new StreamResult(sw2));
-			sw2.flush();
-			return sw2.toString();
-
-		} finally {
-			if (sw1 != null) {
-				sw1.close();
-			}
-			if (sw2 != null) {
-				sw2.close();
-			}
+		if (indent > 0) {
+			t.setOutputProperty(OutputKeys.INDENT, JAXB_TRANSFORM_PROPERTY_YES);
+			t.setOutputProperty(JAXB_TRANSFORM_INDENT_AMOUNT, String.valueOf(indent));
 		}
+		if (omitXmlDeclaration) {
+			t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, JAXB_TRANSFORM_PROPERTY_YES);
+		} else {
+			t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, JAXB_TRANSFORM_PROPERTY_NO);
+		}
+		t.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS, elementsEncapsulatedInCdataTags);
+
+		jaxbContext = JAXBContext.newInstance(serializableObject.getClass());
+		Marshaller marsh = jaxbContext.createMarshaller();
+		marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		sw1 = new StringWriter();
+		marsh.marshal(serializableObject, sw1);
+		sw1.flush();
+		Source xmlInput = new StreamSource(new StringReader(sw1.toString()));
+		sw2 = new StringWriter();
+		t.transform(xmlInput, new StreamResult(sw2));
+		sw2.flush();
+		return sw2.toString();
 	}
 
 	/**
@@ -232,11 +214,9 @@ public final class SerializationUtils {
 	 * @param omitXmlDeclaration true, if the XML-declaration shall be omitted. False otherwise
 	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
-	 *             <li>No JAXB implementation was discovered</li>
-	 *             <li>Classes use JAXB annotations incorrectly</li>
-	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
-	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
-	 *             development time.)</li>
+	 *             <li>No JAXB implementation was discovered</li> <li>Classes use JAXB annotations incorrectly</li> <li>Classes have colliding annotations
+	 *             (i.e., two classes with the same type name)</li> <li>The JAXB implementation was unable to locate provider-specific out-of-band information
+	 *             (such as additional files generated at the development time.)</li>
 	 *             </ol>
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws TransformerException If an unrecoverable error occurs during the course of the transformation.
@@ -261,11 +241,9 @@ public final class SerializationUtils {
 	 * @return the t
 	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
-	 *             <li>No JAXB implementation was discovered</li>
-	 *             <li>Classes use JAXB annotations incorrectly</li>
-	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
-	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
-	 *             development time.)</li>
+	 *             <li>No JAXB implementation was discovered</li> <li>Classes use JAXB annotations incorrectly</li> <li>Classes have colliding annotations
+	 *             (i.e., two classes with the same type name)</li> <li>The JAXB implementation was unable to locate provider-specific out-of-band information
+	 *             (such as additional files generated at the development time.)</li>
 	 *             </ol>
 	 */
 	public static <T> T jaxBXmlDeserializer(final String source, final Class<T> type) throws JAXBException {
@@ -289,11 +267,9 @@ public final class SerializationUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
-	 *             <li>No JAXB implementation was discovered</li>
-	 *             <li>Classes use JAXB annotations incorrectly</li>
-	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
-	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
-	 *             development time.)</li>
+	 *             <li>No JAXB implementation was discovered</li> <li>Classes use JAXB annotations incorrectly</li> <li>Classes have colliding annotations
+	 *             (i.e., two classes with the same type name)</li> <li>The JAXB implementation was unable to locate provider-specific out-of-band information
+	 *             (such as additional files generated at the development time.)</li>
 	 *             </ol>
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Class<T> type) throws IOException, JAXBException {
@@ -316,11 +292,9 @@ public final class SerializationUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws JAXBException if an error was encountered while creating the JAXBContext, such as (but not limited to):
 	 *             <ol>
-	 *             <li>No JAXB implementation was discovered</li>
-	 *             <li>Classes use JAXB annotations incorrectly</li>
-	 *             <li>Classes have colliding annotations (i.e., two classes with the same type name)</li>
-	 *             <li>The JAXB implementation was unable to locate provider-specific out-of-band information (such as additional files generated at the
-	 *             development time.)</li>
+	 *             <li>No JAXB implementation was discovered</li> <li>Classes use JAXB annotations incorrectly</li> <li>Classes have colliding annotations
+	 *             (i.e., two classes with the same type name)</li> <li>The JAXB implementation was unable to locate provider-specific out-of-band information
+	 *             (such as additional files generated at the development time.)</li>
 	 *             </ol>
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Encoding encoding, final Class<T> type) throws IOException, JAXBException {
@@ -339,16 +313,11 @@ public final class SerializationUtils {
 	 */
 	public static void beansXmlEncode(final Object serializableObject, final File targetFile) throws FileNotFoundException {
 
+		@Cleanup
 		XMLEncoder encoder = null;
-		try {
-			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(targetFile)));
-			encoder.writeObject(serializableObject);
 
-		} finally {
-			if (encoder != null) {
-				encoder.close();
-			}
-		}
+		encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(targetFile)));
+		encoder.writeObject(serializableObject);
 	}
 
 	/**
@@ -364,16 +333,11 @@ public final class SerializationUtils {
 	public static <T> T beansXmlDecode(final File sourceFile, final Class<T> type) throws FileNotFoundException {
 
 		T result = null;
+		@Cleanup
 		XMLDecoder decoder = null;
-		try {
-			decoder = new XMLDecoder(new FileInputStream(sourceFile));
-			result = (T) decoder.readObject();
 
-		} finally {
-			if (decoder != null) {
-				decoder.close();
-			}
-		}
+		decoder = new XMLDecoder(new FileInputStream(sourceFile));
+		result = (T) decoder.readObject();
 		return result;
 	}
 
@@ -388,22 +352,13 @@ public final class SerializationUtils {
 	 */
 	public static void objectSerialize(final Object serializableObject, final File targetFile) throws IOException, FileNotFoundException {
 
+		@Cleanup
 		ByteArrayOutputStream baos = SerializationUtils.objectSerialize(serializableObject);
-
+		@Cleanup
 		FileOutputStream outputStream = null;
-		try {
 
-			outputStream = new FileOutputStream(targetFile);
-			baos.writeTo(outputStream);
-
-		} finally {
-			if (baos != null) {
-				baos.close();
-			}
-			if (outputStream != null) {
-				outputStream.close();
-			}
-		}
+		outputStream = new FileOutputStream(targetFile);
+		baos.writeTo(outputStream);
 	}
 
 	/**
@@ -415,16 +370,11 @@ public final class SerializationUtils {
 	 */
 	public static ByteArrayOutputStream objectSerialize(final Object serializableObject) throws IOException {
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
-		ObjectOutputStream out = null;
-		try {
-			out = new ObjectOutputStream(result);
-			out.writeObject(serializableObject);
-			out.close();
-		} finally {
-			if (out != null) {
-				out.close();
-			}
-		}
+
+		@Cleanup
+		ObjectOutputStream out = new ObjectOutputStream(result);
+		out.writeObject(serializableObject);
+		out.close();
 		return result;
 	}
 
@@ -439,18 +389,14 @@ public final class SerializationUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static <T> T objectDeserialize(final File sourceFile, final Class<T> type) throws ClassNotFoundException, IOException {
+		@Cleanup
 		ByteArrayOutputStream baos = null;
-		try {
-			byte[] ba = FileUtils.readFileToByteArray(sourceFile);
-			baos = new ByteArrayOutputStream();
-			baos.write(ba);
-			baos.flush();
-			return SerializationUtils.<T> objectDeserialize(baos, type);
-		} finally {
-			if (baos != null) {
-				baos.close();
-			}
-		}
+
+		byte[] ba = FileUtils.readFileToByteArray(sourceFile);
+		baos = new ByteArrayOutputStream();
+		baos.write(ba);
+		baos.flush();
+		return SerializationUtils.<T> objectDeserialize(baos, type);
 	}
 
 	/**
@@ -464,16 +410,12 @@ public final class SerializationUtils {
 	 * @throws ClassNotFoundException Class of a serialized object cannot be found
 	 */
 	public static <T> T objectDeserialize(final ByteArrayOutputStream baos, final Class<T> type) throws IOException, ClassNotFoundException {
+		@Cleanup
 		ObjectInputStream in = null;
+
 		T result = null;
-		try {
-			in = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
-			result = (T) in.readObject();
-		} finally {
-			if (in != null) {
-				in.close();
-			}
-		}
+		in = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
+		result = (T) in.readObject();
 		return result;
 	}
 

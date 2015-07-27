@@ -19,7 +19,7 @@
  ***************************************************************************/
 package info.unterrainer.java.tools.csvtools;
 
-import info.unterrainer.java.tools.utils.ExtensionMethods;
+import info.unterrainer.java.tools.utils.NullUtils;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -35,7 +35,7 @@ import lombok.experimental.ExtensionMethod;
  * <p>
  * Enables you to read CSV-files using various types of delimiters (column and row) and quotes.
  */
-@ExtensionMethod(ExtensionMethods.class)
+@ExtensionMethod(NullUtils.class)
 public class CsvReader extends CsvBase {
 
 	private final static int DEFAULT_CHUNK_SIZE = 16384;
@@ -91,8 +91,7 @@ public class CsvReader extends CsvBase {
 	@Builder
 	public CsvReader(final StringReader stringReader, final Character columnSeparator, final String rowSeparator, final String fieldDelimiter,
 			final Integer readChunkSize) {
-		this(stringReader, columnSeparator.or(DEFAULT_COLUMN_SEPARATOR), rowSeparator.or(DEFAULT_ROW_SEPARATOR),
-				fieldDelimiter.or(DEFAULT_FIELD_DELIMITER));
+		this(stringReader, columnSeparator.or(DEFAULT_COLUMN_SEPARATOR), rowSeparator.or(DEFAULT_ROW_SEPARATOR), fieldDelimiter.or(DEFAULT_FIELD_DELIMITER));
 		setChunkAndBufferSize(readChunkSize.or(DEFAULT_CHUNK_SIZE));
 	}
 

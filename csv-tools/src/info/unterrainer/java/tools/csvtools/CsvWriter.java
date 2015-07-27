@@ -20,19 +20,20 @@
 
 package info.unterrainer.java.tools.csvtools;
 
+import info.unterrainer.java.tools.utils.NullUtils;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
-import info.unterrainer.java.tools.utils.ExtensionMethods;
 import lombok.Builder;
 import lombok.experimental.ExtensionMethod;
 
 /**
  * This data-structure represents a comma-separated-values file. It helps in dealing with such files and delivers various manipulation routines.
  */
-@ExtensionMethod(ExtensionMethods.class)
+@ExtensionMethod(NullUtils.class)
 public class CsvWriter extends CsvBase {
 
 	private final Writer stringWriter;
@@ -84,8 +85,7 @@ public class CsvWriter extends CsvBase {
 	 * Initializes a new instance of the CsvWriter class. Call close() on it before moving on in order to flush and close the underlying reader. If you don't do
 	 * this, the garbage collector will do that for you at an undefined point in time.
 	 *
-	 * @param stringWriter
-	 *            The StringWriter you want the CsvWriter to attach to.
+	 * @param stringWriter The StringWriter you want the CsvWriter to attach to.
 	 */
 	public CsvWriter(final StringWriter stringWriter) {
 		this.stringWriter = stringWriter;
@@ -95,11 +95,9 @@ public class CsvWriter extends CsvBase {
 	 * Initializes a new instance of the CsvWriter class. Call close() on it before moving on in order to flush and close the underlying reader. If you don't do
 	 * this, the garbage collector will do that for you at an undefined point in time.
 	 *
-	 * @param stringWriter
-	 *            The StringWriter you want the CsvWriter to attach to.
-	 * @param quotingBehavior
-	 *            The quotingBehavior tells the writer how to quote fields in the resulting CSV. Minimal only lets him apply quotes where absolutely necessary.
-	 *            All means that he always applies them, necessary or not.
+	 * @param stringWriter The StringWriter you want the CsvWriter to attach to.
+	 * @param quotingBehavior The quotingBehavior tells the writer how to quote fields in the resulting CSV. Minimal only lets him apply quotes where absolutely
+	 *            necessary. All means that he always applies them, necessary or not.
 	 */
 	public CsvWriter(final StringWriter stringWriter, final QuotingBehavior quotingBehavior) {
 		this.stringWriter = stringWriter;
@@ -110,14 +108,10 @@ public class CsvWriter extends CsvBase {
 	 * Initializes a new instance of the CsvWriter class. Call close() on it before moving on in order to flush and close the underlying reader. If you don't do
 	 * this, the garbage collector will do that for you at an undefined point in time.
 	 *
-	 * @param stringWriter
-	 *            The StringWriter you want the CsvWriter to attach to.
-	 * @param columnSeparator
-	 *            A delimiter to separate columns (e.g. ';').
-	 * @param rowSeparator
-	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
-	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
+	 * @param stringWriter The StringWriter you want the CsvWriter to attach to.
+	 * @param columnSeparator A delimiter to separate columns (e.g. ';').
+	 * @param rowSeparator A delimiter to separate rows (e.g. System.getProperty("line.separator")).
+	 * @param fieldDelimiter A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 */
 	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter) {
 		this(stringWriter);
@@ -130,17 +124,12 @@ public class CsvWriter extends CsvBase {
 	 * Initializes a new instance of the CsvWriter class. Call close() on it before moving on in order to flush and close the underlying reader. If you don't do
 	 * this, the garbage collector will do that for you at an undefined point in time.
 	 *
-	 * @param stringWriter
-	 *            The StringWriter you want the CsvWriter to attach to.
-	 * @param columnSeparator
-	 *            A delimiter to separate columns (e.g. ';').
-	 * @param rowSeparator
-	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
-	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
-	 * @param quotingBehavior
-	 *            The quotingBehavior tells the writer how to quote fields in the resulting CSV. Minimal only lets him apply quotes where absolutely necessary.
-	 *            All means that he always applies them, necessary or not.
+	 * @param stringWriter The StringWriter you want the CsvWriter to attach to.
+	 * @param columnSeparator A delimiter to separate columns (e.g. ';').
+	 * @param rowSeparator A delimiter to separate rows (e.g. System.getProperty("line.separator")).
+	 * @param fieldDelimiter A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
+	 * @param quotingBehavior The quotingBehavior tells the writer how to quote fields in the resulting CSV. Minimal only lets him apply quotes where absolutely
+	 *            necessary. All means that he always applies them, necessary or not.
 	 */
 	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter,
 			final QuotingBehavior quotingBehavior) {
@@ -154,17 +143,12 @@ public class CsvWriter extends CsvBase {
 	 * Initializes a new instance of the CsvWriter class. Call close() on it before moving on in order to flush and close the underlying reader. If you don't do
 	 * this, the garbage collector will do that for you at an undefined point in time.
 	 *
-	 * @param stringWriter
-	 *            The StringWriter you want the CsvWriter to attach to.
-	 * @param columnSeparator
-	 *            A delimiter to separate columns (e.g. ';').
-	 * @param rowSeparator
-	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
-	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
-	 * @param writeChunkSize
-	 *            Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The bufferSize
-	 *            is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
+	 * @param stringWriter The StringWriter you want the CsvWriter to attach to.
+	 * @param columnSeparator A delimiter to separate columns (e.g. ';').
+	 * @param rowSeparator A delimiter to separate rows (e.g. System.getProperty("line.separator")).
+	 * @param fieldDelimiter A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
+	 * @param writeChunkSize Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The
+	 *            bufferSize is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
 	 */
 	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter,
 			final int writeChunkSize) {
@@ -176,26 +160,20 @@ public class CsvWriter extends CsvBase {
 	 * Initializes a new instance of the CsvWriter class. Call close() on it before moving on in order to flush and close the underlying reader. If you don't do
 	 * this, the garbage collector will do that for you at an undefined point in time.
 	 *
-	 * @param stringWriter
-	 *            The StringWriter you want the CsvWriter to attach to.
-	 * @param columnSeparator
-	 *            A delimiter to separate columns (e.g. ';').
-	 * @param rowSeparator
-	 *            A delimiter to separate rows (e.g. System.getProperty("line.separator")).
-	 * @param fieldDelimiter
-	 *            A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
-	 * @param writeChunkSize
-	 *            Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The bufferSize
-	 *            is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
-	 * @param quotingBehavior
-	 *            The quotingBehavior tells the writer how to quote fields in the resulting CSV. Minimal only lets him apply quotes where absolutely necessary.
-	 *            All means that he always applies them, necessary or not.
+	 * @param stringWriter The StringWriter you want the CsvWriter to attach to.
+	 * @param columnSeparator A delimiter to separate columns (e.g. ';').
+	 * @param rowSeparator A delimiter to separate rows (e.g. System.getProperty("line.separator")).
+	 * @param fieldDelimiter A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
+	 * @param writeChunkSize Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The
+	 *            bufferSize is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
+	 * @param quotingBehavior The quotingBehavior tells the writer how to quote fields in the resulting CSV. Minimal only lets him apply quotes where absolutely
+	 *            necessary. All means that he always applies them, necessary or not.
 	 */
 	@Builder
 	public CsvWriter(final StringWriter stringWriter, final Character columnSeparator, final String rowSeparator, final String fieldDelimiter,
 			final Integer writeChunkSize, final QuotingBehavior quotingBehavior) {
-		this(stringWriter, columnSeparator.or(DEFAULT_COLUMN_SEPARATOR), rowSeparator.or(DEFAULT_ROW_SEPARATOR),
-				fieldDelimiter.or(DEFAULT_FIELD_DELIMITER), writeChunkSize.or(DEFAULT_CHUNK_SIZE));
+		this(stringWriter, columnSeparator.or(DEFAULT_COLUMN_SEPARATOR), rowSeparator.or(DEFAULT_ROW_SEPARATOR), fieldDelimiter.or(DEFAULT_FIELD_DELIMITER),
+				writeChunkSize.or(DEFAULT_CHUNK_SIZE));
 		this.quotingBehavior = quotingBehavior.or(QuotingBehavior.MINIMAL);
 	}
 
@@ -217,10 +195,8 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Writes a string to the buffer. Flushes it if necessary.
 	 *
-	 * @param text
-	 *            The text to write.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @param text The text to write.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	private void internalWrite(final String text) throws IOException {
 		if (numberOfUnusedBufferCharacters < text.length()) {
@@ -249,8 +225,7 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Flushes all internal buffers to the underlying writer.
 	 *
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public CsvWriter flush() throws IOException {
 		stringWriter.write(buffer, 0, bufferCount);
@@ -263,8 +238,7 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Calls flush on the underlying stringWriter.
 	 *
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public CsvWriter flushUnderlyingWriter() throws IOException {
 		if (stringWriter != null) {
@@ -276,8 +250,7 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Writes a character to the buffer.
 	 *
-	 * @param c
-	 *            The character to write.
+	 * @param c The character to write.
 	 */
 	private void writeToBuffer(final char c) {
 		buffer[bufferCount] = c;
@@ -288,8 +261,7 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Determines if a field delimiter has to be used in order to produce a well formed CSV format.
 	 *
-	 * @param csvData
-	 *            The data the determination is based on.
+	 * @param csvData The data the determination is based on.
 	 * @return True, if a field-delimiter has to be used, false otherwise.
 	 */
 	private boolean isUseFieldDelimiter(final String csvData) {
@@ -303,8 +275,7 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Writes an empty string (followed by a column-separator).
 	 *
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public synchronized CsvWriter write() throws IOException {
 		write("");
@@ -314,8 +285,7 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Writes a row-separator, advancing the writer to a new row. Does not write an empty string before advancing the writer.
 	 *
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public synchronized CsvWriter writeLine() throws IOException {
 		internalWrite(rowSeparator);
@@ -327,10 +297,8 @@ public class CsvWriter extends CsvBase {
 	 * Writes a field to the CSV and appends a columnSeparator in front of the new entry if necessary. Appends a rowSeparator at the end, advancing the writer
 	 * to a new row.
 	 *
-	 * @param csvData
-	 *            The data that should be written.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @param csvData The data that should be written.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public synchronized CsvWriter writeLine(final String csvData) throws IOException {
 		write(csvData);
@@ -341,10 +309,8 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Writes a field to the CSV and appends a columnSeparator in front of the new entry if necessary.
 	 *
-	 * @param csvData
-	 *            The data, that should be written to the CSV.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @param csvData The data, that should be written to the CSV.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public synchronized CsvWriter write(final String csvData) throws IOException {
 		if (isFirstFieldInRow) {
@@ -374,10 +340,8 @@ public class CsvWriter extends CsvBase {
 	 * Writes a row to the CSV ending with a rowSeparator. Treats the target as if it was empty, or at least in a new-row-position (empty row, no field inserted
 	 * yet).
 	 *
-	 * @param csvData
-	 *            The data, that should be written to the CSV.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @param csvData The data, that should be written to the CSV.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public synchronized CsvWriter writeLine(final List<String> csvData) throws IOException {
 		initialize();
@@ -390,10 +354,8 @@ public class CsvWriter extends CsvBase {
 	 * Writes a row to the CSV not ending with a rowSeparator. Treats the target as if it was empty, or at least in a newline-position (empty row, no field
 	 * inserted yet).
 	 *
-	 * @param csvData
-	 *            The data, that should be written to the CSV.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @param csvData The data, that should be written to the CSV.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public synchronized CsvWriter write(final List<String> csvData) throws IOException {
 		if (csvData == null || csvData.size() == 0) {
@@ -410,10 +372,8 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Writes all rows to a CSV. Treats the target as if it was empty, or at least in a newline-position (empty row, no field inserted yet).
 	 *
-	 * @param csvData
-	 *            The data, that should be written to the CSV.
-	 * @throws IOException
-	 *             If the underlying stream could not be accessed.
+	 * @param csvData The data, that should be written to the CSV.
+	 * @throws IOException If the underlying stream could not be accessed.
 	 */
 	public synchronized CsvWriter writeAll(final List<List<String>> csvData) throws IOException {
 		initialize();
@@ -432,8 +392,7 @@ public class CsvWriter extends CsvBase {
 	/**
 	 * Sets the size of the buffer and of the chunk.
 	 *
-	 * @param chunkSize
-	 *            The size of one chunk.
+	 * @param chunkSize The size of one chunk.
 	 */
 	private CsvWriter setChunkAndBufferSize(final int chunkSize) {
 		this.chunkSize = chunkSize;
@@ -444,11 +403,6 @@ public class CsvWriter extends CsvBase {
 		return this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.io.Closeable#close()
-	 */
 	@Override
 	public void close() throws IOException {
 		if (stringWriter == null) {
@@ -458,11 +412,6 @@ public class CsvWriter extends CsvBase {
 		stringWriter.close();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#finalize()
-	 */
 	@Override
 	protected void finalize() throws Throwable {
 		try {

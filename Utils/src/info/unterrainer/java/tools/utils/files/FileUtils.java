@@ -20,6 +20,9 @@
 
 package info.unterrainer.java.tools.utils.files;
 
+import info.unterrainer.java.tools.utils.StreamUtils;
+import info.unterrainer.java.tools.utils.StringUtils;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -50,39 +53,13 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.function.Consumer;
 
-import info.unterrainer.java.tools.utils.StringUtils;
+import lombok.Cleanup;
+import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
+@ExtensionMethod(StringUtils.class)
 public final class FileUtils {
-
-	/**
-	 * Gets a part of a stream given by a start-index and end-index by lines.
-	 *
-	 * @param inputStream {@link InputStream} the input stream to read from
-	 * @param outputStream {@link OutputStream} the output stream to write to
-	 * @param startLineIndex the start line index
-	 * @param endLineIndex the end line index. If you want all until the file ends, just specify -1 here
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void partOfByLines(final InputStream inputStream, final OutputStream outputStream, final long startLineIndex, final long endLineIndex)
-			throws IOException {
-		partOf(inputStream, outputStream, startLineIndex, endLineIndex, true, false, false);
-	}
-
-	/**
-	 * Gets a part of a stream given by a start-index and end-index by words.
-	 *
-	 * @param inputStream {@link InputStream} the input stream to read from
-	 * @param outputStream {@link OutputStream} the output stream to write to
-	 * @param startWordIndex the start word index
-	 * @param endWordIndex the end word index. If you want all until the file ends, just specify -1 here
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void partOfByWords(final InputStream inputStream, final OutputStream outputStream, final long startWordIndex, final long endWordIndex)
-			throws IOException {
-		partOf(inputStream, outputStream, startWordIndex, endWordIndex, false, true, false);
-	}
 
 	public static List<String> getFileList(File dir, String ending, boolean isRecursive) {
 		return getFileList(dir, ending, isRecursive, new ArrayList<>());
@@ -120,89 +97,7 @@ public final class FileUtils {
 	}
 
 	/**
-	 * Gets a part of a stream given by a start-index and end-index by characters.
-	 *
-	 * @param inputStream {@link InputStream} the input stream to read from
-	 * @param outputStream {@link OutputStream} the output stream to write to
-	 * @param startCharacterIndex the start character index
-	 * @param endCharacterIndex the end character index. If you want all until the file ends, just specify -1 here
-	 */
-	public static void partOfByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
-			final long endCharacterIndex) throws IOException {
-		partOf(inputStream, outputStream, startCharacterIndex, endCharacterIndex, false, false, true);
-	}
-
-	/**
-	 * Gets a part of a stream given by a start-index and end-index.
-	 *
-	 * @param inputStream {@link InputStream} the input stream to read from
-	 * @param outputStream {@link OutputStream} the output stream to write to
-	 * @param startIndex the start index
-	 * @param endIndex the end index. If you want all until the file ends, just specify -1 here
-	 * @param indexIsLine the index is line-controlled
-	 * @param indexIsWord the index is word-controlled
-	 * @param indexIsCharacter the index is character-controlled
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void partOf(final InputStream inputStream, final OutputStream outputStream, final long startIndex, final long endIndex,
-			final boolean indexIsLine, final boolean indexIsWord, final boolean indexIsCharacter) throws IOException {
-		try {
-			final int bufferSize = 1024;
-			byte[] c = new byte[bufferSize];
-			long count = 0;
-			int readChars = 0;
-			while ((readChars = inputStream.read(c)) != -1) {
-				for (int i = 0; i < readChars; i++) {
-					byte b = c[i];
-					if (indexIsCharacter) {
-						count++;
-					} else if (indexIsWord && (b == ' ')) {
-						count++;
-					} else if (indexIsLine && (b == '\n')) {
-						count++;
-					}
-					if ((count >= startIndex) && ((endIndex == -1) || (count <= endIndex))) {
-						outputStream.write(b);
-					}
-				}
-			}
-		} finally {
-			inputStream.close();
-		}
-	}
-
-	/**
-	 * Gets a part of a stream given by a start-index and end-index by characters.
-	 *
-	 * @param inputStream {@link InputStream} the input stream to read from
-	 * @param outputStream {@link OutputStream} the output stream to write to
-	 * @param startCharacterIndex the start character index
-	 * @param endCharacterIndex the end character index
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void getPartOfByCharacters(final InputStream inputStream, final OutputStream outputStream, final long startCharacterIndex,
-			final long endCharacterIndex) throws IOException {
-		try {
-			final int bufferSize = 1024;
-			byte[] c = new byte[bufferSize];
-			long count = 0;
-			int readChars = 0;
-			while ((readChars = inputStream.read(c)) != -1) {
-				for (int i = 0; i < readChars; i++) {
-					count++;
-					if ((count >= startCharacterIndex) && (count <= endCharacterIndex)) {
-						outputStream.write(c[i]);
-					}
-				}
-			}
-		} finally {
-			inputStream.close();
-		}
-	}
-
-	/**
-	 * Gets the number of lines/words/characters contained in a given string by counting the number of occurrence of line-feed characters/spaces/characters.
-	 * <br/>
+	 * Gets the number of lines/words/characters contained in a given string by counting the number of occurrence of line-feed characters/spaces/characters. <br/>
 	 * It does this by reading the stream step-by-step (in order to prevent holding the whole file in memory) and by counting the number of occurrences of
 	 * line-feed characters in that buffer.
 	 * <p>
@@ -214,7 +109,7 @@ public final class FileUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static CountProperties getCountPropertiesOf(final String input) throws IOException {
-		return getCountPropertiesOf(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+		return StreamUtils.getCountPropertiesOf(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
 	}
 
 	/**
@@ -230,47 +125,7 @@ public final class FileUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static CountProperties getCountPropertiesOf(final File file) throws IOException {
-		return getCountPropertiesOf(new BufferedInputStream(new FileInputStream(file)));
-	}
-
-	/**
-	 * Gets the number of lines/words/characters contained in a given input-stream by counting the number of occurrence of line-feed
-	 * characters/spaces/characters.<br/>
-	 * It does this by reading the stream step-by-step (in order to prevent holding the whole file in memory) and by counting the number of occurrences of
-	 * line-feed characters in that buffer.
-	 * <p>
-	 * This method is by far the fastest method to do that.<br/>
-	 * Info: The word-count is done by counting spaces.
-	 *
-	 * @param inputStream {@link InputStream} the input stream to scan
-	 * @return the count properties {@link CountProperties}
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static CountProperties getCountPropertiesOf(final InputStream inputStream) throws IOException {
-		try {
-			final int bufferSize = 1024;
-			byte[] c = new byte[bufferSize];
-			long lineCount = 0;
-			long wordCount = 0;
-			long characterCount = 0;
-			int readChars = 0;
-			while ((readChars = inputStream.read(c)) != -1) {
-				for (int i = 0; i < readChars; i++) {
-					characterCount++;
-					if (c[i] == '\n') {
-						lineCount++;
-						wordCount++;
-					} else if (c[i] == ' ') {
-						wordCount++;
-					}
-				}
-			}
-			lineCount++;
-			wordCount++;
-			return new CountProperties(lineCount, wordCount, characterCount);
-		} finally {
-			inputStream.close();
-		}
+		return StreamUtils.getCountPropertiesOf(new BufferedInputStream(new FileInputStream(file)));
 	}
 
 	/**
@@ -314,18 +169,15 @@ public final class FileUtils {
 	 * @param destination {@link File} the destination
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	@SuppressWarnings("resource")
 	public static void copyFile(final File source, final File destination) throws IOException {
+		@Cleanup
 		FileChannel inputChannel = null;
+		@Cleanup
 		FileChannel outputChannel = null;
-		try {
-			inputChannel = new FileInputStream(source).getChannel();
-			outputChannel = new FileOutputStream(destination).getChannel();
-			outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
-		} finally {
-			inputChannel.close();
-			outputChannel.close();
-		}
+
+		inputChannel = new FileInputStream(source).getChannel();
+		outputChannel = new FileOutputStream(destination).getChannel();
+		outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
 	}
 
 	/**
@@ -351,32 +203,18 @@ public final class FileUtils {
 	public static void copyFile(final String srcFile, final String dstFile) throws IOException {
 		final File src = new File(srcFile);
 		final File dest = new File(dstFile);
+		@Cleanup
 		InputStream in = null;
+		@Cleanup
 		OutputStream out = null;
-		try {
-			in = new FileInputStream(src);
-			out = new FileOutputStream(dest);
-			final int buffersize = 1024;
-			final byte[] buf = new byte[buffersize];
-			int len;
-			while ((len = in.read(buf)) > 0) {
-				out.write(buf, 0, len);
-			}
-		} finally {
-			try {
-				if (in != null) {
-					in.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (out != null) {
-					out.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+
+		in = new FileInputStream(src);
+		out = new FileOutputStream(dest);
+		final int buffersize = 1024;
+		final byte[] buf = new byte[buffersize];
+		int len;
+		while ((len = in.read(buf)) > 0) {
+			out.write(buf, 0, len);
 		}
 	}
 
@@ -495,7 +333,7 @@ public final class FileUtils {
 		String retVal = null;
 		// Get file name only
 		final String fileName = getFileNameOnly(fullFileName);
-		if (!(StringUtils.isNullOrEmpty(fileName)) && fileName.contains(".")) {
+		if (!StringUtils.isNullOrEmpty(fileName) && fileName.contains(".")) {
 			retVal = fileName.substring(0, fileName.lastIndexOf('.'));
 		}
 		return retVal;
@@ -738,21 +576,15 @@ public final class FileUtils {
 	 * @param append a flag indicating if the content of the file should be overwritten (replaced) or appended at the end of the existing file
 	 */
 	public static void writeToFile(final File file, final Encoding encoding, final String data, final boolean append) throws IOException {
+		@Cleanup
 		OutputStream out = null;
+		@Cleanup
 		Writer writer = null;
 		final CharsetEncoder charsetEncoder = Charset.forName(encoding.getEncoding()).newEncoder();
-		try {
-			out = new FileOutputStream(file, append);
-			writer = new OutputStreamWriter(out, charsetEncoder);
-			writer.write(data);
-		} finally {
-			if (writer != null) {
-				writer.close();
-			}
-			if (out != null) {
-				out.close();
-			}
-		}
+
+		out = new FileOutputStream(file, append);
+		writer = new OutputStreamWriter(out, charsetEncoder);
+		writer.write(data);
 	}
 
 	/**
@@ -782,7 +614,7 @@ public final class FileUtils {
 		return new FilenameFilter() {
 			@Override
 			public boolean accept(final File dir, final String name) {
-				return StringUtils.contains(matches, name);
+				return name.contains(matches);
 			}
 		};
 	}
@@ -797,7 +629,7 @@ public final class FileUtils {
 		return new FilenameFilter() {
 			@Override
 			public boolean accept(final File dir, final String name) {
-				return StringUtils.contains(matches, name.substring(importInterFacePkg.length()));
+				return name.substring(importInterFacePkg.length()).contains(matches);
 			}
 		};
 	}
@@ -812,7 +644,7 @@ public final class FileUtils {
 		return new FileFilter() {
 			@Override
 			public boolean accept(final File pathname) {
-				return StringUtils.contains(matches, pathname.getName());
+				return pathname.getName().contains(matches);
 			}
 		};
 	}
