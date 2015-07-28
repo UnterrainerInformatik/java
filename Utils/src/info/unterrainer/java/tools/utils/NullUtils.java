@@ -30,8 +30,10 @@ import lombok.experimental.UtilityClass;
 public class NullUtils {
 
 	/**
-	 * Checks if the given object is null.<br/>
-	 * If not, the object is returned. If so, the given defaultValue is returned.
+	 * Checks if the given object is null.<br>
+	 * If not, the object is returned. If so, the given default-value is returned.
+	 * <p>
+	 * If the given default-value is null as well, null is returned.
 	 *
 	 * @param <T> the generic type of the object to be checked
 	 * @param obj the object to be checked
@@ -50,6 +52,7 @@ public class NullUtils {
 	 * @param obj the first object to be checked and to be returned if it's not equal null
 	 * @param ifNull the second object to be checked and to be returned if the first object is null and the second isn't
 	 * @return first if it is non-null; otherwise second if it is non-null
+	 * @throws {@link NullPointerException} if both objects are {@code null}
 	 */
 	@Nonnull
 	public static <T> T orNoNull(@Nullable T obj, @Nullable T ifNull) {
