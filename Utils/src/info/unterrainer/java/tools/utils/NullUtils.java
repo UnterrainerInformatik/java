@@ -38,7 +38,24 @@ public class NullUtils {
 	 * @param ifNull the default value
 	 * @return the object or the default-value (ifNull)
 	 */
-	public static <T> T or(T obj, T ifNull) {
+	@Nullable
+	public static <T> T or(@Nullable T obj, @Nullable T ifNull) {
+		return obj != null ? obj : ifNull;
+	}
+
+	/**
+	 * Returns the first of two given parameters that is not null, if either is, or otherwise throws a NullPointerException.
+	 *
+	 * @param <T> the generic type of the objects to be checked
+	 * @param obj the first object to be checked and to be returned if it's not equal null
+	 * @param ifNull the second object to be checked and to be returned if the first object is null and the second isn't
+	 * @return first if it is non-null; otherwise second if it is non-null
+	 */
+	@Nonnull
+	public static <T> T orNoNull(@Nullable T obj, @Nullable T ifNull) {
+		if (obj == null && ifNull == null) {
+			throw new NullPointerException();
+		}
 		return obj != null ? obj : ifNull;
 	}
 
@@ -69,7 +86,7 @@ public class NullUtils {
 	 * @throws {@link NullPointerException} if object is {@code null}
 	 */
 	@Nonnull
-	public static <T> T noNull(@Nullable T object, String message) {
+	public static <T> T noNull(@Nullable T object, @Nullable String message) {
 		return Objects.requireNonNull(object, message);
 	}
 }
