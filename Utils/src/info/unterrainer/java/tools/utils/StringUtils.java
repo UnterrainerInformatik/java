@@ -55,11 +55,49 @@ public class StringUtils {
 	/**
 	 * Checks whether a given string is null or empty.
 	 *
-	 * @param in a {@link String} to be checked
+	 * @param value a {@link String} to be checked
 	 * @return true, or false
 	 */
-	public static boolean isNullOrEmpty(@Nullable String string) {
-		return string == null || string.equals("");
+	public static boolean isEmpty(@Nullable String value) {
+		return value == null || value.equals("");
+	}
+
+	/**
+	 * Checks whether a given string is null or consists of only whitespace characters.
+	 * <p>
+	 * Whitespace characters are:<br>
+	 * <p>
+	 * Determines if one of the specified characters (Unicode code point) is white space according to Java.<br>
+	 * A character is a Java whitespace character if and only if it satisfies one of the following criteria:
+	 * <ul>
+	 * <li>It is a Unicode space character (SPACE_SEPARATOR, LINE_SEPARATOR, or PARAGRAPH_SEPARATOR) but is not also a non-breaking space ('\u00A0', '\u2007',
+	 * '\u202F').</li>
+	 * <li>It is '\t', U+0009 HORIZONTAL TABULATION.</li>
+	 * <li>It is '\n', U+000A LINE FEED.</li>
+	 * <li>It is '\u000B', U+000B VERTICAL TABULATION.</li>
+	 * <li>It is '\f', U+000C FORM FEED.</li>
+	 * <li>It is '\r', U+000D CARRIAGE RETURN.</li>
+	 * <li>It is '\u001C', U+001C FILE SEPARATOR.</li>
+	 * <li>It is '\u001D', U+001D GROUP SEPARATOR.</li>
+	 * <li>It is '\u001E', U+001E RECORD SEPARATOR.</li>
+	 * <li>It is '\u001F', U+001F UNIT SEPARATOR.</li>
+	 * </ul>
+	 *
+	 * @param value the {@link String} to test
+	 * @return true, if the given string is null or consists of whitespace-characters, false otherwise
+	 */
+	public static boolean isBlank(@Nullable String value) {
+		if (value == null) {
+			return true;
+		}
+
+		for (int codePoint : value.codePoints().toArray()) {
+			if (!Character.isWhitespace(codePoint)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -111,12 +149,21 @@ public class StringUtils {
 
 	/**
 	 * Evaluates if a given string contains one or more of the strings within a given list.
+	 * <p>
+	 * Returns false if your list is null.<br>
+	 * Returns true if your string is null and the list contains a string that's null as well.
 	 *
 	 * @param inputString the input string to check
 	 * @param items the items to check for
 	 * @return true, if successful, false otherwise
 	 */
 	public static boolean contains(@Nullable String inputString, @Nullable List<String> items) {
+		if (inputString == null && items != null) {
+			if (items.contains(null)) {
+				return true;
+			}
+		}
+
 		if (inputString == null || items == null) {
 			return false;
 		}
@@ -131,7 +178,7 @@ public class StringUtils {
 
 	/**
 	 * Strips the leading and trailing quotes {@code (")} from a string if it starts with one and ends with one. Does not trim the string first; That's up to
-	 * you.
+	 * you. Only strips a full set of quotes (if the string begins with and ends with quotes).
 	 *
 	 * @param text {@link String} the text to strip the quotes from
 	 * @return the string {@link String} the text without the quotes or the original text, if the condition was not satisfied
