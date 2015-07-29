@@ -249,11 +249,9 @@ public final class SerializationUtils {
 	 *             </ol>
 	 */
 	public static <T> T jaxBXmlDeserializer(final String source, final Class<T> type) throws JAXBException {
-		T result = null;
 
 		final JAXBContext unmarshallingClassJAXB = JAXBContext.newInstance(type);
-		result = (T) unmarshallingClassJAXB.createUnmarshaller().unmarshal(new InputSource(new StringReader(source)));
-		return result;
+		return (T) unmarshallingClassJAXB.createUnmarshaller().unmarshal(new InputSource(new StringReader(source)));
 	}
 
 	/**
@@ -334,13 +332,11 @@ public final class SerializationUtils {
 	 */
 	public static <T> T beansXmlDecode(final File sourceFile, final Class<T> type) throws FileNotFoundException {
 
-		T result = null;
 		@Cleanup
 		XMLDecoder decoder = null;
 
 		decoder = new XMLDecoder(new FileInputStream(sourceFile));
-		result = (T) decoder.readObject();
-		return result;
+		return (T) decoder.readObject();
 	}
 
 	/**
@@ -415,10 +411,8 @@ public final class SerializationUtils {
 		@Cleanup
 		ObjectInputStream in = null;
 
-		T result = null;
 		in = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
-		result = (T) in.readObject();
-		return result;
+		return (T) in.readObject();
 	}
 
 	/**

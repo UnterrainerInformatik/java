@@ -23,6 +23,8 @@ package info.unterrainer.java.tools.utils;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 import lombok.experimental.UtilityClass;
 
 /**
@@ -38,7 +40,8 @@ public final class DateUtils {
 	 * @param date the date in the form of a ISO-8601 string (for example: '2009-06-30T18:30:00+02:00')
 	 * @return the calendar
 	 */
-	public static Calendar fromIso8601(String date) {
+	@Nullable
+	public static Calendar fromIso8601(@Nullable String date) {
 		if (date == null) {
 			return null;
 		}
@@ -51,7 +54,8 @@ public final class DateUtils {
 	 * @param calendar the calendar
 	 * @return the ISO-8601 string (for example: '2009-06-30T18:30:00+02:00')
 	 */
-	public static String toIso8601(Calendar calendar) {
+	@Nullable
+	public static String toIso8601(@Nullable Calendar calendar) {
 		if (calendar == null) {
 			return null;
 		}
@@ -64,7 +68,8 @@ public final class DateUtils {
 	 * @param date the date
 	 * @return the ISO-8601 string (for example: '2009-06-30T18:30:00+02:00')
 	 */
-	public static String toIso8601(Date date) {
+	@Nullable
+	public static String toIso8601(@Nullable Date date) {
 		if (date == null) {
 			return null;
 		}
@@ -79,7 +84,8 @@ public final class DateUtils {
 	 * @param timeStamp the time stamp
 	 * @return the ISO-8601 string (for example: '2009-06-30T18:30:00+02:00')
 	 */
-	public static String toIso8601(Long timeStamp) {
+	@Nullable
+	public static String toIso8601(@Nullable Long timeStamp) {
 		if (timeStamp == null) {
 			return null;
 		}

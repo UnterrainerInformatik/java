@@ -3,11 +3,11 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.java.tools</groupId>
-	<artifactId>csv-tools</artifactId>
+	<artifactId>nullannotations</artifactId>
 	<version>0.2.1-SNAPSHOT</version>
-	<name>CsvTools</name>
+	<name>NullAnnotations</name>
 	<packaging>jar</packaging>
-	<description>This library provides writer and reader for the CSV format.</description>
+	<description>This class contains annotations for the javax.annotation namespace to enable null-checks in Eclipse.</description>
 	<url>https://www.unterrainer.info:8443/projects/JAV/repos/general/browse</url>
 
 	<developers>
@@ -74,8 +74,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
-					<useStandardDocletOptions>false</useStandardDocletOptions>
 					<additionalparam>-Xdoclint:none</additionalparam>
+					<useStandardDocletOptions>false</useStandardDocletOptions>
 				</configuration>
 				<executions>
 					<execution>
@@ -125,31 +125,6 @@
 		<name>Unterrainer Informatik OG</name>
 		<url>http://www.unterrainer.info</url>
 	</organization>
-
-	<dependencies>
-		<dependency>
-			<groupId>info.unterrainer.java.tools</groupId>
-			<artifactId>nullannotations</artifactId>
-			<version>0.2.1-SNAPSHOT</version>
-			<optional>true</optional>
-			<!-- for annotations only -->
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.4</version>
-		</dependency>
-		<dependency>
-			<groupId>info.unterrainer.java.tools</groupId>
-			<artifactId>utils</artifactId>
-			<version>0.2.1-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
 
 	<profiles>
 		<profile>

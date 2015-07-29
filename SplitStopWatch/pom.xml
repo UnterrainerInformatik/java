@@ -74,6 +74,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
+					<useStandardDocletOptions>false</useStandardDocletOptions>
 					<additionalparam>-Xdoclint:none</additionalparam>
 				</configuration>
 				<executions>
@@ -126,6 +127,13 @@
 	</organization>
 
 	<dependencies>
+		<dependency>
+			<groupId>info.unterrainer.java.tools</groupId>
+			<artifactId>nullannotations</artifactId>
+			<version>0.2.1-SNAPSHOT</version>
+			<optional>true</optional>
+			<!-- for annotations only -->
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

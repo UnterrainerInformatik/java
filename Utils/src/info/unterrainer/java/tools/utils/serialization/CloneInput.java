@@ -35,10 +35,10 @@ public class CloneInput extends ObjectInputStream {
 	}
 
 	@Override
-	protected Class<?> resolveClass(final ObjectStreamClass osc) throws IOException, ClassNotFoundException {
+	protected Class<?> resolveClass(ObjectStreamClass osc) throws IOException, ClassNotFoundException {
 		Class<?> c = output.getClassQueue().poll();
 		String expected = osc.getName();
-		String found = (c == null) ? null : c.getName();
+		String found = c.getName();
 		if (!expected.equals(found)) {
 			throw new InvalidClassException("Classes desynchronized: " + "found " + found + " when expecting " + expected);
 		}
@@ -46,7 +46,7 @@ public class CloneInput extends ObjectInputStream {
 	}
 
 	@Override
-	protected Class<?> resolveProxyClass(final String[] interfaceNames) throws IOException, ClassNotFoundException {
+	protected Class<?> resolveProxyClass(String[] interfaceNames) throws IOException, ClassNotFoundException {
 		return output.getClassQueue().poll();
 	}
 }

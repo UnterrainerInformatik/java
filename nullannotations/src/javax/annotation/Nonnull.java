@@ -17,27 +17,15 @@
  *
  * </pre>
  ***************************************************************************/
+package javax.annotation;
 
-package info.unterrainer.java.tools.utils.files;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import info.unterrainer.java.tools.utils.NullUtils;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.experimental.ExtensionMethod;
-
-@ExtensionMethod(NullUtils.class)
-@AllArgsConstructor
-public class CountProperties {
-
-	@Getter
-	private final long lineCount;
-	@Getter
-	private final long wordCount;
-	@Getter
-	private final long characterCount;
-
-	@Override
-	public String toString() {
-		return "[" + lineCount + "] lines, [" + wordCount + "] words, [" + characterCount + "] characters";
-	}
+@Documented
+@Retention(RetentionPolicy.CLASS)
+@Target({ java.lang.annotation.ElementType.TYPE_USE })
+public @interface Nonnull {
 }

@@ -1,3 +1,22 @@
+/**************************************************************************
+ * <pre>
+ *
+ * Copyright (c) Unterrainer Informatik OG.
+ * This source is subject to the Microsoft Public License.
+ *
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ *
+ * (In other words you may copy, use, change and redistribute it without
+ * any restrictions except for not suing me because it broke something.)
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * </pre>
+ ***************************************************************************/
 package info.unterrainer.java.tools.utils;
 
 import info.unterrainer.java.tools.utils.files.FileUtils;
@@ -7,6 +26,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import lombok.experimental.ExtensionMethod;
 
@@ -57,6 +78,7 @@ public class FileUtilsTests {
 		}
 	}
 
+	@Nullable
 	private Path writeTempFile(List<String> contents) {
 		try {
 			Path tempFile = Files.createTempFile("FileUtilTests", "");

@@ -20,6 +20,7 @@
 
 package info.unterrainer.java.tools.utils.files;
 
+import info.unterrainer.java.tools.utils.NullUtils;
 import info.unterrainer.java.tools.utils.StreamUtils;
 import info.unterrainer.java.tools.utils.StringUtils;
 
@@ -61,7 +62,7 @@ import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-@ExtensionMethod({ StringUtils.class, StreamUtils.class })
+@ExtensionMethod({ StringUtils.class, StreamUtils.class, NullUtils.class })
 public final class FileUtils {
 
 	public static List<String> getFileList(File dir, String ending, boolean isRecursive) {
@@ -334,6 +335,7 @@ public final class FileUtils {
 	 * @param fullFileName {@link String} the full file name
 	 * @return String : file extension
 	 */
+	@Nullable
 	public static String getFileNameNoExt(final String fullFileName) {
 		String retVal = null;
 		// Get file name only
@@ -373,6 +375,7 @@ public final class FileUtils {
 	 * @param fullFileName {@link String} the full file name
 	 * @return file directory
 	 */
+	@Nullable
 	public static String getFilePath(final String fullFileName) {
 		String retVal = null;
 		// Check separator character
@@ -439,7 +442,8 @@ public final class FileUtils {
 	 * @param encoding {@link Encoding} the encoding
 	 * @return the string {@link String}
 	 */
-	public static String loadComponentIfNull(final String content, final File file, final Encoding encoding) {
+	@Nullable
+	public static String loadComponentIfNull(@Nullable String content, final File file, final Encoding encoding) {
 		if (content == null) {
 			try {
 				return readFileToString(file, encoding);
@@ -616,8 +620,8 @@ public final class FileUtils {
 		final File source = new File(directory);
 		final FileFilter fileFilter = new FileFilter() {
 			@Override
-			public boolean accept(final File file) {
-				return file.isDirectory();
+			public boolean accept(@Nullable File file) {
+				return file.noNull().isDirectory();
 			}
 		};
 		return source.listFiles(fileFilter);
@@ -632,7 +636,7 @@ public final class FileUtils {
 	public static FilenameFilter createContainsFileNameFilter(final List<String> matches) {
 		return new FilenameFilter() {
 			@Override
-			public boolean accept(final File dir, final String name) {
+			public boolean accept(@Nullable File dir, @Nullable String name) {
 				return name.contains(matches);
 			}
 		};
@@ -647,8 +651,8 @@ public final class FileUtils {
 	public static FilenameFilter createSubStringContainsFileNameFilter(final List<String> matches, final String importInterFacePkg) {
 		return new FilenameFilter() {
 			@Override
-			public boolean accept(final File dir, final String name) {
-				return name.substring(importInterFacePkg.length()).contains(matches);
+			public boolean accept(@Nullable File dir, @Nullable String name) {
+				return name.noNull().substring(importInterFacePkg.length()).contains(matches);
 			}
 		};
 	}
@@ -662,8 +666,8 @@ public final class FileUtils {
 	public static FileFilter createContainsFileFilter(final List<String> matches) {
 		return new FileFilter() {
 			@Override
-			public boolean accept(final File pathname) {
-				return pathname.getName().contains(matches);
+			public boolean accept(@Nullable File pathname) {
+				return pathname.noNull().getName().contains(matches);
 			}
 		};
 	}

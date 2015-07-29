@@ -25,7 +25,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import lombok.experimental.UtilityClass;
@@ -40,7 +39,6 @@ public class StringUtils {
 	 * @param count the number of times to repeat it; a nonnegative integer
 	 * @return the string {@link String} containing string repeated count times (the empty string if count is zero)
 	 */
-	@Nonnull
 	public static String repeat(@Nullable String string, int count) {
 		String result = "";
 		if (string != null) {
@@ -106,8 +104,7 @@ public class StringUtils {
 	 * @param throwable {@link Throwable} the throwable
 	 * @return the stack trace {@link String}
 	 */
-	@Nonnull
-	public static String getStackTrace(@Nonnull Throwable throwable) {
+	public static String getStackTrace(Throwable throwable) {
 		final Writer result = new StringWriter();
 		final PrintWriter printWriter = new PrintWriter(result);
 
