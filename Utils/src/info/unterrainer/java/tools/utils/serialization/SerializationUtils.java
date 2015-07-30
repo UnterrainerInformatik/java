@@ -52,14 +52,11 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import lombok.Cleanup;
-import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 
 import org.xml.sax.InputSource;
 
 @UtilityClass
-@SuppressWarnings({ "unchecked" })
-@ExtensionMethod({ FileUtils.class })
 public final class SerializationUtils {
 
 	private static final String JAXB_TRANSFORM_INDENT_AMOUNT = "{http://xml.apache.org/xslt}indent-amount";
@@ -86,11 +83,10 @@ public final class SerializationUtils {
 
 		JAXBContext jaxbContext;
 		@Cleanup
-		StringWriter sw = null;
+		StringWriter sw = new StringWriter();
 		jaxbContext = JAXBContext.newInstance(serializableObject.getClass());
 		Marshaller marsh = jaxbContext.createMarshaller();
 		marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		sw = new StringWriter();
 
 		marsh.marshal(serializableObject, sw);
 		sw.flush();
@@ -172,9 +168,9 @@ public final class SerializationUtils {
 		JAXBContext jaxbContext;
 
 		@Cleanup
-		StringWriter sw1 = null;
+		StringWriter sw1 = new StringWriter();
 		@Cleanup
-		StringWriter sw2 = null;
+		StringWriter sw2 = new StringWriter();
 
 		t = TransformerFactory.newInstance().newTransformer();
 
@@ -192,11 +188,9 @@ public final class SerializationUtils {
 		jaxbContext = JAXBContext.newInstance(serializableObject.getClass());
 		Marshaller marsh = jaxbContext.createMarshaller();
 		marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		sw1 = new StringWriter();
 		marsh.marshal(serializableObject, sw1);
 		sw1.flush();
 		Source xmlInput = new StreamSource(new StringReader(sw1.toString()));
-		sw2 = new StringWriter();
 		t.transform(xmlInput, new StreamResult(sw2));
 		sw2.flush();
 		return sw2.toString();
@@ -248,6 +242,7 @@ public final class SerializationUtils {
 	 *             (such as additional files generated at the development time.)</li>
 	 *             </ol>
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T jaxBXmlDeserializer(final String source, final Class<T> type) throws JAXBException {
 
 		final JAXBContext unmarshallingClassJAXB = JAXBContext.newInstance(type);
@@ -274,7 +269,7 @@ public final class SerializationUtils {
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Class<T> type) throws IOException, JAXBException {
 
-		String source = sourceFile.readFileToString(Encoding.UTF8);
+		String source = FileUtils.readFileToString(sourceFile, Encoding.UTF8);
 		return jaxBXmlDeserializer(source, type);
 	}
 
@@ -299,7 +294,7 @@ public final class SerializationUtils {
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Encoding encoding, final Class<T> type) throws IOException, JAXBException {
 
-		String source = sourceFile.readFileToString(encoding);
+		String source = FileUtils.readFileToString(sourceFile, encoding);
 		return jaxBXmlDeserializer(source, type);
 	}
 
@@ -314,9 +309,7 @@ public final class SerializationUtils {
 	public static void beansXmlEncode(final Object serializableObject, final File targetFile) throws FileNotFoundException {
 
 		@Cleanup
-		XMLEncoder encoder = null;
-
-		encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(targetFile)));
+		XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(targetFile)));
 		encoder.writeObject(serializableObject);
 	}
 
@@ -330,12 +323,11 @@ public final class SerializationUtils {
 	 * @throws FileNotFoundException if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened
 	 *             for any other reason
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T beansXmlDecode(final File sourceFile, final Class<T> type) throws FileNotFoundException {
 
 		@Cleanup
-		XMLDecoder decoder = null;
-
-		decoder = new XMLDecoder(new FileInputStream(sourceFile));
+		XMLDecoder decoder = new XMLDecoder(new FileInputStream(sourceFile));
 		return (T) decoder.readObject();
 	}
 
@@ -353,9 +345,7 @@ public final class SerializationUtils {
 		@Cleanup
 		ByteArrayOutputStream baos = SerializationUtils.objectSerialize(serializableObject);
 		@Cleanup
-		FileOutputStream outputStream = null;
-
-		outputStream = new FileOutputStream(targetFile);
+		FileOutputStream outputStream = new FileOutputStream(targetFile);
 		baos.writeTo(outputStream);
 	}
 
@@ -388,10 +378,9 @@ public final class SerializationUtils {
 	 */
 	public static <T> T objectDeserialize(final File sourceFile, final Class<T> type) throws ClassNotFoundException, IOException {
 		@Cleanup
-		ByteArrayOutputStream baos = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		byte[] ba = sourceFile.readFileToByteArray();
-		baos = new ByteArrayOutputStream();
+		byte[] ba = FileUtils.readFileToByteArray(sourceFile);
 		baos.write(ba);
 		baos.flush();
 		return SerializationUtils.<T> objectDeserialize(baos, type);
@@ -407,11 +396,10 @@ public final class SerializationUtils {
 	 * @throws IOException if an I/O error occurs while reading the stream header of the input stream
 	 * @throws ClassNotFoundException Class of a serialized object cannot be found
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T objectDeserialize(final ByteArrayOutputStream baos, final Class<T> type) throws IOException, ClassNotFoundException {
 		@Cleanup
-		ObjectInputStream in = null;
-
-		in = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
+		ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
 		return (T) in.readObject();
 	}
 
@@ -439,6 +427,7 @@ public final class SerializationUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws ClassNotFoundException Class of a serialized object cannot be found
 	 */
+	@SuppressWarnings("unchecked")
 	private static <T> T serialCloneInternal(final T x) throws IOException, ClassNotFoundException {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();

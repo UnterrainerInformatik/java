@@ -27,6 +27,8 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lombok.Builder;
 import lombok.experimental.ExtensionMethod;
 
@@ -53,7 +55,7 @@ public class CsvReader extends CsvBase {
 	 * @param stringReader The StringReader you want the CsvReader to attach to.
 	 * @throws IllegalArgumentException If the provided stringReader is null.
 	 */
-	public CsvReader(final StringReader stringReader) throws IllegalArgumentException {
+	public CsvReader(@Nullable StringReader stringReader) throws IllegalArgumentException {
 		if (stringReader == null) {
 			throw new IllegalArgumentException("The StringReader you provided is null.");
 		}
@@ -70,7 +72,7 @@ public class CsvReader extends CsvBase {
 	 * @param rowSeparator A delimiter to separate rows (e.g. System.getProperty("line.separator")).
 	 * @param fieldDelimiter A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 */
-	public CsvReader(final StringReader stringReader, final char columnSeparator, final String rowSeparator, final String fieldDelimiter) {
+	public CsvReader(@Nullable StringReader stringReader, final char columnSeparator, final String rowSeparator, final String fieldDelimiter) {
 		this(stringReader);
 		this.columnSeparator = columnSeparator;
 		this.rowSeparator = rowSeparator;
@@ -89,10 +91,11 @@ public class CsvReader extends CsvBase {
 	 *            bufferSize is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
 	 */
 	@Builder
-	public CsvReader(final StringReader stringReader, final Character columnSeparator, final String rowSeparator, final String fieldDelimiter,
-			final Integer readChunkSize) {
-		this(stringReader, columnSeparator.or(DEFAULT_COLUMN_SEPARATOR), rowSeparator.or(DEFAULT_ROW_SEPARATOR), fieldDelimiter.or(DEFAULT_FIELD_DELIMITER));
-		setChunkAndBufferSize(readChunkSize.or(DEFAULT_CHUNK_SIZE));
+	public CsvReader(@Nullable StringReader stringReader, @Nullable Character columnSeparator, @Nullable String rowSeparator, @Nullable String fieldDelimiter,
+			@Nullable Integer readChunkSize) {
+		this(stringReader, columnSeparator.orNoNull(DEFAULT_COLUMN_SEPARATOR), rowSeparator.orNoNull(DEFAULT_ROW_SEPARATOR), fieldDelimiter
+				.orNoNull(DEFAULT_FIELD_DELIMITER));
+		setChunkAndBufferSize(readChunkSize.orNoNull(DEFAULT_CHUNK_SIZE));
 	}
 
 	/**
@@ -170,6 +173,7 @@ public class CsvReader extends CsvBase {
 	 * @return The next character or null if the end of the file is reached.
 	 * @throws IOException If the underlying stream could not be accessed.
 	 */
+	@Nullable
 	private synchronized Character getNextChar() throws IOException {
 		if (numberOfUnparsedChars > 0) {
 			char c = buffer[nextCharBufferIndex + 1];
@@ -239,6 +243,7 @@ public class CsvReader extends CsvBase {
 	 * @return An array of string containing the fields of this row or null if the end of the source has been reached.
 	 * @throws IOException If the underlying stream could not be accessed.
 	 */
+	@Nullable
 	public synchronized List<String> readRow() throws IOException {
 		List<String> fields = new ArrayList<String>();
 		if (nextChar == null) {
@@ -278,6 +283,7 @@ public class CsvReader extends CsvBase {
 	 * @return A List-of-List-of-string representing the read CSV-file.
 	 * @throws IOException If the underlying stream could not be accessed.
 	 */
+	@Nullable
 	public synchronized List<List<String>> readAllRows() throws IOException {
 		List<List<String>> data = new ArrayList<List<String>>();
 		List<String> row = readRow();

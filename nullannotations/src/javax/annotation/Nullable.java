@@ -28,5 +28,4 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Target({ java.lang.annotation.ElementType.TYPE_USE })
 public @interface Nullable {
-
 }

@@ -20,6 +20,8 @@
 
 package info.unterrainer.java.tools.csvtools;
 
+import javax.annotation.Nullable;
+
 /**
  * The Enumeration QuotingBehavior.
  * <p>
@@ -55,6 +57,7 @@ public enum QuotingBehavior {
 	 * @param code The code the enumeration value should be found for.
 	 * @return The enumeration value that was found for the given unique code.
 	 */
+	@Nullable
 	public static QuotingBehavior fromCode(final int code) {
 		for (QuotingBehavior b : QuotingBehavior.values()) {
 			if (code == b.getCode()) {

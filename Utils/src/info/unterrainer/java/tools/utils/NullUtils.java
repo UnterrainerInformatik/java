@@ -21,6 +21,7 @@ package info.unterrainer.java.tools.utils;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import lombok.experimental.UtilityClass;
@@ -53,7 +54,8 @@ public class NullUtils {
 	 * @return first if it is non-null; otherwise second if it is non-null
 	 * @throws {@link NullPointerException} if both objects are {@code null}
 	 */
-	public static <@Nullable T> T orNoNull(@Nullable T obj, @Nullable T ifNull) {
+	@SuppressWarnings("null")
+	public static <T> @Nonnull T orNoNull(@Nullable T obj, @Nullable T ifNull) {
 		if (obj == null && ifNull == null) {
 			throw new NullPointerException();
 		}
@@ -70,7 +72,8 @@ public class NullUtils {
 	 * @return object if not {@code null}
 	 * @throws {@link NullPointerException} if object is {@code null}
 	 */
-	public static <@Nullable T> T noNull(@Nullable T object) {
+	@SuppressWarnings("null")
+	public static <T> @Nonnull T noNull(@Nullable T object) {
 		return Objects.requireNonNull(object);
 	}
 
@@ -85,7 +88,8 @@ public class NullUtils {
 	 * @return object if not {@code null}
 	 * @throws {@link NullPointerException} if object is {@code null}
 	 */
-	public static <@Nullable T> T noNull(@Nullable T object, @Nullable String message) {
+	@SuppressWarnings("null")
+	public static <T> @Nonnull T noNull(@Nullable T object, @Nullable String message) {
 		return Objects.requireNonNull(object, message);
 	}
 }

@@ -20,11 +20,14 @@
 
 package info.unterrainer.java.tools.datastructures;
 
+import info.unterrainer.java.tools.utils.NullUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.ExtensionMethod;
 
 @NoArgsConstructor
+@ExtensionMethod({ NullUtils.class })
 public class Fader {
 	private static double A_THIRD = 1d / 3d;
 
@@ -82,7 +85,7 @@ public class Fader {
 	 * @param value the current value of the fader
 	 */
 	public void setValue(double value) {
-		this.value = interval.clamp(value);
+		this.value = interval.clamp(value).noNull();
 		percentage = getPercentageAtValue(this.value);
 	}
 
@@ -130,7 +133,7 @@ public class Fader {
 			if (interval.getMax() - interval.getMin() == 0d) {
 				return 0.0d;
 			}
-			return 1f - ((value - interval.getMin()) / (interval.getMax() - interval.getMin()));
+			return 1f - (value - interval.getMin()) / (interval.getMax() - interval.getMin());
 		}
 
 		if (interval.getMax() - interval.getMin() == 0d) {
@@ -190,7 +193,7 @@ public class Fader {
 	 * @param value
 	 */
 	public void setExponentialValue(double value) {
-		percentage = Math.log((20.0 * getPercentageAtValue(value)) + 1.0) / Math.log(20.0);
+		percentage = Math.log(20.0 * getPercentageAtValue(value) + 1.0) / Math.log(20.0);
 	}
 
 	/**
@@ -208,7 +211,7 @@ public class Fader {
 	 * @param value
 	 */
 	public void setBidirectionalSlow(double value) {
-		percentage = 1.0 - (Math.acos(2.0 * getPercentageAtValue(value) - 1.0) / Math.PI);
+		percentage = 1.0 - Math.acos(2.0 * getPercentageAtValue(value) - 1.0) / Math.PI;
 	}
 
 	/**
@@ -217,7 +220,7 @@ public class Fader {
 	 * @return value
 	 */
 	public double getBidirectionalQuick() {
-		return getValueAtPercentage((Math.pow((2.0 * percentage - 1.0), 3.0) + 1.0) / 2.0);
+		return getValueAtPercentage((Math.pow(2.0 * percentage - 1.0, 3.0) + 1.0) / 2.0);
 	}
 
 	/**

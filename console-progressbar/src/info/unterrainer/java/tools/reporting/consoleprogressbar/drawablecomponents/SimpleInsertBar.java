@@ -25,6 +25,8 @@ import info.unterrainer.java.tools.utils.StringUtils;
 
 import java.io.PrintStream;
 
+import javax.annotation.Nullable;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -94,7 +96,7 @@ public class SimpleInsertBar implements DrawableComponent {
 	private Character legendFill;
 
 	@Builder
-	public SimpleInsertBar(String begin, String end, Character full, Character legendFill) {
+	public SimpleInsertBar(@Nullable String begin, @Nullable String end, @Nullable Character full, @Nullable Character legendFill) {
 		super();
 		this.begin = begin.or("[");
 		this.end = end.or("]");

@@ -25,6 +25,8 @@ import info.unterrainer.java.tools.utils.StringUtils;
 
 import java.io.PrintStream;
 
+import javax.annotation.Nullable;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -90,7 +92,7 @@ public class ProgressBar implements DrawableComponent {
 	private Character empty;
 
 	@Builder
-	public ProgressBar(String begin, String end, Character full, Character empty) {
+	public ProgressBar(@Nullable String begin, @Nullable String end, @Nullable Character full, @Nullable Character empty) {
 		super();
 		this.begin = begin.or("[");
 		this.end = end.or("]");

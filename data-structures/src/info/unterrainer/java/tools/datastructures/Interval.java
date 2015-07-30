@@ -20,6 +20,8 @@
 
 package info.unterrainer.java.tools.datastructures;
 
+import javax.annotation.Nullable;
+
 public class Interval<T extends Comparable<T>> {
 
 	private T maximalValue;
@@ -75,12 +77,18 @@ public class Interval<T extends Comparable<T>> {
 
 	/**
 	 * Clamps the given value to the {@link Interval}. If the value is greater than the interval's maximal-value, the interval's maximal-value is returned. If
-	 * the value is smaller than the interval's minimal-value, the interval's minimal-value is returned.
+	 * the value is smaller than the interval's minimal-value, the interval's minimal-value is returned.<br>
+	 * If the value is null, null is returned.
 	 *
 	 * @param value the value
 	 * @return the clamped value
 	 */
-	public T clamp(T value) {
+	@Nullable
+	public T clamp(@Nullable T value) {
+		if (value == null) {
+			return value;
+		}
+
 		if (value.compareTo(maximalValue) > 0) {
 			return maximalValue;
 		}
@@ -91,12 +99,16 @@ public class Interval<T extends Comparable<T>> {
 	}
 
 	/**
-	 * Determines whether a specified value is in between the intervals boundaries.
+	 * Determines whether a specified value is in between the intervals boundaries.<br>
+	 * If the specified value is null, false is returned.
 	 *
 	 * @param value the value
 	 * @return true if the given value is in between the specified boundaries
 	 */
-	public boolean isInBetween(T value) {
+	public boolean isInBetween(@Nullable T value) {
+		if (value == null) {
+			return false;
+		}
 		if (value.compareTo(getMin()) < 0) {
 			return false;
 		}

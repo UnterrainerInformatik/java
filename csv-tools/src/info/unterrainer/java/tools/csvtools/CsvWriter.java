@@ -27,6 +27,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lombok.Builder;
 import lombok.experimental.ExtensionMethod;
 
@@ -87,7 +89,10 @@ public class CsvWriter extends CsvBase {
 	 *
 	 * @param stringWriter The StringWriter you want the CsvWriter to attach to.
 	 */
-	public CsvWriter(final StringWriter stringWriter) {
+	public CsvWriter(@Nullable StringWriter stringWriter) {
+		if (stringWriter == null) {
+			throw new IllegalArgumentException("The StringWriter you provided is null.");
+		}
 		this.stringWriter = stringWriter;
 	}
 
@@ -113,7 +118,7 @@ public class CsvWriter extends CsvBase {
 	 * @param rowSeparator A delimiter to separate rows (e.g. System.getProperty("line.separator")).
 	 * @param fieldDelimiter A delimiter to enclose special-character-containing strings (e.g. " or just the empty string).
 	 */
-	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter) {
+	public CsvWriter(@Nullable StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter) {
 		this(stringWriter);
 		this.columnSeparator = columnSeparator;
 		this.rowSeparator = rowSeparator;
@@ -150,7 +155,7 @@ public class CsvWriter extends CsvBase {
 	 * @param writeChunkSize Size of one chunk (the minimal value is rowSeparator.length() and is automatically assigned if the given value was too small). The
 	 *            bufferSize is automatically allocated in any case. It will be readChunkSize + rowSeparator.length() due to the parsing technique used).
 	 */
-	public CsvWriter(final StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter,
+	public CsvWriter(@Nullable StringWriter stringWriter, final char columnSeparator, final String rowSeparator, final String fieldDelimiter,
 			final int writeChunkSize) {
 		this(stringWriter, columnSeparator, rowSeparator, fieldDelimiter);
 		setChunkAndBufferSize(writeChunkSize);
@@ -170,10 +175,10 @@ public class CsvWriter extends CsvBase {
 	 *            necessary. All means that he always applies them, necessary or not.
 	 */
 	@Builder
-	public CsvWriter(final StringWriter stringWriter, final Character columnSeparator, final String rowSeparator, final String fieldDelimiter,
-			final Integer writeChunkSize, final QuotingBehavior quotingBehavior) {
-		this(stringWriter, columnSeparator.or(DEFAULT_COLUMN_SEPARATOR), rowSeparator.or(DEFAULT_ROW_SEPARATOR), fieldDelimiter.or(DEFAULT_FIELD_DELIMITER),
-				writeChunkSize.or(DEFAULT_CHUNK_SIZE));
+	public CsvWriter(@Nullable StringWriter stringWriter, @Nullable Character columnSeparator, @Nullable String rowSeparator, @Nullable String fieldDelimiter,
+			@Nullable Integer writeChunkSize, @Nullable QuotingBehavior quotingBehavior) {
+		this(stringWriter, columnSeparator.orNoNull(DEFAULT_COLUMN_SEPARATOR), rowSeparator.orNoNull(DEFAULT_ROW_SEPARATOR), fieldDelimiter
+				.orNoNull(DEFAULT_FIELD_DELIMITER), writeChunkSize.orNoNull(DEFAULT_CHUNK_SIZE));
 		this.quotingBehavior = quotingBehavior.or(QuotingBehavior.MINIMAL);
 	}
 
@@ -264,7 +269,7 @@ public class CsvWriter extends CsvBase {
 	 * @param csvData The data the determination is based on.
 	 * @return True, if a field-delimiter has to be used, false otherwise.
 	 */
-	private boolean isUseFieldDelimiter(final String csvData) {
+	private boolean isUseFieldDelimiter(String csvData) {
 		boolean isFieldDelimiterNeeded = csvData.contains(usedFieldDelimiter) || csvData.contains(rowSeparator) || csvData.contains("" + columnSeparator);
 		if (usedFieldDelimiter != null && usedFieldDelimiter != "" && (isFieldDelimiterNeeded || quotingBehavior == QuotingBehavior.ALL)) {
 			return true;
@@ -300,7 +305,7 @@ public class CsvWriter extends CsvBase {
 	 * @param csvData The data that should be written.
 	 * @throws IOException If the underlying stream could not be accessed.
 	 */
-	public synchronized CsvWriter writeLine(final String csvData) throws IOException {
+	public synchronized CsvWriter writeLine(@Nullable String csvData) throws IOException {
 		write(csvData);
 		writeLine();
 		return this;
@@ -312,7 +317,7 @@ public class CsvWriter extends CsvBase {
 	 * @param csvData The data, that should be written to the CSV.
 	 * @throws IOException If the underlying stream could not be accessed.
 	 */
-	public synchronized CsvWriter write(final String csvData) throws IOException {
+	public synchronized CsvWriter write(@Nullable String csvData) throws IOException {
 		if (isFirstFieldInRow) {
 			isFirstFieldInRow = false;
 		} else {
@@ -343,7 +348,7 @@ public class CsvWriter extends CsvBase {
 	 * @param csvData The data, that should be written to the CSV.
 	 * @throws IOException If the underlying stream could not be accessed.
 	 */
-	public synchronized CsvWriter writeLine(final List<String> csvData) throws IOException {
+	public synchronized CsvWriter writeLine(@Nullable List<String> csvData) throws IOException {
 		initialize();
 		write(csvData);
 		writeLine();
@@ -357,7 +362,7 @@ public class CsvWriter extends CsvBase {
 	 * @param csvData The data, that should be written to the CSV.
 	 * @throws IOException If the underlying stream could not be accessed.
 	 */
-	public synchronized CsvWriter write(final List<String> csvData) throws IOException {
+	public synchronized CsvWriter write(@Nullable List<String> csvData) throws IOException {
 		if (csvData == null || csvData.size() == 0) {
 			return this;
 		}
@@ -375,15 +380,17 @@ public class CsvWriter extends CsvBase {
 	 * @param csvData The data, that should be written to the CSV.
 	 * @throws IOException If the underlying stream could not be accessed.
 	 */
-	public synchronized CsvWriter writeAll(final List<List<String>> csvData) throws IOException {
-		initialize();
-		for (int i = 0; i < csvData.size(); i++) {
-			List<String> rowData = csvData.get(i);
-			if (i == csvData.size() - 1) {
-				// This is the last one.
-				write(rowData);
-			} else {
-				writeLine(rowData);
+	public synchronized CsvWriter writeAll(@Nullable List<List<String>> csvData) throws IOException {
+		if (csvData != null) {
+			initialize();
+			for (int i = 0; i < csvData.size(); i++) {
+				List<String> rowData = csvData.get(i);
+				if (i == csvData.size() - 1) {
+					// This is the last one.
+					write(rowData);
+				} else {
+					writeLine(rowData);
+				}
 			}
 		}
 		return this;

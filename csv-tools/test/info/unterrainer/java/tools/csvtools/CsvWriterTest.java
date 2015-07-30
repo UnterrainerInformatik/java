@@ -18,10 +18,7 @@
  * </pre>
  ***************************************************************************/
 
-package info.unterrainer.java.tools.csvs;
-
-import info.unterrainer.java.tools.csvtools.CsvWriter;
-import info.unterrainer.java.tools.csvtools.QuotingBehavior;
+package info.unterrainer.java.tools.csvtools;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -37,9 +34,6 @@ import org.junit.Test;
  * The Class CsvWriterTest.
  * <p>
  * The unit-tests for the CsvWriter.
- *
- * @author GEUNT
- * @since 20.09.2013
  */
 public class CsvWriterTest {
 
@@ -273,7 +267,7 @@ public class CsvWriterTest {
 
 		row = new ArrayList<String>();
 		row.add("1");
-		row.add(null);
+		row.add((String) null);
 		row.add("3");
 		csv.add(row);
 

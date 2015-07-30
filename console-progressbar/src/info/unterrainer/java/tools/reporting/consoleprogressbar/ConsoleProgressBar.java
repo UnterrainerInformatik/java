@@ -27,6 +27,8 @@ import info.unterrainer.java.tools.utils.NullUtils;
 
 import java.io.PrintStream;
 
+import javax.annotation.Nullable;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -85,15 +87,16 @@ public class ConsoleProgressBar {
 	private DrawableComponent component;
 
 	@Builder
-	public ConsoleProgressBar(Integer width, Double minValue, Double maxValue, Boolean controlCharacterSupport, DrawableComponent component) {
+	public ConsoleProgressBar(@Nullable Integer width, @Nullable Double minValue, @Nullable Double maxValue, @Nullable Boolean controlCharacterSupport,
+			@Nullable DrawableComponent component) {
 
 		this.minValue = minValue.or(0.0d);
 		this.maxValue = maxValue.or(1.0d);
 		this.width = width.or(50);
-		this.controlCharacterSupport = controlCharacterSupport.or(true);
+		this.controlCharacterSupport = controlCharacterSupport.orNoNull(true).booleanValue();
 
 		if (component == null) {
-			if (controlCharacterSupport) {
+			if (this.controlCharacterSupport) {
 				this.component = ProgressBar.builder().build();
 			} else {
 				this.component = SimpleInsertBar.builder().build();
@@ -105,7 +108,7 @@ public class ConsoleProgressBar {
 
 	private void checkFader() {
 		if (fader == null) {
-			fader = new Fader(minValue.or(0.0d), maxValue.or(1.0d));
+			fader = new Fader(minValue.orNoNull(0.0d).doubleValue(), maxValue.orNoNull(1.0d).doubleValue());
 		}
 	}
 
@@ -188,15 +191,17 @@ public class ConsoleProgressBar {
 	 * @param ps the print-stream to draw to
 	 * @return the console progress bar
 	 */
-	public ConsoleProgressBar draw(PrintStream ps) {
-		checkFader();
+	public ConsoleProgressBar draw(@Nullable PrintStream ps) {
+		if (ps != null) {
+			checkFader();
 
-		int fullNumber = (int) (fader.getPercentage() * width);
+			int fullNumber = (int) (fader.getPercentage() * width);
 
-		if (fullNumber != lastNumberOfCharactersDrawn || !drawInitialized) {
-			component.draw(ps, fader, width, drawInitialized, fullNumber, lastNumberOfCharactersDrawn);
-			drawInitialized = true;
-			lastNumberOfCharactersDrawn = fullNumber;
+			if (fullNumber != lastNumberOfCharactersDrawn || !drawInitialized) {
+				component.draw(ps, fader, width, drawInitialized, fullNumber, lastNumberOfCharactersDrawn);
+				drawInitialized = true;
+				lastNumberOfCharactersDrawn = fullNumber;
+			}
 		}
 		return this;
 	}

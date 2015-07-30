@@ -18,9 +18,7 @@
  * </pre>
  ***************************************************************************/
 
-package info.unterrainer.java.tools.csvs;
-
-import info.unterrainer.java.tools.csvtools.CsvReader;
+package info.unterrainer.java.tools.csvtools;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -37,9 +35,6 @@ import org.junit.Test;
  * The Class CsvReaderTest.
  * <p>
  * The unit-tests for the CsvReader.
- *
- * @author GEUNT
- * @since 20.09.2013
  */
 public class CsvReaderTest {
 
@@ -258,8 +253,8 @@ public class CsvReaderTest {
 		// 10 rows with 5 fields each containing 100 characters each.
 		// = 5000 characters.
 		final String FIELD_DATA = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
-		String[] rowData = (String[]) (Arrays.asList(FIELD_DATA, FIELD_DATA, FIELD_DATA, FIELD_DATA, FIELD_DATA)).toArray();
-		String[][] csvData = (String[][]) (Arrays.asList(rowData, rowData, rowData, rowData, rowData, rowData, rowData, rowData, rowData, rowData)).toArray();
+		String[] rowData = (String[]) Arrays.asList(FIELD_DATA, FIELD_DATA, FIELD_DATA, FIELD_DATA, FIELD_DATA).toArray();
+		String[][] csvData = (String[][]) Arrays.asList(rowData, rowData, rowData, rowData, rowData, rowData, rowData, rowData, rowData, rowData).toArray();
 		String csvToWrite = writeCsv(csvData, ';', newLine);
 		stringReader = new StringReader(csvToWrite);
 
@@ -273,9 +268,6 @@ public class CsvReaderTest {
 		// all following read-attempts should return null...
 		List<String> row = csvReader.readRow();
 		Assert.assertNull(row);
-
-		List<List<String>> rows = csvReader.readAllRows();
-		Assert.assertNull(rows);
 	}
 
 	/**

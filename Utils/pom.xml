@@ -127,11 +127,6 @@
 	</organization>
 
 	<dependencies>
-	<dependency>
-    <groupId>org.eclipse.jdt</groupId>
-    <artifactId>org.eclipse.jdt.annotation</artifactId>
-    <version>1.1.0</version>
-</dependency>
 		<dependency>
 			<groupId>info.unterrainer.java.tools</groupId>
 			<artifactId>nullannotations</artifactId>

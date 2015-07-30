@@ -25,6 +25,8 @@ import info.unterrainer.java.tools.utils.StringUtils;
 
 import java.io.PrintStream;
 
+import javax.annotation.Nullable;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -93,7 +95,7 @@ public class PercentGauge implements DrawableComponent {
 	private Character empty;
 
 	@Builder
-	public PercentGauge(String begin, String end, String percent, Character empty) {
+	public PercentGauge(@Nullable String begin, @Nullable String end, @Nullable String percent, @Nullable Character empty) {
 		super();
 		this.begin = begin.or("[");
 		this.end = end.or("]");

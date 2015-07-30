@@ -173,14 +173,21 @@ public final class FileUtils {
 	 * @param destination {@link File} the destination
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void copyFile(final File source, final File destination) throws IOException {
-		@Cleanup
-		FileChannel inputChannel = null;
-		@Cleanup
-		FileChannel outputChannel = null;
+	public static void copyFile(@Nullable File source, @Nullable File destination) throws IOException {
+		if (source == null || destination == null) {
+			return;
+		}
 
-		inputChannel = new FileInputStream(source).getChannel();
-		outputChannel = new FileOutputStream(destination).getChannel();
+		@Cleanup
+		FileInputStream inputStream = new FileInputStream(source);
+		@Cleanup
+		FileChannel inputChannel = inputStream.getChannel();
+
+		@Cleanup
+		FileOutputStream outputStream = new FileOutputStream(destination);
+		@Cleanup
+		FileChannel outputChannel = outputStream.getChannel();
+
 		outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
 	}
 
@@ -208,12 +215,10 @@ public final class FileUtils {
 		final File src = new File(srcFile);
 		final File dest = new File(dstFile);
 		@Cleanup
-		InputStream in = null;
+		InputStream in = new FileInputStream(src);
 		@Cleanup
-		OutputStream out = null;
+		OutputStream out = new FileOutputStream(dest);
 
-		in = new FileInputStream(src);
-		out = new FileOutputStream(dest);
 		final int buffersize = 1024;
 		final byte[] buf = new byte[buffersize];
 		int len;
@@ -599,14 +604,13 @@ public final class FileUtils {
 	 * @param append a flag indicating if the content of the file should be overwritten (replaced) or appended at the end of the existing file
 	 */
 	public static void writeToFile(final File file, final Encoding encoding, final String data, final boolean append) throws IOException {
-		@Cleanup
-		OutputStream out = null;
-		@Cleanup
-		Writer writer = null;
-		final CharsetEncoder charsetEncoder = Charset.forName(encoding.getEncoding()).newEncoder();
 
-		out = new FileOutputStream(file, append);
-		writer = new OutputStreamWriter(out, charsetEncoder);
+		final CharsetEncoder charsetEncoder = Charset.forName(encoding.getEncoding()).newEncoder();
+		@Cleanup
+		OutputStream out = new FileOutputStream(file, append);
+		@Cleanup
+		Writer writer = new OutputStreamWriter(out, charsetEncoder);
+
 		writer.write(data);
 	}
 
