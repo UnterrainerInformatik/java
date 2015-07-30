@@ -18,26 +18,29 @@
  ***************************************************************************/
 ```
  
-# utils
+# nullannotations
 
-This jar contains various utility-classes used throughout our programs.  
+This jar contains an implementation of annotations that may be used as a replacement for the (more common) Eclipse null-annotations.  
 Feel free to use them or help correcting errors or writing tests on the develop-branch of this git-repository.  
 
 This repository is private since this is the master- and release-branch. You may clone it, but it will be read-only.  
 If you want to contribute to our repository (push, open pull requests), please use the copy on github located here: [the public github repository][github]
 
-Currently this contains the following utility classes:
+Currently this contains the following annotations:
 
-* ##### FileUtils  
-This class contains methods to read and write files from and to lists or other data-structures. It eases the creation or deletion of directory trees or bulk-moving and bulk-copying them.
-* ##### StringUtils  
-This class contains a method to get a formatted stacktrace as a string and several other helper methods.
-* ##### DateUtils
-Contains helper methods to convert from and to ISO8601 dates like `2009-06-30T18:30:00+02:00`.
-* ##### NullUtils
-This class only contains a single method, which is called `defaultIfNull(T obj, T defaultValue)`.
-* ##### SerializationUtils
-Eases your life when doing JAXB-XML- or ByteArray- serialization and deserialization. 
+* ##### Nonnull  
+Applicable on all types.  
+Specifies that this type may NOT be null in ANY case.
+* ##### Nullable  
+Applicable on all types.  
+Specifies that this type MAY be null (or not).
+* ##### ParametersAreNonnullByDefault
+Applicable to packages, types, methods or constructors.  
+Specifies that the parameters in that element are nonnull by default unless there is:  
+    * An explicit nullness annotation  
+    * The method overrides a method in a superclass (in which case the annotation of the corresponding parameter in the superclass applies)  
+    * There is a default parameter annotation applied to a more tightly nested element.  
+
 
 All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
 
