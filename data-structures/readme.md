@@ -27,11 +27,11 @@ If you want to contribute to our repository (push, open pull requests), please u
 
 Currently this contains the following classes:
 
-* ##### Tuple2  
+##### Tuple2  
 This class is a simple generic implementation of a two-tuple.
-* ##### Interval  
+##### Interval  
 Is exactly what the name suggests. An interval defined by a minimum and a maximum with getters and setters.
-* ##### Fader  
+##### Fader  
 The fader consists of an interval and adds a value (double) to it. The value is always in between the interval.  
 It adds a percentage getter and setter as well allowing you to do conversions from a percentage-value to your interval and backwards.
 

@@ -34,36 +34,38 @@ If you want to contribute to our repository (push, open pull requests), please u
 
 Currently this contains the following annotations:
 
-* ##### `javax.annotation.Nonnull()`  
+#### javax.annotation.Nonnull()  
 Applicable on all types.  
 Specifies that this type may NOT be null in ANY case.
-* ##### `javax.annotation.Nullable()`  
+#### javax.annotation.Nullable()  
 Applicable on all types.  
 Specifies that this type MAY be null (or not).
-* ##### `javax.annotation.ParametersAreNonnullByDefault(DefaultLocation[])`  
+#### javax.annotation.ParametersAreNonnullByDefault(DefaultLocation[])  
 Applicable to packages, types, methods or constructors.  
 Specifies that the parameters in that element matching the given `DefaultLocation`s are nonnull by default unless there is:  
-    * An explicit nullness annotation  
-    * The method overrides a method in a superclass (in which case the annotation of the corresponding parameter in the superclass applies)  
-    * There is a default parameter annotation applied to a more tightly nested element.  
-    #### Parameters:  
-    The optional parameters of this annotation is an array of DefaultLocation.  
-    It defaults to the following value: `{ PARAMETER, RETURN_TYPE, TYPE_BOUND, TYPE_ARGUMENT }`  
-    ##### DefaultLocation is an enumeration of the following values:  
-    ###### PARAMETER  
-    Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated parameters of any method or constructor within the scope of the annotated declaration.
-    ###### RETURN_TYPE  
-    Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated method return types within the scope of the annotated declaration.
-    ###### FIELD  
-    Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated field types within the scope of the annotated declaration.
-    ###### TYPE_PARAMETER  
-    Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated type parameter declarations within the scope of the annotated declaration.
-    ###### TYPE_BOUND  
-    Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated explicit type bounds within the scope of the annotated declaration.
-    ###### TYPE_ARGUMENT  
-    Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated type arguments within the scope of the annotated declaration (except wildcards and type variables).
-    ###### ARRAY_CONTENTS  
-    Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated array components within the scope of the annotated declaration.
+
+* An explicit nullness annotation  
+* The method overrides a method in a superclass (in which case the annotation of the corresponding parameter in the superclass applies)  
+* There is a default parameter annotation applied to a more tightly nested element.  
+
+##### Parameters:  
+The optional parameters of this annotation is an array of DefaultLocation.  
+It defaults to the following value: `{ PARAMETER, RETURN_TYPE, TYPE_BOUND, TYPE_ARGUMENT }`  
+##### DefaultLocation is an enumeration of the following values:  
+###### PARAMETER  
+Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated parameters of any method or constructor within the scope of the annotated declaration.  
+###### RETURN_TYPE  
+Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated method return types within the scope of the annotated declaration.  
+###### FIELD  
+Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated field types within the scope of the annotated declaration.  
+###### TYPE_PARAMETER  
+Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated type parameter declarations within the scope of the annotated declaration.  
+###### TYPE_BOUND  
+Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated explicit type bounds within the scope of the annotated declaration.  
+###### TYPE_ARGUMENT  
+Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated type arguments within the scope of the annotated declaration (except wildcards and type variables).  
+###### ARRAY_CONTENTS  
+Defines that a given `ParametersAreNonnullByDefault` annotation should affect all unannotated array components within the scope of the annotated declaration.
 
 The way we use it is we annotate all the `package-info.java` files with `@javax.annotation.ParametersAreNonnullByDefault` and act according to the warnings and errors your *Eclipse* confronts you with.  
 

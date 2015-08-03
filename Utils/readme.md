@@ -28,15 +28,15 @@ If you want to contribute to our repository (push, open pull requests), please u
 
 Currently this contains the following utility classes:
 
-* ##### FileUtils  
-This class contains methods to read and write files from and to lists or other data-structures. It eases the creation or deletion of directory trees or bulk-moving and bulk-copying them.
-* ##### StringUtils  
-This class contains a method to get a formatted stacktrace as a string and several other helper methods.
-* ##### DateUtils
-Contains helper methods to convert from and to ISO8601 dates like `2009-06-30T18:30:00+02:00`.
-* ##### NullUtils
-This class only contains a single method, which is called `defaultIfNull(T obj, T defaultValue)`.
-* ##### SerializationUtils
+##### FileUtils  
+This class contains methods to read and write files from and to lists or other data-structures. It eases the creation or deletion of directory trees or bulk-moving and bulk-copying them.  
+##### StringUtils  
+This class contains a method to get a formatted stacktrace as a string and several other helper methods.  
+##### DateUtils
+Contains helper methods to convert from and to ISO8601 dates like `2009-06-30T18:30:00+02:00`.  
+##### NullUtils
+This class only contains a single method, which is called `defaultIfNull(T obj, T defaultValue)`.  
+##### SerializationUtils
 Eases your life when doing JAXB-XML- or ByteArray- serialization and deserialization. 
 
 All of our projects facilitate the [Project Lombok][lombok]. So please download it and 'install' it in your preferred IDE by clicking on the downloaded jar-file. Then all compile-errors should vanish.  
