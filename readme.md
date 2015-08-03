@@ -114,4 +114,4 @@ For additional information check the `readme.md` file in the sub-directory.
 [homepage]: http://www.unterrainer.info
 [coding]: http://www.unterrainer.info/Home/Coding
 [lombok]: https://projectlombok.org
-[github] : https://github.com/UnterrainerInformatik/java
+[github]: https://github.com/UnterrainerInformatik/java
