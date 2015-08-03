@@ -18,7 +18,7 @@
  * </pre>
  ***************************************************************************/
 
-package info.unterrainer.java.tools.utils.files;
+package info.unterrainer.java.tools.utils.streams;
 
 import info.unterrainer.java.tools.utils.NullUtils;
 import lombok.AllArgsConstructor;

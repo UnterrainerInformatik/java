@@ -21,8 +21,9 @@
 package info.unterrainer.java.tools.utils.files;
 
 import info.unterrainer.java.tools.utils.NullUtils;
-import info.unterrainer.java.tools.utils.StreamUtils;
 import info.unterrainer.java.tools.utils.StringUtils;
+import info.unterrainer.java.tools.utils.streams.CountProperties;
+import info.unterrainer.java.tools.utils.streams.StreamUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
@@ -32,12 +33,9 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
@@ -50,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -65,6 +62,14 @@ import lombok.experimental.UtilityClass;
 @ExtensionMethod({ StringUtils.class, StreamUtils.class, NullUtils.class })
 public final class FileUtils {
 
+	/**
+	 * Gets a list of files located in the given directory matching the given file-ending.
+	 * 
+	 * @param dir the directory to search in
+	 * @param ending the file-ending to match
+	 * @param isRecursive if true, searches all sub-directories as well
+	 * @return a list of found files
+	 */
 	public static List<String> getFileList(File dir, String ending, boolean isRecursive) {
 		return getFileList(dir, ending, isRecursive, new ArrayList<>());
 	}
@@ -133,13 +138,26 @@ public final class FileUtils {
 	}
 
 	/**
-	 * Copy directory.
+	 * Copies a whole directory including all files and sub-directories.
 	 *
 	 * @param sourcePath path of the directory which should be copied
 	 * @param destinationPath path where the directory gets copied to
 	 * @return true, if successful
 	 */
-	public static boolean copyDirectory(final File sourcePath, final File destinationPath) {
+	public static boolean copyDir(final String sourcePath, final String destinationPath) {
+		final File source = new File(sourcePath);
+		final File destination = new File(destinationPath);
+		return copyDir(source, destination);
+	}
+
+	/**
+	 * Copies a whole directory including all files and sub-directories.
+	 *
+	 * @param sourcePath path of the directory which should be copied
+	 * @param destinationPath path where the directory gets copied to
+	 * @return true, if successful
+	 */
+	public static boolean copyDir(final File sourcePath, final File destinationPath) {
 		if (sourcePath.isDirectory()) {
 			if (!destinationPath.exists()) {
 				destinationPath.mkdirs();
@@ -149,7 +167,7 @@ public final class FileUtils {
 				final File sourceFile = new File(sourcePath, element);
 				final File destination = new File(destinationPath, element);
 				if (sourceFile.isDirectory()) {
-					if (!copyDirectory(sourceFile, destination)) {
+					if (!copyDir(sourceFile, destination)) {
 						return false;
 					}
 				} else {
@@ -167,7 +185,18 @@ public final class FileUtils {
 	}
 
 	/**
-	 * Copies the given file to the given destination.
+	 * Copies a given file to a given destination.
+	 *
+	 * @param source the source file
+	 * @param destination the destination file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void copyFile(final String source, final String destination) throws IOException {
+		copyFile(new File(source), new File(destination));
+	}
+
+	/**
+	 * Copies a given file to a given destination.
 	 *
 	 * @param source {@link File} the source
 	 * @param destination {@link File} the destination
@@ -189,68 +218,6 @@ public final class FileUtils {
 		FileChannel outputChannel = outputStream.getChannel();
 
 		outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
-	}
-
-	/**
-	 * Copy directory.
-	 *
-	 * @param sourcePath path of the directory which should be copied
-	 * @param destinationPath path where the directory gets copied to
-	 * @return true, if successful
-	 */
-	public static boolean copyDirectory(final String sourcePath, final String destinationPath) {
-		final File source = new File(sourcePath);
-		final File destination = new File(destinationPath);
-		return copyDirectory(source, destination);
-	}
-
-	/**
-	 * Copy a file.
-	 *
-	 * @param srcFile the source file
-	 * @param dstFile the destination file
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void copyFile(final String srcFile, final String dstFile) throws IOException {
-		final File src = new File(srcFile);
-		final File dest = new File(dstFile);
-		@Cleanup
-		InputStream in = new FileInputStream(src);
-		@Cleanup
-		OutputStream out = new FileOutputStream(dest);
-
-		final int buffersize = 1024;
-		final byte[] buf = new byte[buffersize];
-		int len;
-		while ((len = in.read(buf)) > 0) {
-			out.write(buf, 0, len);
-		}
-	}
-
-	/**
-	 * Creates the directory/sub-directory-structure as a sibling of the given parent directory (if it doesn't already exist in the first place).
-	 *
-	 * @param parent {@link File} the parent directory to create the new structure in
-	 * @param directory {@link String} the directory or directory with sub-directories to create, if it doesn't already exist
-	 */
-	public static void createDirectory(final File parent, final String directory) {
-		final File dir = new File(parent, directory);
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-	}
-
-	/**
-	 * creates a file with known name.
-	 *
-	 * @param fileName file name and path
-	 * @return file
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static File createFile(final String fileName) throws IOException {
-		final File file = new File(fileName);
-		file.createNewFile();
-		return file;
 	}
 
 	/**
@@ -279,7 +246,7 @@ public final class FileUtils {
 	 * @return true, if successful
 	 * @throws IOException if an I/O error occurs
 	 */
-	public static boolean deleteDirectory(final File directory) throws IOException {
+	public static boolean deleteDir(final File directory) throws IOException {
 		if (!directory.exists() || !directory.isDirectory()) {
 			return false;
 		}
@@ -287,7 +254,7 @@ public final class FileUtils {
 		for (final String file : files) {
 			final File f = new File(directory, file);
 			if (f.isDirectory()) {
-				deleteDirectory(f);
+				deleteDir(f);
 			} else {
 				Files.deleteIfExists(Paths.get(f.getAbsolutePath()));
 			}
@@ -304,9 +271,9 @@ public final class FileUtils {
 	 * @return true, if successful
 	 * @throws IOException if an I/O error occurs
 	 */
-	public static boolean deleteDirectory(final String directory) throws IOException {
+	public static boolean deleteDir(final String directory) throws IOException {
 		final File dir = new File(directory);
-		return FileUtils.deleteDirectory(dir);
+		return FileUtils.deleteDir(dir);
 	}
 
 	/**
@@ -315,7 +282,7 @@ public final class FileUtils {
 	 * @param fileName {@link String} the file name
 	 * @return String file extension
 	 */
-	public static String getFileExtension(final String fileName) {
+	public static String getExtension(final String fileName) {
 		return fileName.substring(fileName.lastIndexOf('.') + 1);
 	}
 
@@ -325,7 +292,7 @@ public final class FileUtils {
 	 * @param fileName the file name
 	 * @return true, if the file has been deleted, otherwise false
 	 */
-	public static boolean deleteFile(final String fileName) {
+	public static boolean delete(final String fileName) {
 		boolean success = false;
 		final File file = new File(fileName);
 		if (file.exists()) {
@@ -341,10 +308,10 @@ public final class FileUtils {
 	 * @return String : file extension
 	 */
 	@Nullable
-	public static String getFileNameNoExt(final String fullFileName) {
+	public static String getNameNoExtension(final String fullFileName) {
 		String retVal = null;
 		// Get file name only
-		final String fileName = getFileNameOnly(fullFileName);
+		final String fileName = getName(fullFileName);
 		if (!fileName.isEmpty() && fileName.contains(".")) {
 			retVal = fileName.substring(0, fileName.lastIndexOf('.'));
 		}
@@ -357,7 +324,7 @@ public final class FileUtils {
 	 * @param fullFileName {@link String} the full file name
 	 * @return short file name
 	 */
-	public static String getFileNameOnly(final String fullFileName) {
+	public static String getName(final String fullFileName) {
 		String retVal = null;
 		// Check separator character
 		if (fullFileName.contains(String.valueOf(File.separatorChar))) {
@@ -375,123 +342,12 @@ public final class FileUtils {
 	}
 
 	/**
-	 * Returns the directory the file is located in.
-	 *
-	 * @param fullFileName {@link String} the full file name
-	 * @return file directory
-	 */
-	@Nullable
-	public static String getFilePath(final String fullFileName) {
-		String retVal = null;
-		// Check separator character
-		if (fullFileName.contains(String.valueOf(File.separatorChar))) {
-			retVal = fullFileName.substring(0, fullFileName.lastIndexOf(File.separatorChar));
-		} else {
-			// Check separator character
-			if (fullFileName.contains(String.valueOf(File.separatorChar))) {
-				// Suspect Unix-style path delimiter
-				retVal = fullFileName.substring(0, fullFileName.lastIndexOf('/'));
-			}
-		}
-		return retVal;
-	}
-
-	/**
-	 * Gets the file-name from a string containing a path and file-name.
-	 *
-	 * @param fileNameAndPath {@link String} the file name and path to get the file-name from
-	 * @return the name {@link String} of the file
-	 */
-	public static String getName(final String fileNameAndPath) {
-		final int lastIndex = fileNameAndPath.lastIndexOf('/');
-		if (lastIndex == -1) {
-			return fileNameAndPath;
-		}
-		return fileNameAndPath.substring(lastIndex + 1);
-	}
-
-	/**
-	 * Gets the path from a string containing a file-name.
-	 *
-	 * @param fileNameAndPath {@link String} the file name and path to get the path from
-	 * @return the path {@link String} or an empty string, if the given fileNameAndPath only contained a file-name.
-	 */
-	public static String getPath(final String fileNameAndPath) {
-		final int lastIndex = fileNameAndPath.lastIndexOf('/');
-		if (lastIndex == -1) {
-			return "";
-		}
-		return fileNameAndPath.substring(0, lastIndex + 1);
-	}
-
-	/**
-	 * Checks if is file existing.
-	 *
-	 * @param fileName {@link String} the file name
-	 * @return true, if is file existing
-	 */
-	public static boolean isFileExisting(@Nullable String fileName) {
-		if (fileName == null) {
-			return false;
-		}
-		Path path = Paths.get(fileName);
-		return Files.exists(path);
-	}
-
-	/**
-	 * Load an external component if and only if the given component is null. Returns the found external component's content or the given content, if it wasn't
-	 * null in the first place.
-	 *
-	 * @param content {@link String} the component's content
-	 * @param file {@link File} the file
-	 * @param encoding {@link Encoding} the encoding
-	 * @return the string {@link String}
-	 */
-	@Nullable
-	public static String loadComponentIfNull(@Nullable String content, final File file, final Encoding encoding) {
-		if (content == null) {
-			try {
-				return readFileToString(file, encoding);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return content;
-	}
-
-	/**
-	 * Loads a properties-file from disk and returns a properties-object.
-	 *
-	 * @param pathAndNameAndExtension {@link String} the path and name and extension
-	 * @return the properties {@link Properties} that where read from file
-	 */
-	public static Properties loadProperties(final String pathAndNameAndExtension) throws IOException {
-		final Properties properties = new Properties();
-		final BufferedInputStream stream = new BufferedInputStream(new FileInputStream(pathAndNameAndExtension));
-		properties.load(stream);
-		stream.close();
-		return properties;
-	}
-
-	/**
-	 * Opens a file either to be replaced by a new content or to append.
-	 *
-	 * @param file {@link File} the file
-	 * @param encoding {@link Encoding} the encoding
-	 * @param append the append
-	 * @return the prints the writer {@link PrintWriter}
-	 */
-	public static PrintWriter openFile(final File file, final Encoding encoding, final boolean append) throws IOException {
-		return new PrintWriter(new OutputStreamWriter(new FileOutputStream(file.getAbsoluteFile(), append), encoding.getEncoding()));
-	}
-
-	/**
 	 * Reads the contents of a file and returns it as a byteArray taking into account all the exceptions that might occur.
 	 *
 	 * @param file {@link File} the file
 	 * @return the string {@link String}
 	 */
-	public static byte[] readFileToByteArray(final File file) throws IOException {
+	public static byte[] readToByteArray(final File file) throws IOException {
 		return java.nio.file.Files.readAllBytes(Paths.get(file.getAbsolutePath()));
 	}
 
@@ -532,24 +388,7 @@ public final class FileUtils {
 	 * @return the string {@link String} that consists of the file-content
 	 */
 	public static String readFileToString(final File file, final Encoding encoding) throws IOException {
-		return new String(readFileToByteArray(file), encoding.getEncoding());
-	}
-
-	/**
-	 * Reads the contents of a file and returns it as a List<String> taking into account all the exceptions that might occur.
-	 *
-	 * @param file {@link File} the file to read
-	 * @param encoding {@link Encoding} the encoding to expect when putting the file-content to a string
-	 * @return the string {@link String} that consists of the file-content
-	 */
-	public static List<String> readFileToList(final File file, final Encoding encoding) throws IOException {
-		List<String> result = new ArrayList<>();
-		List<String> lines = java.nio.file.Files.readAllLines(Paths.get(file.getAbsolutePath()), encoding.toCharset());
-
-		for (String line : lines) {
-			Collections.addAll(result, line.split(";"));
-		}
-		return result;
+		return new String(readToByteArray(file), encoding.getEncoding());
 	}
 
 	/**
@@ -559,8 +398,8 @@ public final class FileUtils {
 	 * @param list list of strings which gets written into the file
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void writeListToFile(final File file, final List<String> list) throws IOException {
-		writeListToFile(file, list, true);
+	public static void writeListTo(final File file, final List<String> list) throws IOException {
+		writeListTo(file, list, true);
 	}
 
 	/**
@@ -571,7 +410,7 @@ public final class FileUtils {
 	 * @param append true = append to file, false = overwrite
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void writeListToFile(final File file, final List<String> list, final boolean append) throws IOException {
+	public static void writeListTo(final File file, final List<String> list, final boolean append) throws IOException {
 		FileWriter fstream = null;
 		fstream = new FileWriter(file, append);
 		final BufferedWriter out = new BufferedWriter(fstream);
@@ -591,8 +430,8 @@ public final class FileUtils {
 	 * @param data {@link String} the data to be written
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void writeToFile(final File file, final Encoding encoding, final String data) throws IOException {
-		writeToFile(file, encoding, data, true);
+	public static void writeTo(final File file, final Encoding encoding, final String data) throws IOException {
+		writeTo(file, encoding, data, true);
 	}
 
 	/**
@@ -603,7 +442,7 @@ public final class FileUtils {
 	 * @param data {@link String} the data to be written
 	 * @param append a flag indicating if the content of the file should be overwritten (replaced) or appended at the end of the existing file
 	 */
-	public static void writeToFile(final File file, final Encoding encoding, final String data, final boolean append) throws IOException {
+	public static void writeTo(final File file, final Encoding encoding, final String data, final boolean append) throws IOException {
 
 		final CharsetEncoder charsetEncoder = Charset.forName(encoding.getEncoding()).newEncoder();
 		@Cleanup
@@ -629,85 +468,5 @@ public final class FileUtils {
 			}
 		};
 		return source.listFiles(fileFilter);
-	}
-
-	/**
-	 * Creates the contains file name filter.
-	 *
-	 * @param matches the matches
-	 * @return the filename filter {@link FilenameFilter}
-	 */
-	public static FilenameFilter createContainsFileNameFilter(final List<String> matches) {
-		return new FilenameFilter() {
-			@Override
-			public boolean accept(@Nullable File dir, @Nullable String name) {
-				return name.contains(matches);
-			}
-		};
-	}
-
-	/**
-	 * Creates the replaced contains file name filter.
-	 *
-	 * @param matches the matches
-	 * @return the filename filter {@link FilenameFilter}
-	 */
-	public static FilenameFilter createSubStringContainsFileNameFilter(final List<String> matches, final String importInterFacePkg) {
-		return new FilenameFilter() {
-			@Override
-			public boolean accept(@Nullable File dir, @Nullable String name) {
-				return name.noNull().substring(importInterFacePkg.length()).contains(matches);
-			}
-		};
-	}
-
-	/**
-	 * Creates the contains file filter.
-	 *
-	 * @param matches the matches
-	 * @return the file filter {@link FileFilter}
-	 */
-	public static FileFilter createContainsFileFilter(final List<String> matches) {
-		return new FileFilter() {
-			@Override
-			public boolean accept(@Nullable File pathname) {
-				return pathname.noNull().getName().contains(matches);
-			}
-		};
-	}
-
-	/**
-	 * Creates the file list.
-	 *
-	 * @param path {@link String} the path
-	 * @return the list
-	 */
-	public static List<File> createRecursiveFileList(final String path) {
-		List<File> result = new ArrayList<File>();
-		File directory = new File(path);
-		File[] fList = directory.listFiles();
-		result.add(directory);
-		result.addAll(Arrays.asList(fList));
-		for (File file : fList) {
-			if (file.isDirectory()) {
-				result.addAll(createRecursiveFileList(file.getAbsolutePath()));
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * Assure that the given directory exists.
-	 *
-	 * @param targetFolder {@link String} the target folder
-	 * @return true, if successful
-	 */
-	public static boolean assureDirExists(final String targetFolder) {
-		File f = new File(targetFolder);
-		boolean result = true;
-		if (!f.exists()) {
-			result = f.mkdirs();
-		}
-		return result;
 	}
 }

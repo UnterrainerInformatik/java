@@ -17,9 +17,7 @@
  *
  * </pre>
  ***************************************************************************/
-package info.unterrainer.java.tools.utils;
-
-import info.unterrainer.java.tools.utils.files.CountProperties;
+package info.unterrainer.java.tools.utils.streams;
 
 import java.io.BufferedReader;
 import java.io.IOException;
