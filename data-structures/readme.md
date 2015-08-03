@@ -50,4 +50,4 @@ We use the following parts of Project Lombok:
 ```
 
 [lombok]: https://projectlombok.org
-[github] : https://github.com/UnterrainerInformatik/java
+[github]: https://github.com/UnterrainerInformatik/java

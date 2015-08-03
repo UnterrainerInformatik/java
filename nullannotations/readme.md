@@ -21,7 +21,12 @@
 # nullannotations
 
 This jar contains an implementation of annotations that may be used as a replacement for the (more common) Eclipse null-annotations.  
-When we first decided to use those annotations there where several candidates to pick from. We opted for the version that tried to implement a de-facto standard at that time (`JSR-305`). Those annotations are located in the namespace `javax.annotation`.
+
+When we first decided to use those annotations there where several candidates to pick from. We opted for the version that tried to implement a de-facto standard at that time (`JSR-305`). Those annotations are located in the namespace `javax.annotation`.  
+
+By now `JSR-305` is dead but we're stuck with a ton of classes all referencing those annotations that don't support Java 1.8.  
+We don't want to change to another annotation-implementation (other namespace, other names) especially since there's no solid successor to be found right now. The consensus at this very moment is to use the internal Eclipse-annotations and that's not good enough for us since we want to implement our services IDE-agnostic.  
+
 Feel free to use them or help correcting errors or writing tests on the develop-branch of this git-repository.  
 
 This repository is private since this is the master- and release-branch. You may clone it, but it will be read-only.  
@@ -74,8 +79,8 @@ In order to effectively use null-annotations you'll have to setup your Eclipse t
 <dependency>
     <groupId>info.unterrainer.java.tools</groupId>
     <artifactId>nullannotations</artifactId>
-	<version>0.2</version>
+    <version>0.2</version>
 </dependency>
 ```
 
-[github] : https://github.com/UnterrainerInformatik/java
+[github]: https://github.com/UnterrainerInformatik/java

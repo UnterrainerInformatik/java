@@ -74,4 +74,4 @@ csvWriter.close();
 ```
 
 [lombok]: https://projectlombok.org
-[github] : https://github.com/UnterrainerInformatik/java
+[github]: https://github.com/UnterrainerInformatik/java

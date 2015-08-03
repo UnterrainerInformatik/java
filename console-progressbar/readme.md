@@ -66,4 +66,4 @@ All of our projects facilitate the [Project Lombok][lombok]. So please download 
 ```
 
 [lombok]: https://projectlombok.org
-[github] : https://github.com/UnterrainerInformatik/java
+[github]: https://github.com/UnterrainerInformatik/java
