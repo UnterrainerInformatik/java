@@ -76,6 +76,11 @@ When extending legacy classes (for instance if you'd like to implement `Map.entr
 In order to effectively use null-annotations you'll have to setup your Eclipse to honor them and display the resulting warnings or errors accordingly.  
 ![Image of example Eclipse-config](http://unterrainer.info/images/Eclipse_null-annotations_settings.png)
 
+**Caution:**  
+There currently is an error in [Project Lombok 1.16.4][lombok] when using `Java 1.8`.  
+You will not be able to use the orX-annotation (annotation via annotation) since it just gets ignored. That means that you cannot annotate a generated equals-method with `@Nullable` using this workaround.  
+In order to do so, you'll have to set your compiler compliance level to Java 1.7. That way Lombok works like a charm.
+
 #### Apache Maven artifact to use in your pom
 ```xml
 <dependency>
@@ -85,4 +90,5 @@ In order to effectively use null-annotations you'll have to setup your Eclipse t
 </dependency>
 ```
 
+[lombok]: https://projectlombok.org
 [github]: https://github.com/UnterrainerInformatik/java

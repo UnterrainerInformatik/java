@@ -111,6 +111,21 @@ For additional information check the `readme.md` file in the sub-directory.
 </dependency>
 ```
 
+## nullannotations
+
+This project contains an implementation of annotations that may be used as a replacement for the (more common) Eclipse null-annotations.  
+
+For additional information check the `readme.md` file in the sub-directory.  
+
+##### Apache Maven artifact to use in your pom
+```xml
+<dependency>
+    <groupId>info.unterrainer.java.tools</groupId>
+    <artifactId>nullannotations</artifactId>
+    <version>0.2</version>
+</dependency>
+```
+
 [homepage]: http://www.unterrainer.info
 [coding]: http://www.unterrainer.info/Home/Coding
 [lombok]: https://projectlombok.org
