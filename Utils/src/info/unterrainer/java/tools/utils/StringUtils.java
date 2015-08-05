@@ -32,6 +32,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class StringUtils {
 
+	public static final String EMTPY = "";
+
 	/**
 	 * Returns a string consisting of a specific number of concatenated copies of an input string. For example, repeat("hey", 3) returns the string "heyheyhey".
 	 *
@@ -104,7 +106,7 @@ public class StringUtils {
 	 * @param throwable {@link Throwable} the throwable
 	 * @return the stack trace {@link String}
 	 */
-	public static String getStackTrace(Throwable throwable) {
+	public static String getStackTraceAsString(Throwable throwable) {
 		final Writer result = new StringWriter();
 		final PrintWriter printWriter = new PrintWriter(result);
 

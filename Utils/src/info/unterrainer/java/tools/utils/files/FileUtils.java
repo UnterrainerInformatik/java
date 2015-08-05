@@ -64,7 +64,7 @@ public final class FileUtils {
 
 	/**
 	 * Gets a list of files located in the given directory matching the given file-ending.
-	 * 
+	 *
 	 * @param dir the directory to search in
 	 * @param ending the file-ending to match
 	 * @param isRecursive if true, searches all sub-directories as well
@@ -342,6 +342,16 @@ public final class FileUtils {
 	}
 
 	/**
+	 * Returns the path (without the file-name) for a filename with path.
+	 *
+	 * @param fullFileName {@link String} the full file name
+	 * @return the path as a string
+	 */
+	public static String getPath(final String fullFileName) {
+		return Paths.get(fullFileName).getParent().toString();
+	}
+
+	/**
 	 * Reads the contents of a file and returns it as a byteArray taking into account all the exceptions that might occur.
 	 *
 	 * @param file {@link File} the file
@@ -349,6 +359,36 @@ public final class FileUtils {
 	 */
 	public static byte[] readToByteArray(final File file) throws IOException {
 		return java.nio.file.Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+	}
+
+	/**
+	 * Open a file and read its content to a list of strings.
+	 * <p>
+	 * Assumes UTF8 as default {@link Charset}.
+	 *
+	 * @param file the file to read
+	 * @return an ArrayList containing all the lines of the read file
+	 */
+	public static List<String> readToList(@Nullable File file) throws IOException {
+		if (file == null) {
+			return Collections.emptyList();
+		}
+
+		return readToList(file.toPath(), Encoding.UTF8.toCharset());
+	}
+
+	/**
+	 * Open a file and read its content to a list of strings.
+	 *
+	 * @param file the file to read
+	 * @param cs the {@link Charset} to use (defaults to UTF-8)
+	 * @return an ArrayList containing all the lines of the read file
+	 */
+	public static List<String> readToList(@Nullable File file, @Nullable Charset cs) throws IOException {
+		if (file == null) {
+			return Collections.emptyList();
+		}
+		return readToList(file.toPath(), cs);
 	}
 
 	/**
@@ -367,7 +407,9 @@ public final class FileUtils {
 	 * Open a file and read its content to a list of strings.
 	 *
 	 * @param path the path to the file to read
+	 * @param cs the {@link Charset} to use (defaults to UTF-8)
 	 * @return an ArrayList containing all the lines of the read file
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static List<String> readToList(@Nullable Path path, @Nullable Charset cs) throws IOException {
 		if (path == null) {
@@ -387,7 +429,7 @@ public final class FileUtils {
 	 * @param encoding {@link Encoding} the encoding to expect when putting the file-content to a string
 	 * @return the string {@link String} that consists of the file-content
 	 */
-	public static String readFileToString(final File file, final Encoding encoding) throws IOException {
+	public static String readToString(final File file, final Encoding encoding) throws IOException {
 		return new String(readToByteArray(file), encoding.getEncoding());
 	}
 

@@ -271,7 +271,7 @@ public final class SerializationUtils {
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Class<T> type) throws IOException, JAXBException {
 
-		String source = sourceFile.readFileToString(Encoding.UTF8);
+		String source = sourceFile.readToString(Encoding.UTF8);
 		return jaxBXmlDeserializer(source, type);
 	}
 
@@ -296,7 +296,7 @@ public final class SerializationUtils {
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Encoding encoding, final Class<T> type) throws IOException, JAXBException {
 
-		String source = sourceFile.readFileToString(encoding);
+		String source = sourceFile.readToString(encoding);
 		return jaxBXmlDeserializer(source, type);
 	}
 
