@@ -17,7 +17,9 @@
  * 
  ***************************************************************************/
 ```
- 
+[![Maven Central](https://img.shields.io/maven-central/v/info.unterrainer.java.tools.reporting/splitstopwatch.svg)](https://repo1.maven.org/maven2/info/unterrainer/java/tools/reporting/splitstopwatch)
+[![Javadocs](https://img.shields.io/maven-central/v/info.unterrainer.java.tools.reporting/splitstopwatch.svg?label=Javadocs)](http://www.javadoc.io/doc/info.unterrainer.java.tools.reporting/splitstopwatch)
+
 # splitstopwatch
 
 This class implements a stopWatch.

@@ -17,8 +17,6 @@
  * 
  ***************************************************************************/
 ```
-[![Release](https://img.shields.io/github/tag/unterrainerinformatik/java.svg?label=release)](https://github.com/unterrainerinformatik/java/releases)
-  
 [![Issue Stats](http://www.issuestats.com/github/unterrainerinformatik/java/badge/pr)](http://www.issuestats.com/github/unterrainerinformatik/java)
 [![Issue Stats](http://www.issuestats.com/github/unterrainerinformatik/java/badge/issue)](http://www.issuestats.com/github/unterrainerinformatik/java)
 

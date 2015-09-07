@@ -17,7 +17,9 @@
  * 
  ***************************************************************************/
 ```
- 
+[![Maven Central](https://img.shields.io/maven-central/v/info.unterrainer.java.tools/data-structures.svg)](https://repo1.maven.org/maven2/info/unterrainer/java/tools/data-structures)
+[![Javadocs](https://img.shields.io/maven-central/v/info.unterrainer.java.tools/data-structures.svg?label=Javadocs)](http://www.javadoc.io/doc/info.unterrainer.java.tools/data-structures)
+
 # data-structures
 
 This jar contains several classes designed to do common tasks.

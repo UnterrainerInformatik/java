@@ -17,7 +17,9 @@
  * 
  ***************************************************************************/
 ```
- 
+[![Maven Central](https://img.shields.io/maven-central/v/info.unterrainer.java.tools/csv-tools.svg)](https://repo1.maven.org/maven2/info/unterrainer/java/tools/csv-tools)
+[![Javadocs](https://img.shields.io/maven-central/v/info.unterrainer.java.tools/csv-tools.svg?label=Javadocs)](http://www.javadoc.io/doc/info.unterrainer.java.tools/csv-tools)
+
 # csv-tools
 
 This repository is private since this is the master- and release-branch. You may clone it, but it will be read-only.  

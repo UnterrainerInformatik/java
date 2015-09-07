@@ -17,7 +17,9 @@
  * 
  ***************************************************************************/
 ```
- 
+[![Maven Central](https://img.shields.io/maven-central/v/info.unterrainer.java.tools.reporting/console-progressbar.svg)](https://repo1.maven.org/maven2/info/unterrainer/java/tools/reporting/console-progressbar)
+[![Javadocs](https://img.shields.io/maven-central/v/info.unterrainer.java.tools.reporting/console-progressbar.svg?label=Javadocs)](http://www.javadoc.io/doc/info.unterrainer.java.tools.reporting/console-progressbar)
+
 # console-progressbar
 
 This repository is private since this is the master- and release-branch. You may clone it, but it will be read-only.  
