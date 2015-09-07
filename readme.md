@@ -17,7 +17,12 @@
  * 
  ***************************************************************************/
 ```
- 
+  
+[![Issue Stats](http://www.issuestats.com/github/unterrainerinformatik/java/badge/pr)](http://www.issuestats.com/github/unterrainerinformatik/java)
+[![Issue Stats](http://www.issuestats.com/github/unterrainerinformatik/java/badge/issue)](http://www.issuestats.com/github/unterrainerinformatik/java)
+
+[![Help Wanted Issues](https://badge.waffle.io/unterrainerinformatik/java.svg?label=help%20wanted&title=Help Wanted Issues)](http://waffle.io/unterrainerinformatik/java)
+  
 # General JAVA Tools
 
 This section contains various useful projects that should help your development-process.
