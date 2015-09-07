@@ -17,7 +17,9 @@
  * 
  ***************************************************************************/
 ```
- 
+[![Maven Central](https://img.shields.io/maven-central/v/info.unterrainer.java.tools/utils.svg)](https://repo1.maven.org/maven2/info/unterrainer/java/tools/utils)
+[![Javadocs](https://img.shields.io/maven-central/v/info.unterrainer.java.tools/utils.svg?label=Javadocs)](http://www.javadoc.io/doc/info.unterrainer.java.tools/utils)
+
 # utils
 
 This jar contains various utility-classes used throughout our programs.  
