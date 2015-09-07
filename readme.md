@@ -17,9 +17,9 @@
  * 
  ***************************************************************************/
 ```
-[![Release][releaseImg]][releaseLink]
+[![Release](https://img.shields.io/github/tag/unterrainerinformatik/java.svg?label=release)](https://github.com/unterrainerinformatik/java/releases)
   
-[![Issue Stats][pullRequestsImg]][pullRequestsLink]
+[![Issue Stats](http://www.issuestats.com/github/unterrainerinformatik/java/badge/pr)](http://www.issuestats.com/github/unterrainerinformatik/java)
 [![Issue Stats](http://www.issuestats.com/github/unterrainerinformatik/java/badge/issue)](http://www.issuestats.com/github/unterrainerinformatik/java)
 
 [![Help Wanted Issues](https://badge.waffle.io/unterrainerinformatik/java.svg?label=help%20wanted&title=Help Wanted Issues)](http://waffle.io/unterrainerinformatik/java)
@@ -136,7 +136,3 @@ For additional information check the `readme.md` file in the sub-directory.
 [coding]: http://www.unterrainer.info/Home/Coding
 [lombok]: https://projectlombok.org
 [github]: https://github.com/UnterrainerInformatik/java
-[releaseImg]: https://img.shields.io/github/tag/unterrainerinformatik/java.svg?label=release
-[releaseLink]: https://github.com/unterrainerinformatik/java/releases
-[pullRequestImg]: http://www.issuestats.com/github/unterrainerinformatik/java/badge/pr
-[pullRequestLink]: http://www.issuestats.com/github/unterrainerinformatik/java
