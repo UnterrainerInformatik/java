@@ -39,18 +39,18 @@ import lombok.experimental.ExtensionMethod;
  *
  * <pre>
  * {@code
- * [>>>>>>>>>>>>>>>]
- *  ####
+ * file a: [>>>>>>>>>>>>>>>]
+ *          ####
  *
  *  ...
  *
- * [>>>>>>>>>>>>>>>]
- *  ############
+ * file a: [>>>>>>>>>>>>>>>]
+ *          ############
  *
  *  ...
  *
- * [>>>>>>>>>>>>>>>]
- *  ###############
+ * file a: [>>>>>>>>>>>>>>>]
+ *          ###############
  * }
  * </pre>
  *
@@ -60,6 +60,10 @@ import lombok.experimental.ExtensionMethod;
  * <p>
  * Default values are:
  * <table>
+ * <tr>
+ * <td><b>prefix</b></td>
+ * <td>"file a: "</td>
+ * </tr>
  * <tr>
  * <td><b>begin</b></td>
  * <td>"["</td>
@@ -84,6 +88,9 @@ public class SimpleInsertBar implements DrawableComponent {
 
 	@Getter
 	@Setter
+	private String prefix;
+	@Getter
+	@Setter
 	private String begin;
 	@Getter
 	@Setter
@@ -96,8 +103,9 @@ public class SimpleInsertBar implements DrawableComponent {
 	private Character legendFill;
 
 	@Builder
-	public SimpleInsertBar(@Nullable String begin, @Nullable String end, @Nullable Character full, @Nullable Character legendFill) {
+	public SimpleInsertBar(@Nullable String prefix, @Nullable String begin, @Nullable String end, @Nullable Character full, @Nullable Character legendFill) {
 		super();
+		this.prefix = prefix.or("");
 		this.begin = begin.or("[");
 		this.end = end.or("]");
 		this.full = full.or('#');
@@ -106,14 +114,16 @@ public class SimpleInsertBar implements DrawableComponent {
 
 	@Override
 	public void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value, int lastValue) {
-
 		if (!drawInitialized) {
 			// Draw the lead-line, the legend to the bar.
-			ps.print(begin + legendFill + "".repeat(width) + end + "\n" + " ".repeat(begin.length()));
-			ps.flush();
+			int l = begin.length() + prefix.length();
+			ps.print(prefix + begin + legendFill.repeat(width) + end + "\n" + " ".repeat(l));
 		}
 
-		ps.print(full + "".repeat(value - lastValue));
-		ps.flush();
+		ps.print(full.repeat(value - lastValue));
+	}
+
+	@Override
+	public void remove(PrintStream ps, int width, int lastValue) {
 	}
 }

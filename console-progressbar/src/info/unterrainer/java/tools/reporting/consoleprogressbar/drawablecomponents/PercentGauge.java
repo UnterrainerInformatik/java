@@ -39,15 +39,15 @@ import lombok.experimental.ExtensionMethod;
  *
  * <pre>
  * {@code
- * [  4%]
+ * file a: [  4%]
  *
  * ...
  *
- * [ 56%]
+ * file a: [ 56%]
  *
  * ...
  *
- * [100%]
+ * file a: [100%]
  * }
  * </pre>
  *
@@ -59,6 +59,10 @@ import lombok.experimental.ExtensionMethod;
  * using '\b' (backspace).
  * <p>
  * <table>
+ * <tr>
+ * <td><b>prefix</b></td>
+ * <td>"file a: "</td>
+ * </tr>
  * <tr>
  * <td><b>begin</b></td>
  * <td>"["</td>
@@ -83,6 +87,9 @@ public class PercentGauge implements DrawableComponent {
 
 	@Getter
 	@Setter
+	private String prefix;
+	@Getter
+	@Setter
 	private String begin;
 	@Getter
 	@Setter
@@ -95,8 +102,9 @@ public class PercentGauge implements DrawableComponent {
 	private Character empty;
 
 	@Builder
-	public PercentGauge(@Nullable String begin, @Nullable String end, @Nullable String percent, @Nullable Character empty) {
+	public PercentGauge(@Nullable String begin, @Nullable String end, @Nullable String percent, @Nullable Character empty, @Nullable String prefix) {
 		super();
+		this.prefix = prefix.or("");
 		this.begin = begin.or("[");
 		this.end = end.or("]");
 		this.percent = percent.or("%");
@@ -105,15 +113,9 @@ public class PercentGauge implements DrawableComponent {
 
 	@Override
 	public void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value, int lastValue) {
-		String s = "";
-
-		if (drawInitialized) {
-			// Delete already drawn bar using command-characters.
-			s += "\b".repeat(begin.length() + percent.length() + 3 + end.length());
-		}
-
 		int v = (int) (fader.getPercentage() * 100);
 
+		String s = prefix;
 		s += begin;
 		if (v < 10) {
 			s += empty;
@@ -124,8 +126,13 @@ public class PercentGauge implements DrawableComponent {
 		s += v;
 		s += percent;
 		s += end;
-
 		ps.print(s);
-		ps.flush();
+	}
+
+	@Override
+	public void remove(PrintStream ps, int width, int lastValue) {
+		// Delete already drawn bar using command-characters.
+		String s = "\b".repeat(prefix.length() + begin.length() + percent.length() + 3 + end.length());
+		ps.print(s);
 	}
 }

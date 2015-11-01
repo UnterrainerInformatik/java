@@ -39,15 +39,15 @@ import lombok.experimental.ExtensionMethod;
  *
  * <pre>
  * {@code
- * [####-----------]
+ * file a: [####-----------]
  *
  * ...
  *
- * [########-------]
+ * file a: [########-------]
  *
  * ...
  *
- * [###############]
+ * file a: [###############]
  * }
  * </pre>
  *
@@ -56,6 +56,10 @@ import lombok.experimental.ExtensionMethod;
  * using '\b' (backspace).
  * <p>
  * <table>
+ * <tr>
+ * <td><b>prefix</b></td>
+ * <td>"file a: "</td>
+ * </tr>
  * <tr>
  * <td><b>begin</b></td>
  * <td>"["</td>
@@ -80,6 +84,9 @@ public class ProgressBar implements DrawableComponent {
 
 	@Getter
 	@Setter
+	private String prefix;
+	@Getter
+	@Setter
 	private String begin;
 	@Getter
 	@Setter
@@ -92,8 +99,9 @@ public class ProgressBar implements DrawableComponent {
 	private Character empty;
 
 	@Builder
-	public ProgressBar(@Nullable String begin, @Nullable String end, @Nullable Character full, @Nullable Character empty) {
+	public ProgressBar(@Nullable String begin, @Nullable String end, @Nullable Character full, @Nullable Character empty, @Nullable String prefix) {
 		super();
+		this.prefix = prefix.or("");
 		this.begin = begin.or("[");
 		this.end = end.or("]");
 		this.full = full.or('#');
@@ -102,19 +110,21 @@ public class ProgressBar implements DrawableComponent {
 
 	@Override
 	public void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value, int lastValue) {
-		String s = "";
-
-		if (drawInitialized) {
-			// Delete already drawn bar using command-characters.
-			s += "\b".repeat(begin.length() + width + end.length());
-		}
-
+		String s = prefix;
 		s += begin;
-		s += full + "".repeat(value);
-		s += empty + "".repeat(width - value);
+		s += full.repeat(value);
+		s += empty.repeat(width - value);
 		s += end;
-
 		ps.print(s);
-		ps.flush();
+	}
+
+	@Override
+	public void remove(PrintStream ps, int width, int lastValue) {
+		// Delete already drawn bar using command-characters.
+		int len = prefix.length() + begin.length() + width + end.length();
+		String s = "\b".repeat(len);
+		s += " ".repeat(len);
+		s += "\b".repeat(len);
+		ps.print(s);
 	}
 }

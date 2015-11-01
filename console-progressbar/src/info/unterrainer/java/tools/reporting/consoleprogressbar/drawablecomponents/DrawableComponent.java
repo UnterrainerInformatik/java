@@ -1,14 +1,14 @@
 package info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents;
 
-import java.io.PrintStream;
-
 import info.unterrainer.java.tools.datastructures.Fader;
+
+import java.io.PrintStream;
 
 public interface DrawableComponent {
 
 	/**
 	 * Draws the graphical component of the progress bar.<br/>
-	 * Only gets called if the value has changed from the last draw-call.
+	 * No need to flush the stream after writing. This is done after calling this method.
 	 *
 	 * @param ps the print-stream to draw to
 	 * @param fader the fader that holds all exact values regarding the bar
@@ -18,4 +18,14 @@ public interface DrawableComponent {
 	 * @param lastValue the number of character drawn by the last call to draw
 	 */
 	void draw(PrintStream ps, Fader fader, int width, boolean drawInitialized, int value, int lastValue);
+
+	/**
+	 * Removes the graphical component of the progress bar from the output stream.<br/>
+	 * No need to flush the stream after writing. This is done after calling this method.
+	 *
+	 * @param ps the print-stream to draw to
+	 * @param width the width of the bar in characters
+	 * @param lastValue the number of character drawn by the last call to draw
+	 */
+	void remove(PrintStream ps, int width, int lastValue);
 }

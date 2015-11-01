@@ -82,8 +82,10 @@ public class ConsoleProgressBar {
 	@Setter
 	private Integer width;
 
+	@Getter
 	private boolean drawInitialized = false;
 	private int lastNumberOfCharactersDrawn;
+	@Getter
 	private DrawableComponent component;
 
 	@Builder
@@ -183,10 +185,45 @@ public class ConsoleProgressBar {
 	}
 
 	/**
-	 * Draws the draw-able component of this progress bar.
+	 * Decides if a redraw is necessary.
 	 * <p>
-	 * Please call this as frequent as possible. The real draw-call will only be issued if there really has been a change in the graphical representation of the
-	 * bar.
+	 * This is the case if the last drawn value differs from the current one or if the component hasn't been drawn yet at all.
+	 *
+	 * @return
+	 */
+	public boolean isRedrawNecessary() {
+		return !drawInitialized || (int) (fader.getPercentage() * width) != lastNumberOfCharactersDrawn;
+	}
+
+	/**
+	 * Redraws the draw-able component of this progress bar by calling {@link #remove(PrintStream)} and then {@link #draw(PrintStream)}.
+	 * <p>
+	 * Please call this as frequent as possible.<br>
+	 * The real remove-draw call will only be issued if there really has been a change in the graphical representation of the bar.
+	 *
+	 * @param ps the print-stream to draw to
+	 * @return the console progress bar
+	 */
+	public ConsoleProgressBar redraw(@Nullable PrintStream ps) {
+		if (ps != null) {
+			checkFader();
+			int fullNumber = (int) (fader.getPercentage() * width);
+
+			if (isRedrawNecessary()) {
+				if (drawInitialized) {
+					component.remove(ps, width, lastNumberOfCharactersDrawn);
+				}
+				component.draw(ps, fader, width, drawInitialized, fullNumber, lastNumberOfCharactersDrawn);
+				drawInitialized = true;
+				lastNumberOfCharactersDrawn = fullNumber;
+			}
+		}
+		return this;
+	}
+
+	/**
+	 * This method will draw the component. It will not remove the component first and it will draw at any circumstances.<br>
+	 * If you want to re-draw it (update its values visually) consider calling redraw instead.
 	 *
 	 * @param ps the print-stream to draw to
 	 * @return the console progress bar
@@ -194,13 +231,29 @@ public class ConsoleProgressBar {
 	public ConsoleProgressBar draw(@Nullable PrintStream ps) {
 		if (ps != null) {
 			checkFader();
-
 			int fullNumber = (int) (fader.getPercentage() * width);
+			component.draw(ps, fader, width, drawInitialized, fullNumber, lastNumberOfCharactersDrawn);
+			drawInitialized = true;
+			lastNumberOfCharactersDrawn = fullNumber;
+			ps.flush();
+		}
+		return this;
+	}
 
-			if (fullNumber != lastNumberOfCharactersDrawn || !drawInitialized) {
-				component.draw(ps, fader, width, drawInitialized, fullNumber, lastNumberOfCharactersDrawn);
-				drawInitialized = true;
-				lastNumberOfCharactersDrawn = fullNumber;
+	/**
+	 * This method removes the component from the print-stream if possible.
+	 * <p>
+	 * If you use a component that cannot do so, e.g. components designed for consoles with no control-character support, then this call will do nothing.
+	 *
+	 * @param ps the print-stream to draw to
+	 * @return the console progress bar
+	 */
+	public ConsoleProgressBar remove(@Nullable PrintStream ps) {
+		if (ps != null) {
+			checkFader();
+			if (drawInitialized) {
+				component.remove(ps, width, lastNumberOfCharactersDrawn);
+				ps.flush();
 			}
 		}
 		return this;
