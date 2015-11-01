@@ -35,7 +35,10 @@ public class StringUtils {
 	public static final String EMTPY = "";
 
 	/**
-	 * Returns a string consisting of a specific number of concatenated copies of an input string. For example, repeat("hey", 3) returns the string "heyheyhey".
+	 * Returns a string consisting of a specific number of concatenated copies of an input string.<br>
+	 * For example, repeat("hey", 3) returns the string "heyheyhey".
+	 * <p>
+	 * If the given string is null, an empty string is returned.
 	 *
 	 * @param string {@link String} any non-null string
 	 * @param count the number of times to repeat it; a nonnegative integer
@@ -50,6 +53,23 @@ public class StringUtils {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * Returns a string consisting of a specific number of concatenated copies of an input character.<br>
+	 * For example, repeat('a', 3) returns the string "aaa".
+	 * <p>
+	 * If the given character is null, an empty string is returned.
+	 *
+	 * @param character {@link Character} any non-null character
+	 * @param count the number of times to repeat it; a nonnegative integer
+	 * @return the string {@link String} containing string repeated count times (the empty string if count is zero)
+	 */
+	public static String repeat(@Nullable Character character, int count) {
+		if (character == null) {
+			return "";
+		}
+		return repeat(character + "", count);
 	}
 
 	/**
