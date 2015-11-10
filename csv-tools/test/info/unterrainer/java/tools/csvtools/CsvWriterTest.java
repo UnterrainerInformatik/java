@@ -25,6 +25,8 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -213,9 +215,9 @@ public class CsvWriterTest {
 
 		csvWriter.close();
 
-		Assert.assertEquals("\"Great\";\"Totally\";\"This is a\r\nbreak"
-				+ "\";\"\"\r\n\"\";\"Gr;eat\";\"Totally\"\r\n\""
-				+ "Great\";\"���\"\"�\";\"\";\"Totally\"", stringWriter.toString());
+		Assert.assertEquals(
+				"\"Great\";\"Totally\";\"This is a\r\nbreak" + "\";\"\"\r\n\"\";\"Gr;eat\";\"Totally\"\r\n\"" + "Great\";\"���\"\"�\";\"\";\"Totally\"",
+				stringWriter.toString());
 	}
 
 	/**
@@ -256,6 +258,7 @@ public class CsvWriterTest {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
+	@ParametersAreNonnullByDefault({})
 	public void appendingNullWithWriteAllTest() throws IOException {
 		List<List<String>> csv = new ArrayList<List<String>>();
 
