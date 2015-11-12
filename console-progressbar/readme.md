@@ -51,10 +51,10 @@ All of our projects facilitate the [Project Lombok][lombok]. So please download 
 	for (String s : list) {
 		doSomething(s);
         
-        bar.updateValue(++count).draw(System.out);
+        bar.updateValue(++count).redraw(System.out);
 	}
     
-	bar.complete().draw(System.out);
+	bar.complete().redraw(System.out);
 	System.out.println("\n");
 ```
 
