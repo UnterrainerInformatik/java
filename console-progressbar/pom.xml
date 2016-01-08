@@ -99,6 +99,9 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<keyname>0x4B02A17C</keyname>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>

@@ -23,6 +23,7 @@ package info.unterrainer.java.tools.utils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -163,7 +164,7 @@ public class StringUtils {
 	 * @return true, if successful, false otherwise
 	 */
 	public static boolean contains(@Nullable String inputString, String... items) {
-		return contains(inputString, items);
+		return contains(inputString, Arrays.asList(items));
 	}
 
 	/**
