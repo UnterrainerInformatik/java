@@ -54,5 +54,10 @@ All of our projects facilitate the [Project Lombok][lombok]. So please download 
 </dependency>
 ```
 
+---
+This program is brought to you by [Unterrainer Informatik][homepage]  
+Project lead is [Gerald Unterrainer][geraldmail]
+
+[geraldmail]: mailto:gerald@unterrainer.info
 [lombok]: https://projectlombok.org
 [github]: https://github.com/UnterrainerInformatik/java

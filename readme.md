@@ -130,6 +130,11 @@ For additional information check the `readme.md` file in the sub-directory.
 </dependency>
 ```
 
+---
+This program is brought to you by [Unterrainer Informatik][homepage]  
+Project lead is [Gerald Unterrainer][geraldmail]
+
+[geraldmail]: mailto:gerald@unterrainer.info
 [homepage]: http://www.unterrainer.info
 [coding]: http://www.unterrainer.info/Home/Coding
 [lombok]: https://projectlombok.org
