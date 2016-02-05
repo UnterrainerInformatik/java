@@ -86,7 +86,7 @@ public class Interval<T extends Comparable<T>> {
 	@Nullable
 	public T clamp(@Nullable T value) {
 		if (value == null) {
-			return value;
+			return null;
 		}
 
 		if (value.compareTo(maximalValue) > 0) {
@@ -106,14 +106,7 @@ public class Interval<T extends Comparable<T>> {
 	 * @return true if the given value is in between the specified boundaries
 	 */
 	public boolean isInBetween(@Nullable T value) {
-		if (value == null) {
-			return false;
-		}
-		if (value.compareTo(getMin()) < 0) {
-			return false;
-		}
-
-		return value.compareTo(getMax()) <= 0;
+		return value != null && value.compareTo(getMin()) >= 0 && value.compareTo(getMax()) <= 0;
 	}
 
 	@Override

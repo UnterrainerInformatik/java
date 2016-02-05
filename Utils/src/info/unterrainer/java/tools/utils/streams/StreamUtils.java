@@ -19,16 +19,11 @@
  ***************************************************************************/
 package info.unterrainer.java.tools.utils.streams;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
+import lombok.experimental.UtilityClass;
 
 import javax.annotation.Nullable;
-
-import lombok.experimental.UtilityClass;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 @UtilityClass
 public class StreamUtils {
@@ -116,7 +111,7 @@ public class StreamUtils {
 			final int bufferSize = 1024;
 			byte[] c = new byte[bufferSize];
 			long count = 0;
-			int readChars = 0;
+			int readChars;
 			while ((readChars = inputStream.read(c)) != -1) {
 				for (int i = 0; i < readChars; i++) {
 					byte b = c[i];
@@ -152,7 +147,7 @@ public class StreamUtils {
 			final int bufferSize = 1024;
 			byte[] c = new byte[bufferSize];
 			long count = 0;
-			int readChars = 0;
+			int readChars;
 			while ((readChars = inputStream.read(c)) != -1) {
 				for (int i = 0; i < readChars; i++) {
 					count++;
@@ -186,7 +181,7 @@ public class StreamUtils {
 			long lineCount = 0;
 			long wordCount = 0;
 			long characterCount = 0;
-			int readChars = 0;
+			int readChars;
 			while ((readChars = inputStream.read(c)) != -1) {
 				for (int i = 0; i < readChars; i++) {
 					characterCount++;

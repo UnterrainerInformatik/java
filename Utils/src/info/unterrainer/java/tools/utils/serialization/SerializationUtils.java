@@ -22,43 +22,21 @@ package info.unterrainer.java.tools.utils.serialization;
 
 import info.unterrainer.java.tools.utils.files.Encoding;
 import info.unterrainer.java.tools.utils.files.FileUtils;
-
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
+import lombok.Cleanup;
+import lombok.experimental.UtilityClass;
+import org.xml.sax.InputSource;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import lombok.Cleanup;
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.UtilityClass;
-
-import org.xml.sax.InputSource;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.*;
 
 @UtilityClass
-@ExtensionMethod({ FileUtils.class })
 public final class SerializationUtils {
 
 	private static final String JAXB_TRANSFORM_INDENT_AMOUNT = "{http://xml.apache.org/xslt}indent-amount";
@@ -165,7 +143,7 @@ public final class SerializationUtils {
 	 * @throws TransformerException If an unrecoverable error occurs during the course of the transformation.
 	 */
 	public static String jaxBXmlTransformerSerialize(final Object serializableObject, final String elementsEncapsulatedInCdataTags, final int indent,
-			final boolean omitXmlDeclaration) throws JAXBException, IOException, TransformerConfigurationException, TransformerException {
+			final boolean omitXmlDeclaration) throws JAXBException, IOException, TransformerException {
 		Transformer t;
 		JAXBContext jaxbContext;
 
@@ -271,7 +249,7 @@ public final class SerializationUtils {
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Class<T> type) throws IOException, JAXBException {
 
-		String source = sourceFile.readToString(Encoding.UTF8);
+		String source = FileUtils.readToString(sourceFile, Encoding.UTF8);
 		return jaxBXmlDeserializer(source, type);
 	}
 
@@ -296,7 +274,7 @@ public final class SerializationUtils {
 	 */
 	public static <T> T jaxBXmlDeserializer(final File sourceFile, final Encoding encoding, final Class<T> type) throws IOException, JAXBException {
 
-		String source = sourceFile.readToString(encoding);
+		String source = FileUtils.readToString(sourceFile, encoding);
 		return jaxBXmlDeserializer(source, type);
 	}
 
@@ -342,7 +320,7 @@ public final class SerializationUtils {
 	 * @throws FileNotFoundException if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened
 	 *             for any other reason
 	 */
-	public static void objectSerialize(final Object serializableObject, final File targetFile) throws IOException, FileNotFoundException {
+	public static void objectSerialize(final Object serializableObject, final File targetFile) throws IOException {
 
 		@Cleanup
 		ByteArrayOutputStream baos = SerializationUtils.objectSerialize(serializableObject);
@@ -385,7 +363,7 @@ public final class SerializationUtils {
 		byte[] ba = FileUtils.readToByteArray(sourceFile);
 		baos.write(ba);
 		baos.flush();
-		return SerializationUtils.<T> objectDeserialize(baos, type);
+		return SerializationUtils.objectDeserialize(baos, type);
 	}
 
 	/**
@@ -442,8 +420,6 @@ public final class SerializationUtils {
 		@SuppressWarnings("resource")
 		CloneInput cin = new CloneInput(bis, co);
 
-		T clone = (T) cin.readObject();
-
-		return clone;
+		return (T) cin.readObject();
 	}
 }

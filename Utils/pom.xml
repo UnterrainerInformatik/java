@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.java.tools</groupId>
 	<artifactId>utils</artifactId>
-	<version>0.2</version>
+	<version>0.3</version>
 	<name>Utils</name>
 	<packaging>jar</packaging>
 	<description>This class contains static helper classes for various occasions.</description>
@@ -130,7 +130,7 @@
 		<dependency>
 			<groupId>info.unterrainer.java.tools</groupId>
 			<artifactId>nullannotations</artifactId>
-			<version>0.2</version>
+			<version>0.3</version>
 			<optional>true</optional>
 			<!-- for annotations only -->
 		</dependency>
@@ -158,6 +158,7 @@
 
 	<profiles>
 		<profile>
+			<id>mvnrepository</id>
 			<repositories>
 				<repository>
 					<id>mvnrepository</id>

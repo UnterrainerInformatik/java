@@ -21,17 +21,14 @@
 package info.unterrainer.java.tools.datastructures;
 
 import info.unterrainer.java.tools.utils.NullUtils;
-
-import java.io.Serializable;
-import java.util.Map.Entry;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.ExtensionMethod;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.Serializable;
+import java.util.Map.Entry;
 
 /**
  * This class is a tuple containing two variables of possibly two different types. This is a convenience class that should ease the burden when requiring
@@ -46,7 +43,6 @@ import lombok.experimental.ExtensionMethod;
  * @param <B> the type of the second parameter.
  */
 @ParametersAreNonnullByDefault({})
-@ExtensionMethod({ NullUtils.class })
 @AllArgsConstructor
 @NoArgsConstructor
 public final class Tuple2<A, B> implements Serializable, Entry<A, B> {
@@ -81,7 +77,7 @@ public final class Tuple2<A, B> implements Serializable, Entry<A, B> {
 	@Override
 	public B setValue(B value) {
 		B old = this.getValue();
-		this.setB(value.noNull());
+		this.setB(NullUtils.noNull(value));
 		return old;
 	}
 }

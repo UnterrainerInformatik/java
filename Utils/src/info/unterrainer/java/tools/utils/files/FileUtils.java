@@ -21,22 +21,13 @@
 package info.unterrainer.java.tools.utils.files;
 
 import info.unterrainer.java.tools.utils.NullUtils;
-import info.unterrainer.java.tools.utils.StringUtils;
 import info.unterrainer.java.tools.utils.streams.CountProperties;
 import info.unterrainer.java.tools.utils.streams.StreamUtils;
+import lombok.Cleanup;
+import lombok.experimental.UtilityClass;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import javax.annotation.Nullable;
+import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
@@ -44,22 +35,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
-
-import lombok.Cleanup;
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.UtilityClass;
-
 @UtilityClass
-@ExtensionMethod({ StringUtils.class, StreamUtils.class, NullUtils.class })
 public final class FileUtils {
 
 	/**
@@ -118,7 +98,7 @@ public final class FileUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static CountProperties getCountPropertiesOf(final String input) throws IOException {
-		return new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)).getCountProperties();
+		return StreamUtils.getCountProperties(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
 	}
 
 	/**
@@ -134,7 +114,7 @@ public final class FileUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static CountProperties getCountPropertiesOf(final File file) throws IOException {
-		return new BufferedInputStream(new FileInputStream(file)).getCountProperties();
+		return StreamUtils.getCountProperties(new BufferedInputStream(new FileInputStream(file)));
 	}
 
 	/**
@@ -325,7 +305,7 @@ public final class FileUtils {
 	 * @return short file name
 	 */
 	public static String getName(final String fullFileName) {
-		String retVal = null;
+		String retVal;
 		// Check separator character
 		if (fullFileName.contains(String.valueOf(File.separatorChar))) {
 			retVal = fullFileName.substring(fullFileName.lastIndexOf(File.separatorChar) + 1);
@@ -453,11 +433,11 @@ public final class FileUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void writeListTo(final File file, final List<String> list, final boolean append) throws IOException {
-		FileWriter fstream = null;
+		FileWriter fstream;
 		fstream = new FileWriter(file, append);
 		final BufferedWriter out = new BufferedWriter(fstream);
-		for (Integer i = 0; i < list.size(); i++) {
-			out.write(list.get(i) + "\n");
+		for (String aList : list) {
+			out.write(aList + "\n");
 		}
 		out.close();
 	}
@@ -503,12 +483,7 @@ public final class FileUtils {
 	 */
 	public File[] getSubDirectories(final String directory) {
 		final File source = new File(directory);
-		final FileFilter fileFilter = new FileFilter() {
-			@Override
-			public boolean accept(@Nullable File file) {
-				return file.noNull().isDirectory();
-			}
-		};
+		final FileFilter fileFilter = file -> NullUtils.noNull(file).isDirectory();
 		return source.listFiles(fileFilter);
 	}
 }

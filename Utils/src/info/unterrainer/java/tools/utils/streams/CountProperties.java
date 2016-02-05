@@ -20,12 +20,9 @@
 
 package info.unterrainer.java.tools.utils.streams;
 
-import info.unterrainer.java.tools.utils.NullUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.ExtensionMethod;
 
-@ExtensionMethod(NullUtils.class)
 @AllArgsConstructor
 public class CountProperties {
 

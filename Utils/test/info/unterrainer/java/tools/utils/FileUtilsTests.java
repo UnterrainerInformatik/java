@@ -20,24 +20,19 @@
 package info.unterrainer.java.tools.utils;
 
 import info.unterrainer.java.tools.utils.files.FileUtils;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import lombok.experimental.ExtensionMethod;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-@ExtensionMethod(FileUtils.class)
+import javax.annotation.Nullable;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
+
 public class FileUtilsTests {
 
 	private Path tempFile;
@@ -70,7 +65,7 @@ public class FileUtilsTests {
 		tempFile = writeTempFile(getLines());
 		try {
 
-			List<String> result = tempFile.readToList();
+			List<String> result = FileUtils.readToList(tempFile);
 			Assert.assertThat(result, CoreMatchers.equalTo(getLines()));
 
 		} catch (IOException e) {
