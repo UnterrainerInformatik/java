@@ -38,7 +38,7 @@ public enum QuotingBehavior {
 	 *
 	 * @param code the code
 	 */
-	private QuotingBehavior(final int code) {
+	QuotingBehavior(final int code) {
 		this.code = code;
 	}
 

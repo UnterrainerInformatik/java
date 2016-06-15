@@ -92,5 +92,10 @@ In order to do so, you'll have to set your compiler compliance level to Java 1.7
 </dependency>
 ```
 
+---
+This program is brought to you by [Unterrainer Informatik][homepage]  
+Project lead is [Gerald Unterrainer][geraldmail]
+
+[geraldmail]: mailto:gerald@unterrainer.info
 [lombok]: https://projectlombok.org
 [github]: https://github.com/UnterrainerInformatik/java

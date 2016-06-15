@@ -24,18 +24,11 @@ import info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponen
 import info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents.ProgressBar;
 import info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents.SimpleInsertBar;
 import info.unterrainer.java.tools.utils.NullUtils;
-
-import java.io.PrintStream;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.annotation.Nullable;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-import lombok.experimental.ExtensionMethod;
+import java.io.PrintStream;
 
 /**
  * This class enables your console-applications to draw a progress-bar.
@@ -64,15 +57,14 @@ import lombok.experimental.ExtensionMethod;
  * </tr>
  * </table>
  */
-@ExtensionMethod(NullUtils.class)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Accessors(chain = true)
 public class ConsoleProgressBar {
 
 	@Getter
 	private Fader fader;
-	private Double minValue;
-	private Double maxValue;
+	private double minValue;
+	private double maxValue;
 
 	@Getter
 	@Setter
@@ -80,7 +72,7 @@ public class ConsoleProgressBar {
 
 	@Getter
 	@Setter
-	private Integer width;
+	private int width;
 
 	@Getter
 	private boolean drawInitialized = false;
@@ -92,10 +84,10 @@ public class ConsoleProgressBar {
 	public ConsoleProgressBar(@Nullable Integer width, @Nullable Double minValue, @Nullable Double maxValue, @Nullable Boolean controlCharacterSupport,
 			@Nullable DrawableComponent component) {
 
-		this.minValue = minValue.or(0.0d);
-		this.maxValue = maxValue.or(1.0d);
-		this.width = width.or(50);
-		this.controlCharacterSupport = controlCharacterSupport.orNoNull(true).booleanValue();
+		this.minValue = NullUtils.orNoNullUnbox(minValue, 0.0d);
+		this.maxValue = NullUtils.orNoNullUnbox(maxValue, 1.0d);
+		this.width = NullUtils.orNoNullUnbox(width, 50);
+		this.controlCharacterSupport = NullUtils.orNoNullUnbox(controlCharacterSupport, true);
 
 		if (component == null) {
 			if (this.controlCharacterSupport) {
@@ -110,7 +102,7 @@ public class ConsoleProgressBar {
 
 	private void checkFader() {
 		if (fader == null) {
-			fader = new Fader(minValue.orNoNull(0.0d).doubleValue(), maxValue.orNoNull(1.0d).doubleValue());
+			fader = new Fader(minValue, maxValue);
 		}
 	}
 
@@ -189,7 +181,7 @@ public class ConsoleProgressBar {
 	 * <p>
 	 * This is the case if the last drawn value differs from the current one or if the component hasn't been drawn yet at all.
 	 *
-	 * @return
+	 * @return a boolean value
 	 */
 	public boolean isRedrawNecessary() {
 		return !drawInitialized || (int) (fader.getPercentage() * width) != lastNumberOfCharactersDrawn;

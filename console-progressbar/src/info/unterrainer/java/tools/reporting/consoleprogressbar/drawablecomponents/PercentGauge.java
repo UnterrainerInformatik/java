@@ -22,17 +22,10 @@ package info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecompone
 import info.unterrainer.java.tools.datastructures.Fader;
 import info.unterrainer.java.tools.utils.NullUtils;
 import info.unterrainer.java.tools.utils.StringUtils;
-
-import java.io.PrintStream;
+import lombok.*;
 
 import javax.annotation.Nullable;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.ExtensionMethod;
+import java.io.PrintStream;
 
 /**
  * This progress-bar draws a bar like:
@@ -81,7 +74,6 @@ import lombok.experimental.ExtensionMethod;
  * </tr>
  * </table>
  */
-@ExtensionMethod({ NullUtils.class, StringUtils.class })
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PercentGauge implements DrawableComponent {
 
@@ -104,11 +96,11 @@ public class PercentGauge implements DrawableComponent {
 	@Builder
 	public PercentGauge(@Nullable String begin, @Nullable String end, @Nullable String percent, @Nullable Character empty, @Nullable String prefix) {
 		super();
-		this.prefix = prefix.or("");
-		this.begin = begin.or("[");
-		this.end = end.or("]");
-		this.percent = percent.or("%");
-		this.empty = empty.or(' ');
+		this.prefix = NullUtils.or(prefix, "");
+		this.begin = NullUtils.or(begin, "[");
+		this.end = NullUtils.or(end, "]");
+		this.percent = NullUtils.or(percent, "%");
+		this.empty = NullUtils.or(empty, ' ');
 	}
 
 	@Override
@@ -132,7 +124,7 @@ public class PercentGauge implements DrawableComponent {
 	@Override
 	public void remove(PrintStream ps, int width, int lastValue) {
 		// Delete already drawn bar using command-characters.
-		String s = "\b".repeat(prefix.length() + begin.length() + percent.length() + 3 + end.length());
+		String s = StringUtils.repeat("\b", prefix.length() + begin.length() + percent.length() + 3 + end.length());
 		ps.print(s);
 	}
 }

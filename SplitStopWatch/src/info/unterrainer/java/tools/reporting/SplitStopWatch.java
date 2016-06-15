@@ -20,15 +20,15 @@
 
 package info.unterrainer.java.tools.reporting;
 
-import java.io.PrintStream;
-import java.util.Formatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.io.PrintStream;
+import java.util.Formatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class implements a stopWatch.
@@ -610,7 +610,6 @@ public class SplitStopWatch {
 
 		if (logger != null) {
 			logger.log(logLevel, text);
-			return;
 		}
 	}
 

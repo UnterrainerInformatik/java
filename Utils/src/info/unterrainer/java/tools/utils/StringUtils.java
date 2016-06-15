@@ -20,15 +20,14 @@
 
 package info.unterrainer.java.tools.utils;
 
+import lombok.experimental.UtilityClass;
+
+import javax.annotation.Nullable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Nullable;
-
-import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class StringUtils {
@@ -142,8 +141,7 @@ public class StringUtils {
 	 * <p>
 	 * Note that {@code Character.isTitleCase(Character.toTitleCase(ch))} does not always return {@code true} for some ranges of characters.
 	 * <p>
-	 * <b>Note:</b> This method cannot handle <a href="#supplementary"> supplementary characters</a>. To support all Unicode characters, including supplementary
-	 * characters, use the {@link #toTitleCase(int)} method.
+	 * <b>Note:</b> This method cannot handle <a href="#supplementary"> supplementary characters</a>.
 	 *
 	 * @param in the string to convert the first character of.
 	 * @return the string starting with the titlecase equivalent of the first character, if any; otherwise, with the character itself.

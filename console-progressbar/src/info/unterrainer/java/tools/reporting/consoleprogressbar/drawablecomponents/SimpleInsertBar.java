@@ -22,17 +22,10 @@ package info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecompone
 import info.unterrainer.java.tools.datastructures.Fader;
 import info.unterrainer.java.tools.utils.NullUtils;
 import info.unterrainer.java.tools.utils.StringUtils;
-
-import java.io.PrintStream;
+import lombok.*;
 
 import javax.annotation.Nullable;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.ExtensionMethod;
+import java.io.PrintStream;
 
 /**
  * This progress-bar draws a bar like:
@@ -82,7 +75,6 @@ import lombok.experimental.ExtensionMethod;
  * </tr>
  * </table>
  */
-@ExtensionMethod({ NullUtils.class, StringUtils.class })
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SimpleInsertBar implements DrawableComponent {
 
@@ -105,11 +97,11 @@ public class SimpleInsertBar implements DrawableComponent {
 	@Builder
 	public SimpleInsertBar(@Nullable String prefix, @Nullable String begin, @Nullable String end, @Nullable Character full, @Nullable Character legendFill) {
 		super();
-		this.prefix = prefix.or("");
-		this.begin = begin.or("[");
-		this.end = end.or("]");
-		this.full = full.or('#');
-		this.legendFill = legendFill.or('>');
+		this.prefix = NullUtils.or(prefix, "");
+		this.begin = NullUtils.or(begin, "[");
+		this.end = NullUtils.or(end, "]");
+		this.full = NullUtils.or(full, '#');
+		this.legendFill = NullUtils.or(legendFill, '>');
 	}
 
 	@Override
@@ -117,10 +109,11 @@ public class SimpleInsertBar implements DrawableComponent {
 		if (!drawInitialized) {
 			// Draw the lead-line, the legend to the bar.
 			int l = begin.length() + prefix.length();
-			ps.print(prefix + begin + legendFill.repeat(width) + end + "\n" + " ".repeat(l));
+			ps.print(prefix + begin + StringUtils.repeat(legendFill, width) + end + "\n" + StringUtils.repeat(" "
+					, l));
 		}
 
-		ps.print(full.repeat(value - lastValue));
+		ps.print(StringUtils.repeat(full, value - lastValue));
 	}
 
 	@Override

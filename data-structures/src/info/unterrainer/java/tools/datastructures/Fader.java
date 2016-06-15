@@ -24,14 +24,12 @@ import info.unterrainer.java.tools.utils.NullUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.ExtensionMethod;
 
 @NoArgsConstructor
-@ExtensionMethod({ NullUtils.class })
 public class Fader {
 	private static double A_THIRD = 1d / 3d;
 
-	private Interval<Double> interval = new Interval<Double>(0d, 100d);
+	private Interval<Double> interval = new Interval<>(0d, 100d);
 
 	@Getter
 	private double value;
@@ -85,7 +83,7 @@ public class Fader {
 	 * @param value the current value of the fader
 	 */
 	public void setValue(double value) {
-		this.value = interval.clamp(value).noNull();
+		this.value = NullUtils.noNull(interval.clamp(value));
 		percentage = getPercentageAtValue(this.value);
 	}
 
@@ -154,7 +152,7 @@ public class Fader {
 	/**
 	 * Sets the quadratic value of the fader: y = x * x
 	 *
-	 * @param value
+	 * @param value to set the fader to
 	 */
 	public void setQuadraticValue(double value) {
 		percentage = Math.sqrt(getPercentageAtValue(value));
@@ -172,7 +170,7 @@ public class Fader {
 	/**
 	 * Sets the cubic value of the fader: y = x * x * x
 	 *
-	 * @param value
+	 * @param value to set the fader to
 	 */
 	public void setCubicValue(double value) {
 		percentage = Math.pow(getPercentageAtValue(value), A_THIRD);
@@ -190,7 +188,7 @@ public class Fader {
 	/**
 	 * Sets the exponential value of the fader: y = (20^x - 1) / 20
 	 *
-	 * @param value
+	 * @param value to set the fader to
 	 */
 	public void setExponentialValue(double value) {
 		percentage = Math.log(20.0 * getPercentageAtValue(value) + 1.0) / Math.log(20.0);
@@ -208,7 +206,7 @@ public class Fader {
 	/**
 	 * Sets the bidirectional slow start value: y = (cos((x - 1)* PI) + 1) / 2
 	 *
-	 * @param value
+	 * @param value to set the fader to
 	 */
 	public void setBidirectionalSlow(double value) {
 		percentage = 1.0 - Math.acos(2.0 * getPercentageAtValue(value) - 1.0) / Math.PI;
@@ -226,7 +224,7 @@ public class Fader {
 	/**
 	 * Sets the bidirectional quick start: y = ((2x - 1)^3+1)/2
 	 *
-	 * @param value
+	 * @param value to set the fader to
 	 */
 	public void setBidirectionalQuick(double value) {
 		percentage = (Math.pow(2.0 * getPercentageAtValue(value) - 1.0, A_THIRD) + 1.0) / 2.0;

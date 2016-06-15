@@ -19,12 +19,9 @@
  ***************************************************************************/
 package info.unterrainer.java.tools.utils;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import lombok.experimental.UtilityClass;
+
+import javax.annotation.Nullable;
 
 @UtilityClass
 public class NullUtils {
@@ -36,30 +33,121 @@ public class NullUtils {
 	 * If the given default-value is null as well, null is returned.
 	 *
 	 * @param <T> the generic type of the object to be checked
-	 * @param obj the object to be checked
+	 * @param object the object to be checked
 	 * @param ifNull the default value
 	 * @return the object or the default-value (ifNull)
 	 */
-	@Nullable
-	public static <T> T or(@Nullable T obj, @Nullable T ifNull) {
-		return obj != null ? obj : ifNull;
+	public static <T> @Nullable T or(@Nullable T object, @Nullable T ifNull) {
+		return object != null ? object : ifNull;
 	}
 
 	/**
 	 * Returns the first of two given parameters that is not null, if either is, or otherwise throws a NullPointerException.
 	 *
 	 * @param <T> the generic type of the objects to be checked
-	 * @param obj the first object to be checked and to be returned if it's not equal null
+	 * @param object the first object to be checked and to be returned if it's not equal null
 	 * @param ifNull the second object to be checked and to be returned if the first object is null and the second isn't
 	 * @return first if it is non-null; otherwise second if it is non-null
-	 * @throws {@link NullPointerException} if both objects are {@code null}
+	 * @throws NullPointerException if both objects are {@code null}
 	 */
-	@SuppressWarnings("null")
-	public static <T> @Nonnull T orNoNull(@Nullable T obj, @Nullable T ifNull) {
-		if (obj == null && ifNull == null) {
-			throw new NullPointerException();
-		}
-		return obj != null ? obj : noNull(ifNull);
+	public static <T> T orNoNull(@Nullable T object, @Nullable T ifNull) {
+		return noNull(or(object, ifNull));
+	}
+
+	/**
+	 * Returns the first of two given parameters that is not null. The second parameter HAS to be nonnull.
+	 * Helper method that does unboxing as well since most of the IDEs have problems resolving over that barrier.
+	 *
+	 * @param object the first object to be checked and to be returned if it's not equal null
+	 * @param defaultValue the second object to be checked and to be returned if the first object is null and the second isn't
+	 * @return first if it is non-null; otherwise second if it is non-null
+	 */
+	public static double orNoNullUnbox(@Nullable Double object, double defaultValue) {
+		return noNull(or(object, defaultValue));
+	}
+
+	/**
+	 * Returns the first of two given parameters that is not null. The second parameter HAS to be nonnull.
+	 * Helper method that does unboxing as well since most of the IDEs have problems resolving over that barrier.
+	 *
+	 * @param object the first object to be checked and to be returned if it's not equal null
+	 * @param defaultValue the second object to be checked and to be returned if the first object is null and the second isn't
+	 * @return first if it is non-null; otherwise second if it is non-null
+	 */
+	public static int orNoNullUnbox(@Nullable Integer object, int defaultValue) {
+		return noNull(or(object, defaultValue));
+	}
+
+	/**
+	 * Returns the first of two given parameters that is not null. The second parameter HAS to be nonnull.
+	 * Helper method that does unboxing as well since most of the IDEs have problems resolving over that barrier.
+	 *
+	 * @param object the first object to be checked and to be returned if it's not equal null
+	 * @param defaultValue the second object to be checked and to be returned if the first object is null and the second isn't
+	 * @return first if it is non-null; otherwise second if it is non-null
+	 */
+	public static short orNoNullUnbox(@Nullable Short object, short defaultValue) {
+		return noNull(or(object, defaultValue));
+	}
+
+	/**
+	 * Returns the first of two given parameters that is not null. The second parameter HAS to be nonnull.
+	 * Helper method that does unboxing as well since most of the IDEs have problems resolving over that barrier.
+	 *
+	 * @param object the first object to be checked and to be returned if it's not equal null
+	 * @param defaultValue the second object to be checked and to be returned if the first object is null and the second isn't
+	 * @return first if it is non-null; otherwise second if it is non-null
+	 */
+	public static long orNoNullUnbox(@Nullable Long object, long defaultValue) {
+		return noNull(or(object, defaultValue));
+	}
+
+	/**
+	 * Returns the first of two given parameters that is not null. The second parameter HAS to be nonnull.
+	 * Helper method that does unboxing as well since most of the IDEs have problems resolving over that barrier.
+	 *
+	 * @param object the first object to be checked and to be returned if it's not equal null
+	 * @param defaultValue the second object to be checked and to be returned if the first object is null and the second isn't
+	 * @return first if it is non-null; otherwise second if it is non-null
+	 */
+	public static char orNoNullUnbox(@Nullable Character object, char defaultValue) {
+		return noNull(or(object, defaultValue));
+	}
+
+	/**
+	 * Returns the first of two given parameters that is not null. The second parameter HAS to be nonnull.
+	 * Helper method that does unboxing as well since most of the IDEs have problems resolving over that barrier.
+	 *
+	 * @param object the first object to be checked and to be returned if it's not equal null
+	 * @param defaultValue the second object to be checked and to be returned if the first object is null and the second isn't
+	 * @return first if it is non-null; otherwise second if it is non-null
+	 */
+	public static byte orNoNullUnbox(@Nullable Byte object, byte defaultValue) {
+		return noNull(or(object, defaultValue));
+	}
+
+	/**
+	 * Returns the first of two given parameters that is not null. The second parameter HAS to be nonnull.
+	 * Helper method that does unboxing as well since most of the IDEs have problems resolving over that barrier.
+	 *
+	 * @param object the first object to be checked and to be returned if it's not equal null
+	 * @param defaultValue the second object to be checked and to be returned if the first object is null and the second isn't
+	 * @return first if it is non-null; otherwise second if it is non-null
+	 */
+	public static float orNoNullUnbox(@Nullable Float object, float defaultValue) {
+		return noNull(or(object, defaultValue));
+	}
+
+	/**
+	 * Returns the first of two given parameters that is not null. The second parameter HAS to be nonnull.
+	 * Helper method that does unboxing as well since most of the IDEs have problems resolving over that barrier.
+	 *
+	 * @param object the first object to be checked and to be returned if it's not equal null
+	 * @param defaultValue the second object to be checked and to be returned if the first object is null and the second isn't
+	 * @return first if it is non-null; otherwise second if it is non-null
+	 */
+	public static boolean orNoNullUnbox(@Nullable Boolean object, boolean defaultValue) {
+		return noNull(or(object, defaultValue));
 	}
 
 	/**
@@ -70,11 +158,13 @@ public class NullUtils {
 	 * @param <T> the generic type of the object to be checked
 	 * @param object the object reference to check for null
 	 * @return object if not {@code null}
-	 * @throws {@link NullPointerException} if object is {@code null}
+	 * @throws NullPointerException if object is {@code null}
 	 */
-	@SuppressWarnings("null")
-	public static <T> @Nonnull T noNull(@Nullable T object) {
-		return Objects.requireNonNull(object);
+	public static <T> T noNull(@Nullable T object) {
+		if (object == null){
+			throw new NullPointerException();
+		}
+		return object;
 	}
 
 	/**
@@ -86,10 +176,11 @@ public class NullUtils {
 	 * @param object the object reference to check for null
 	 * @param message message to be used in the eventually thrown {@link NullPointerException}
 	 * @return object if not {@code null}
-	 * @throws {@link NullPointerException} if object is {@code null}
+	 * @throws NullPointerException if object is {@code null}
 	 */
-	@SuppressWarnings("null")
-	public static <T> @Nonnull T noNull(@Nullable T object, @Nullable String message) {
-		return Objects.requireNonNull(object, message);
+	public static <T> T noNull(@Nullable T object, @Nullable String message) {
+		if (object == null)
+			throw new NullPointerException(message);
+		return object;
 	}
 }

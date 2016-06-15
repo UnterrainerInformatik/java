@@ -20,24 +20,20 @@
 package info.unterrainer.java.tools.csvtools;
 
 import info.unterrainer.java.tools.utils.NullUtils;
+import lombok.Builder;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
-import lombok.Builder;
-import lombok.experimental.ExtensionMethod;
-
 /**
  * The Class CsvReader.
  * <p>
  * Enables you to read CSV-files using various types of delimiters (column and row) and quotes.
  */
-@ExtensionMethod(NullUtils.class)
 public class CsvReader extends CsvBase {
 
 	private final static int DEFAULT_CHUNK_SIZE = 16384;
@@ -93,9 +89,10 @@ public class CsvReader extends CsvBase {
 	@Builder
 	public CsvReader(@Nullable StringReader stringReader, @Nullable Character columnSeparator, @Nullable String rowSeparator, @Nullable String fieldDelimiter,
 			@Nullable Integer readChunkSize) {
-		this(stringReader, columnSeparator.orNoNull(DEFAULT_COLUMN_SEPARATOR), rowSeparator.orNoNull(DEFAULT_ROW_SEPARATOR), fieldDelimiter
-				.orNoNull(DEFAULT_FIELD_DELIMITER));
-		setChunkAndBufferSize(readChunkSize.orNoNull(DEFAULT_CHUNK_SIZE));
+		this(stringReader, NullUtils.orNoNullUnbox(columnSeparator, DEFAULT_COLUMN_SEPARATOR), NullUtils
+				.orNoNull(rowSeparator, DEFAULT_ROW_SEPARATOR), NullUtils.orNoNull(fieldDelimiter,
+				DEFAULT_FIELD_DELIMITER));
+		setChunkAndBufferSize(NullUtils.orNoNullUnbox(readChunkSize, DEFAULT_CHUNK_SIZE));
 	}
 
 	/**
@@ -119,7 +116,8 @@ public class CsvReader extends CsvBase {
 	}
 
 	/**
-	 * Does essentially the same as {@link _Peek} but counts and returns the current nextChar as well. Example: buffer=[1234] & nextChar=0 then
+	 * Does essentially the same as {@link CsvReader#peek(int)} but counts and returns the current nextChar as well. Example:
+	 * buffer=[1234] & nextChar=0 then
 	 * peekInclusiveNextChar(3) would return [012].
 	 *
 	 * @param length The length which should be read ahead.
@@ -245,7 +243,7 @@ public class CsvReader extends CsvBase {
 	 */
 	@Nullable
 	public synchronized List<String> readRow() throws IOException {
-		List<String> fields = new ArrayList<String>();
+		List<String> fields = new ArrayList<>();
 		if (nextChar == null) {
 			readNext();
 		}
@@ -285,7 +283,7 @@ public class CsvReader extends CsvBase {
 	 */
 	@Nullable
 	public synchronized List<List<String>> readAllRows() throws IOException {
-		List<List<String>> data = new ArrayList<List<String>>();
+		List<List<String>> data = new ArrayList<>();
 		List<String> row = readRow();
 		while (row != null) {
 			data.add(row);

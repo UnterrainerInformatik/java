@@ -21,24 +21,21 @@
 package info.unterrainer.java.tools.csvtools;
 
 import info.unterrainer.java.tools.utils.NullUtils;
+import lombok.Builder;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
-
-import javax.annotation.Nullable;
-
-import lombok.Builder;
-import lombok.experimental.ExtensionMethod;
+import java.util.Objects;
 
 /**
  * This data-structure represents a comma-separated-values file. It helps in dealing with such files and delivers various manipulation routines.
  */
-@ExtensionMethod(NullUtils.class)
 public class CsvWriter extends CsvBase {
 
-	private final Writer stringWriter;
+	private Writer stringWriter = null;
 
 	/**
 	 * The default chunk size (bufferSize / 2 - DEFAULT_ROW_SEPARATOR).
@@ -49,11 +46,6 @@ public class CsvWriter extends CsvBase {
 	 * The internal buffer that holds the data to be read or to be written. Default value is the chunk size + the length of the default field delimiter.
 	 */
 	private char[] buffer = new char[DEFAULT_CHUNK_SIZE];
-
-	/**
-	 * The definitive chunkSize preset with the default value.
-	 */
-	private int chunkSize = DEFAULT_CHUNK_SIZE;
 
 	private int bufferCount;
 	private int numberOfUnusedBufferCharacters;
@@ -177,9 +169,10 @@ public class CsvWriter extends CsvBase {
 	@Builder
 	public CsvWriter(@Nullable StringWriter stringWriter, @Nullable Character columnSeparator, @Nullable String rowSeparator, @Nullable String fieldDelimiter,
 			@Nullable Integer writeChunkSize, @Nullable QuotingBehavior quotingBehavior) {
-		this(stringWriter, columnSeparator.orNoNull(DEFAULT_COLUMN_SEPARATOR), rowSeparator.orNoNull(DEFAULT_ROW_SEPARATOR), fieldDelimiter
-				.orNoNull(DEFAULT_FIELD_DELIMITER), writeChunkSize.orNoNull(DEFAULT_CHUNK_SIZE));
-		this.quotingBehavior = quotingBehavior.or(QuotingBehavior.MINIMAL);
+		this(stringWriter, NullUtils.orNoNullUnbox(columnSeparator, DEFAULT_COLUMN_SEPARATOR), NullUtils.orNoNull
+				(rowSeparator, DEFAULT_ROW_SEPARATOR), NullUtils.orNoNull(fieldDelimiter, DEFAULT_FIELD_DELIMITER),
+				NullUtils.orNoNullUnbox(writeChunkSize, DEFAULT_CHUNK_SIZE));
+		this.quotingBehavior = NullUtils.or(quotingBehavior, QuotingBehavior.MINIMAL);
 	}
 
 	/**
@@ -206,7 +199,7 @@ public class CsvWriter extends CsvBase {
 	private void internalWrite(final String text) throws IOException {
 		if (numberOfUnusedBufferCharacters < text.length()) {
 			String t = text;
-			while (t != null && !t.isEmpty()) {
+			while (!t.isEmpty()) {
 				String sub;
 				if (t.length() > numberOfUnusedBufferCharacters) {
 					sub = t.substring(0, numberOfUnusedBufferCharacters);
@@ -271,10 +264,7 @@ public class CsvWriter extends CsvBase {
 	 */
 	private boolean isUseFieldDelimiter(String csvData) {
 		boolean isFieldDelimiterNeeded = csvData.contains(usedFieldDelimiter) || csvData.contains(rowSeparator) || csvData.contains("" + columnSeparator);
-		if (usedFieldDelimiter != null && usedFieldDelimiter != "" && (isFieldDelimiterNeeded || quotingBehavior == QuotingBehavior.ALL)) {
-			return true;
-		}
-		return false;
+		return usedFieldDelimiter != null && !Objects.equals(usedFieldDelimiter, "") && (isFieldDelimiterNeeded || quotingBehavior == QuotingBehavior.ALL);
 	}
 
 	/**
@@ -367,8 +357,7 @@ public class CsvWriter extends CsvBase {
 			return this;
 		}
 		initialize();
-		for (int i = 0; i < csvData.size(); i++) {
-			String fieldData = csvData.get(i);
+		for (String fieldData : csvData) {
 			write(fieldData);
 		}
 		return this;
@@ -402,11 +391,14 @@ public class CsvWriter extends CsvBase {
 	 * @param chunkSize The size of one chunk.
 	 */
 	private CsvWriter setChunkAndBufferSize(final int chunkSize) {
-		this.chunkSize = chunkSize;
-		if (this.chunkSize < 1) {
-			this.chunkSize = 1;
+		/*
+	  The definitive chunkSize preset with the default value.
+	 */
+		int chunkSize1 = chunkSize;
+		if (chunkSize1 < 1) {
+			chunkSize1 = 1;
 		}
-		buffer = new char[this.chunkSize];
+		buffer = new char[chunkSize1];
 		return this;
 	}
 

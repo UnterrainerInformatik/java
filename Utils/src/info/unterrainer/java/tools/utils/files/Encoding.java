@@ -20,10 +20,10 @@
 
 package info.unterrainer.java.tools.utils.files;
 
-import java.nio.charset.Charset;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.nio.charset.Charset;
 
 public enum Encoding {
 

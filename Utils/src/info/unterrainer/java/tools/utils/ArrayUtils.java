@@ -19,9 +19,9 @@
  ***************************************************************************/
 package info.unterrainer.java.tools.utils;
 
-import java.lang.reflect.Array;
-
 import lombok.experimental.UtilityClass;
+
+import java.lang.reflect.Array;
 
 /**
  * This static utility-class contains methods concerned with arrays.
@@ -37,11 +37,11 @@ public final class ArrayUtils {
 	 * @param second the second part of the new array
 	 * @return a new array containing the result of the concatenation of the first and second array.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T[] concatenate(T[] first, T[] second) {
 		int aLen = first.length;
 		int bLen = second.length;
 
-		@SuppressWarnings("unchecked")
 		T[] concatenateArray = (T[]) Array.newInstance(first.getClass().getComponentType(), aLen + bLen);
 		System.arraycopy(first, 0, concatenateArray, 0, aLen);
 		System.arraycopy(second, 0, concatenateArray, aLen, bLen);

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.java.tools</groupId>
 	<artifactId>nullannotations</artifactId>
-	<version>0.2</version>
+	<version>0.3</version>
 	<name>NullAnnotations</name>
 	<packaging>jar</packaging>
 	<description>This class contains annotations for the javax.annotation namespace to enable null-checks in Eclipse.</description>
@@ -128,6 +128,7 @@
 
 	<profiles>
 		<profile>
+			<id>mvnrepository</id>
 			<repositories>
 				<repository>
 					<id>mvnrepository</id>
