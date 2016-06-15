@@ -32,6 +32,8 @@ Currently this contains the following utility classes:
 
 ##### FileUtils  
 This class contains methods to read and write files from and to lists or other data-structures. It eases the creation or deletion of directory trees or bulk-moving and bulk-copying them.  
+#### HrfUtils
+This class is concerned with the conversion to human readable forms (HRF).  
 ##### StringUtils  
 This class contains a method to get a formatted stacktrace as a string and several other helper methods.  
 ##### DateUtils
@@ -61,3 +63,4 @@ Project lead is [Gerald Unterrainer][geraldmail]
 [geraldmail]: mailto:gerald@unterrainer.info
 [lombok]: https://projectlombok.org
 [github]: https://github.com/UnterrainerInformatik/java
+[homepage]: http://www.unterrainer.info
