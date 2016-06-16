@@ -146,7 +146,7 @@ public class HrfUtils {
 	 */
 	public static String toHumanReadableDuration(Duration duration, String[] units) {
 		String[] u = new String[] { "ms", "s", "m", "h", "d", "W", "M", "Y" };
-		if (units != null && units.length == 8) {
+		if (units.length == 8) {
 			u = units;
 		}
 
