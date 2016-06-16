@@ -19,16 +19,21 @@
  ***************************************************************************/
 package info.unterrainer.java.tools.reporting.consoleprogressbar;
 
+import java.io.PrintStream;
+
+import javax.annotation.Nullable;
+
 import info.unterrainer.java.tools.datastructures.Fader;
 import info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents.DrawableComponent;
 import info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents.ProgressBar;
 import info.unterrainer.java.tools.reporting.consoleprogressbar.drawablecomponents.SimpleInsertBar;
 import info.unterrainer.java.tools.utils.NullUtils;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import javax.annotation.Nullable;
-import java.io.PrintStream;
 
 /**
  * This class enables your console-applications to draw a progress-bar.
