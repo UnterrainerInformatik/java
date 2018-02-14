@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.java.tools</groupId>
 	<artifactId>csv-tools</artifactId>
-	<version>0.2</version>
+	<version>0.3</version>
 	<name>CsvTools</name>
 	<packaging>jar</packaging>
 	<description>This library provides writer and reader for the CSV format.</description>
